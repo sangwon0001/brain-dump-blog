@@ -1,8 +1,10 @@
 import Link from 'next/link';
-import { getPostBySlug, getAllPosts, getCategories } from '@/lib/mdx';
+import { getPostBySlug, getAllPosts, getCategories, getSeriesNavigation, getRelatedPosts } from '@/lib/mdx';
 import { notFound } from 'next/navigation';
 import MDXContent from '@/components/MDXContent';
 import Header from '@/components/Header';
+import SeriesNav from '@/components/SeriesNav';
+import RelatedPosts from '@/components/RelatedPosts';
 
 interface PostPageProps {
   params: Promise<{ category: string; slug: string }>;
@@ -56,6 +58,9 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
+  const seriesNav = getSeriesNavigation(post);
+  const relatedPosts = getRelatedPosts(post, 3);
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <Header categories={categories} currentCategory={post.category} />
@@ -104,10 +109,65 @@ export default async function PostPage({ params }: PostPageProps) {
           )}
         </header>
 
+        {/* Series Navigation (상단 - 목차만) */}
+        {seriesNav && (
+          <div className="pt-8 sm:pt-10">
+            <SeriesNav
+              series={seriesNav.series}
+              posts={seriesNav.posts}
+              currentIndex={seriesNav.currentIndex}
+            />
+          </div>
+        )}
+
         {/* Post Content */}
         <div className="py-8 sm:py-12 text-base sm:text-lg">
           <MDXContent source={post.content} />
         </div>
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && <RelatedPosts posts={relatedPosts} />}
+
+        {/* Series Navigation (하단 - 이전/다음) */}
+        {seriesNav && (seriesNav.prev || seriesNav.next) && (
+          <div className="py-6 border-t border-[var(--border-primary)]">
+            <div className="flex justify-between gap-4">
+              {seriesNav.prev ? (
+                <Link
+                  href={`/${seriesNav.prev.category}/${seriesNav.prev.slug}`}
+                  className="flex-1 group p-3 sm:p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg hover:border-[var(--accent-primary)] transition-colors"
+                >
+                  <span className="text-xs text-[var(--text-muted)] flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    이전 글
+                  </span>
+                  <p className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] mt-1 line-clamp-1">
+                    {seriesNav.prev.title}
+                  </p>
+                </Link>
+              ) : <div className="flex-1" />}
+
+              {seriesNav.next ? (
+                <Link
+                  href={`/${seriesNav.next.category}/${seriesNav.next.slug}`}
+                  className="flex-1 group p-3 sm:p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg hover:border-[var(--accent-primary)] transition-colors text-right"
+                >
+                  <span className="text-xs text-[var(--text-muted)] flex items-center justify-end gap-1">
+                    다음 글
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                  <p className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] mt-1 line-clamp-1">
+                    {seriesNav.next.title}
+                  </p>
+                </Link>
+              ) : <div className="flex-1" />}
+            </div>
+          </div>
+        )}
         
         {/* Footer */}
         <footer className="py-8 sm:py-12 border-t border-[var(--border-primary)]">

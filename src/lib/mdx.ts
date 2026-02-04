@@ -5,6 +5,32 @@ import readingTime from 'reading-time';
 
 const contentDirectory = path.join(process.cwd(), 'content');
 
+// 시리즈 자동 감지: "(1편", "(2편", "1편:", "Part 1" 등의 패턴
+function extractSeriesInfo(title: string, frontmatterSeries?: string): { series?: string; order?: number } {
+  // frontmatter에 명시된 경우 우선
+  if (frontmatterSeries) {
+    const orderMatch = title.match(/\((\d+)편[:\)]?|\s(\d+)편[:\s]|Part\s*(\d+)/i);
+    const order = orderMatch ? parseInt(orderMatch[1] || orderMatch[2] || orderMatch[3]) : undefined;
+    return { series: frontmatterSeries, order };
+  }
+
+  // 자동 감지: "(N편" 또는 "N편:" 패턴
+  const patterns = [
+    /^(.+?)\s*\((\d+)편[:\)]?/,      // "제목 (1편:" or "제목 (1편)"
+    /^(.+?)\s+(\d+)편[:\s]/,          // "제목 1편:"
+    /^(.+?)\s*[-–]\s*Part\s*(\d+)/i,  // "제목 - Part 1"
+  ];
+
+  for (const pattern of patterns) {
+    const match = title.match(pattern);
+    if (match) {
+      return { series: match[1].trim(), order: parseInt(match[2]) };
+    }
+  }
+
+  return {};
+}
+
 export interface PostMeta {
   slug: string;
   title: string;
@@ -14,6 +40,8 @@ export interface PostMeta {
   tags?: string[];
   thumbnail?: string;
   readingTime: string;
+  series?: string;
+  seriesOrder?: number;
 }
 
 export interface Post extends PostMeta {
@@ -47,15 +75,20 @@ export function getAllPosts(): PostMeta[] {
     const category = path.dirname(relativePath);
     const slug = path.basename(relativePath, path.extname(relativePath));
 
+    const title = data.title || slug;
+    const { series, order } = extractSeriesInfo(title, data.series);
+
     return {
       slug,
-      title: data.title || slug,
+      title,
       description: data.description || '',
       date: data.date || new Date().toISOString(),
       category: category === '.' ? 'uncategorized' : category,
       tags: data.tags || [],
       thumbnail: data.thumbnail,
       readingTime: readingTime(content).text,
+      series,
+      seriesOrder: order,
     };
   });
 
@@ -88,19 +121,79 @@ export function getPostBySlug(category: string, slug: string): Post | null {
   const fileContents = fs.readFileSync(actualPath, 'utf8');
   const { data, content } = matter(fileContents);
 
+  const title = data.title || slug;
+  const { series, order } = extractSeriesInfo(title, data.series);
+
   return {
     slug,
-    title: data.title || slug,
+    title,
     description: data.description || '',
     date: data.date || new Date().toISOString(),
     category,
     tags: data.tags || [],
     thumbnail: data.thumbnail,
     readingTime: readingTime(content).text,
+    series,
+    seriesOrder: order,
     content,
   };
 }
 
 export function getRecentPosts(count: number = 5): PostMeta[] {
   return getAllPosts().slice(0, count);
+}
+
+// 같은 시리즈의 모든 글 가져오기 (순서대로 정렬)
+export function getSeriesPosts(seriesName: string): PostMeta[] {
+  return getAllPosts()
+    .filter((post) => post.series === seriesName)
+    .sort((a, b) => (a.seriesOrder || 0) - (b.seriesOrder || 0));
+}
+
+// 현재 글의 시리즈 정보 (이전/다음 포함)
+export function getSeriesNavigation(currentPost: PostMeta): {
+  series: string;
+  posts: PostMeta[];
+  currentIndex: number;
+  prev?: PostMeta;
+  next?: PostMeta;
+} | null {
+  if (!currentPost.series) return null;
+
+  const posts = getSeriesPosts(currentPost.series);
+  const currentIndex = posts.findIndex(
+    (p) => p.slug === currentPost.slug && p.category === currentPost.category
+  );
+
+  if (currentIndex === -1) return null;
+
+  return {
+    series: currentPost.series,
+    posts,
+    currentIndex,
+    prev: currentIndex > 0 ? posts[currentIndex - 1] : undefined,
+    next: currentIndex < posts.length - 1 ? posts[currentIndex + 1] : undefined,
+  };
+}
+
+// 관련 글 추천 (같은 태그 기반, 현재 글 제외)
+export function getRelatedPosts(currentPost: PostMeta, count: number = 3): PostMeta[] {
+  if (!currentPost.tags || currentPost.tags.length === 0) return [];
+
+  const allPosts = getAllPosts();
+
+  // 태그 매칭 점수 계산
+  const scored = allPosts
+    .filter((post) => !(post.slug === currentPost.slug && post.category === currentPost.category))
+    .filter((post) => post.series !== currentPost.series) // 같은 시리즈는 제외
+    .map((post) => {
+      const matchingTags = (post.tags || []).filter((tag) =>
+        currentPost.tags!.includes(tag)
+      ).length;
+      return { post, score: matchingTags };
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  return scored.slice(0, count).map(({ post }) => post);
 }
