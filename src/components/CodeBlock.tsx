@@ -19,7 +19,7 @@ export default function CodeBlock({ children, language = 'code' }: CodeBlockProp
   };
 
   return (
-    <div className="relative group my-4 sm:my-6 rounded-lg overflow-hidden -mx-4 sm:mx-0">
+    <div className="relative group my-4 sm:my-6 rounded-lg overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between bg-[#1e1e1e] text-gray-400 px-3 sm:px-4 py-2 text-xs sm:text-sm border-b border-gray-700">
         <span className="font-mono text-xs uppercase tracking-wide">{language}</span>
