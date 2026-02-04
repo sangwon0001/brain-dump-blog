@@ -19,13 +19,13 @@ export default function CodeBlock({ children, language = 'code' }: CodeBlockProp
   };
 
   return (
-    <div className="relative group my-4 sm:my-6 rounded-lg overflow-hidden">
+    <div className="relative group my-4 sm:my-6 rounded-lg overflow-hidden border border-[var(--code-border)]">
       {/* Header */}
-      <div className="flex items-center justify-between bg-[#1e1e1e] text-gray-400 px-3 sm:px-4 py-2 text-xs sm:text-sm border-b border-gray-700">
+      <div className="flex items-center justify-between bg-[var(--code-header-bg)] text-[var(--text-muted)] px-3 sm:px-4 py-2 text-xs sm:text-sm border-b border-[var(--code-border)]">
         <span className="font-mono text-xs uppercase tracking-wide">{language}</span>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1 sm:gap-1.5 hover:text-white active:text-green-400 transition-colors text-xs touch-manipulation"
+          className="flex items-center gap-1 sm:gap-1.5 hover:text-[var(--text-primary)] active:text-green-400 transition-colors text-xs touch-manipulation"
         >
           {copied ? (
             <>
@@ -40,10 +40,10 @@ export default function CodeBlock({ children, language = 'code' }: CodeBlockProp
           )}
         </button>
       </div>
-      {/* Code - scrollable on mobile */}
+      {/* Code */}
       <div 
         ref={preRef} 
-        className="overflow-x-auto [&>pre]:!m-0 [&>pre]:!rounded-none [&>pre]:p-3 sm:[&>pre]:p-4 text-xs sm:text-sm"
+        className="overflow-x-auto bg-[var(--code-bg)] [&>pre]:!m-0 [&>pre]:!rounded-none [&>pre]:p-3 sm:[&>pre]:p-4 [&>pre]:!bg-transparent text-xs sm:text-sm"
       >
         {children}
       </div>
