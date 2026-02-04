@@ -6,9 +6,6 @@
 
 ## 📋 To Do
 
-### 🔴 High Priority
-
-
 ### 🟡 Medium Priority
 
 - [ ] **OG 이미지 자동 생성**
@@ -64,25 +61,31 @@
 
 ## ✅ Done
 
-### 2025-02
+### 2025-02-04
 
-- [x] **Draft 기능** (2025-02-04)
+- [x] **Draft 기능**
   - `draft: true` frontmatter 지원
   - 빌드 시 draft 제외
   - dev 모드에서는 DRAFT 뱃지와 함께 표시
-- [x] **TOC (목차)** (2025-02-04)
+
+- [x] **TOC (목차)**
   - 헤딩 기반 자동 생성
   - 클릭 시 해당 위치로 스크롤
   - 접이식 UI
-- [x] **RSS 피드** (2025-02-04)
+
+- [x] **RSS 피드**
   - `/feed.xml` 생성
   - 최신 20개 글 포함
   - 메타데이터에 RSS 링크 추가
-- [x] **검색 기능** (2025-02-04)
+
+- [x] **검색 기능**
   - 클라이언트 사이드 검색 (제목, 설명, 태그)
   - Cmd/Ctrl + K 단축키
   - 키보드 네비게이션 (↑↓ Enter ESC)
   - 검색 모달 UI
+
+### 2025-02 (이전)
+
 - [x] **시리즈 시스템** - 자동 감지 + 네비게이션
 - [x] **관련 글 추천** - 태그 기반 추천
 - [x] **다크모드** - 토글 + localStorage 저장
@@ -95,12 +98,11 @@
 ## 📝 Notes
 
 ### 작업 규칙
-1. High → Medium → Low 순서로 진행
+1. Medium → Low 순서로 진행
 2. 한 번에 하나씩 완료
 3. 완료 시 Done으로 이동 + 날짜 기록
 
-### 참고 사항
-- 검색: `fuse.js` 또는 직접 구현
-- RSS: `feed` 패키지 사용
-- OG 이미지: Vercel Edge Function 필요
+### 기술 참고
+- OG 이미지: `@vercel/og` + Edge Function
 - Giscus: GitHub repo 연동 필요
+- Analytics: Vercel Analytics 무료 플랜 가능
