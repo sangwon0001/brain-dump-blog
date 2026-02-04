@@ -18,7 +18,7 @@ This is a Next.js 16 (App Router) MDX blog with SSG (Static Site Generation).
 
 - **Blog posts**: Markdown files in `content/[category]/[slug].md`
 - **Categories**: Directory names under `content/` become categories
-- **Frontmatter**: Required fields: `title`, `description`, `date`. Optional: `tags`, `thumbnail`
+- **Frontmatter**: Required fields: `title`, `description`, `date`. Optional: `tags`, `thumbnail`, `series`
 
 ```yaml
 ---
@@ -26,20 +26,45 @@ title: "Post Title"
 description: "Brief description"
 date: "2025-02-04"
 tags: ["tag1", "tag2"]
+series: "시리즈명"  # optional, auto-detected from title pattern
 ---
 ```
 
+### Series System
+
+시리즈 글은 자동으로 감지되거나 명시할 수 있다.
+
+**자동 감지 패턴:**
+- `제목 (1편: 부제)` → 시리즈명: "제목", 순서: 1
+- `제목 (2편)` → 시리즈명: "제목", 순서: 2
+- `제목 1편:` → 시리즈명: "제목", 순서: 1
+
+**명시적 지정:**
+```yaml
+series: "Claude Code로 블로그 만들기"
+```
+
+시리즈 글에는 자동으로:
+- 상단에 시리즈 목차 표시
+- 하단에 이전/다음 네비게이션
+
+### Related Posts
+
+태그 기반으로 관련 글이 자동 추천된다. 같은 시리즈 글은 제외.
+
 ### Core Files
 
-- `src/lib/mdx.ts` - MDX parsing utilities (getAllPosts, getPostBySlug, getCategories)
+- `src/lib/mdx.ts` - MDX parsing, series detection, related posts
 - `src/components/MDXContent.tsx` - MDX renderer with Shiki syntax highlighting
-- `src/app/globals.css` - CSS variables for theming (`:root` for light, `.dark` for dark mode)
+- `src/components/SeriesNav.tsx` - Series table of contents
+- `src/components/RelatedPosts.tsx` - Related posts by tags
+- `src/app/globals.css` - CSS variables for theming
 
 ### Routing
 
 - `/` - Home page (recent posts)
 - `/[category]` - Category listing
-- `/[category]/[slug]` - Individual post
+- `/[category]/[slug]` - Individual post (with series nav & related posts)
 
 ### Theming
 
@@ -50,10 +75,17 @@ All colors use CSS variables defined in `globals.css`. To change theme colors, m
 1. Create `content/[category]/[slug].md` with frontmatter
 2. Add images to `public/images/[slug]/`
 3. Reference images as `/images/[slug]/filename.png`
+4. Series posts: use `(N편:` pattern in title or add `series` field
 
 ## AI Writing System
 
 이 블로그는 AI가 글을 작성할 수 있도록 설계되어 있다.
+
+### 페르소나 구조
+
+**2-Layer 시스템:**
+1. `persona_base.md` - 기본 사고방식 (모든 글에 공통)
+2. 용도별 페르소나 - 출력 형태만 다름
 
 ### 페르소나 파일들 (public/ai/)
 
