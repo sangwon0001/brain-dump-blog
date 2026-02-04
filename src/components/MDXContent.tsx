@@ -1,5 +1,6 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { createHighlighter } from 'shiki';
+import Image from 'next/image';
 import CodeBlock from './CodeBlock';
 
 interface MDXContentProps {
@@ -127,10 +128,24 @@ const components = {
   em: (props: React.HTMLAttributes<HTMLElement>) => (
     <em className="italic" {...props} />
   ),
-  img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className="rounded-lg sm:rounded-xl my-6 sm:my-10 w-full h-auto shadow-[var(--shadow-md)]" alt={props.alt || ''} {...props} />
-  ),
+  img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+    const { src, alt } = props;
+    if (!src || typeof src !== 'string') return null;
+
+    return (
+      <span className="block relative w-full my-6 sm:my-10">
+        <Image
+          src={src}
+          alt={alt || ''}
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="rounded-lg sm:rounded-xl w-full h-auto shadow-[var(--shadow-md)]"
+          style={{ width: '100%', height: 'auto' }}
+        />
+      </span>
+    );
+  },
 };
 
 export default function MDXContent({ source }: MDXContentProps) {
