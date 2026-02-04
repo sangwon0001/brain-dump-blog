@@ -2,6 +2,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { createHighlighter } from 'shiki';
 import Image from 'next/image';
 import CodeBlock from './CodeBlock';
+import Callout from './Callout';
 
 interface MDXContentProps {
   source: string;
@@ -172,6 +173,8 @@ const components = {
       </span>
     );
   },
+  // Callout component for MDX
+  Callout,
 };
 
 export default function MDXContent({ source }: MDXContentProps) {
