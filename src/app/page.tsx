@@ -15,11 +15,14 @@ export default function Home() {
         {/* Hero */}
         <section className="mb-8 sm:mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] mb-2">
-            Welcome to My Blog
+            🧠 스상워이의 뇌 가비지 컬렉터
           </h1>
-          <p className="text-sm sm:text-base text-[var(--text-secondary)]">
-            Tech, AI, and more
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] mb-4">
+            머릿속 비우고 RAM 확보하기 위해 만든 99%의 AI와 1%의 스상워이로 만들어진
           </p>
+          <div className="text-xs sm:text-sm text-[var(--text-tertiary)] border-l-2 border-[var(--accent-primary)] pl-3">
+            <p>개발자 · 풀스택(인 듯) · 블록체인 · AI(사용)</p>
+          </div>
         </section>
 
         {/* Categories */}
@@ -49,7 +52,7 @@ export default function Home() {
         {/* Recent Posts */}
         <section>
           <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-[var(--text-primary)]">
-            Recent Posts
+            최근 덤프
           </h2>
           <div className="grid gap-4 sm:gap-6">
             {recentPosts.map((post) => (

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "My Blog",
-  description: "Tech, AI, and more",
+  title: "뇌 용량 확보용",
+  description: "머릿속 비우고 RAM 확보하는 블로그. 개발, AI, 잡생각 투기장.",
 };
 
 // Script to prevent flash of wrong theme

@@ -18,7 +18,7 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
         <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
-            My Blog
+            블로그임
           </Link>
 
           {/* Desktop Nav */}
@@ -27,11 +27,10 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
               <Link
                 key={cat}
                 href={`/${cat}`}
-                className={`text-sm transition-colors ${
-                  cat === currentCategory
-                    ? 'text-[var(--accent-primary)] font-medium'
-                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                }`}
+                className={`text-sm transition-colors ${cat === currentCategory
+                  ? 'text-[var(--accent-primary)] font-medium'
+                  : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                  }`}
               >
                 {cat}
               </Link>
@@ -41,7 +40,7 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
           {/* Right actions */}
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            
+
             {/* Mobile menu button */}
             <button
               onClick={() => setIsDrawerOpen(true)}
@@ -62,7 +61,7 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
             className="fixed inset-0 z-50 bg-black/50 sm:hidden"
             onClick={() => setIsDrawerOpen(false)}
           />
-          
+
           {/* Drawer */}
           <div className="fixed top-0 right-0 z-50 h-full w-64 bg-[var(--bg-primary)] shadow-xl sm:hidden animate-slide-in">
             <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
@@ -75,7 +74,7 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
                 <CloseIcon className="w-5 h-5 text-[var(--text-secondary)]" />
               </button>
             </div>
-            
+
             <nav className="p-4">
               <ul className="space-y-1">
                 <li>
@@ -92,11 +91,10 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
                     <Link
                       href={`/${cat}`}
                       onClick={() => setIsDrawerOpen(false)}
-                      className={`block px-3 py-2 rounded-lg transition-colors ${
-                        cat === currentCategory
-                          ? 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
-                          : 'text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
-                      }`}
+                      className={`block px-3 py-2 rounded-lg transition-colors ${cat === currentCategory
+                        ? 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
+                        : 'text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
+                        }`}
                     >
                       {cat}
                     </Link>

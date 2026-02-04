@@ -14,17 +14,17 @@
   --text-muted: #9ca3af;
   --text-inverse: #ffffff;
   
-  /* Accent colors */
-  --accent-primary: #2563eb;
-  --accent-primary-hover: #1d4ed8;
-  --accent-secondary: #3b82f6;
-  --accent-bg: #eff6ff;
-  --accent-text: #1e40af;
-  
+  /* Accent colors - Hot Pink */
+  --accent-primary: #ff1493;
+  --accent-primary-hover: #db1076;
+  --accent-secondary: #ff69b4;
+  --accent-bg: #fff0f5;
+  --accent-text: #c71585;
+
   /* Border colors */
   --border-primary: #e5e7eb;
   --border-secondary: #d1d5db;
-  --border-accent: #2563eb;
+  --border-accent: #ff1493;
   
   /* Code block colors */
   --code-bg: #1e1e1e;
@@ -33,22 +33,22 @@
   --code-border: #404040;
   
   /* Inline code */
-  --inline-code-bg: #f3f4f6;
+  --inline-code-bg: #fdf2f8;
   --inline-code-text: #db2777;
-  
+
   /* Blockquote */
-  --blockquote-bg: #f9fafb;
-  --blockquote-border: #2563eb;
+  --blockquote-bg: #fff0f5;
+  --blockquote-border: #ff1493;
   --blockquote-text: #4b5563;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  
+
   /* Tags */
-  --tag-bg: #eff6ff;
-  --tag-text: #2563eb;
+  --tag-bg: #fdf2f8;
+  --tag-text: #db2777;
   
   /* Category badge */
   --category-bg: #f3f4f6;
@@ -56,53 +56,53 @@
 }
 
 .dark {
-  /* Background colors */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-inverse: #f8fafc;
-  
+  /* Background colors - Deep Magenta/Pink tinted */
+  --bg-primary: #120a10;
+  --bg-secondary: #1e1219;
+  --bg-tertiary: #2d1f28;
+  --bg-inverse: #fdf2f8;
+
   /* Text colors */
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-tertiary: #94a3b8;
-  --text-muted: #64748b;
-  --text-inverse: #0f172a;
+  --text-primary: #f9f1f6;
+  --text-secondary: #d4c4cf;
+  --text-tertiary: #a8919e;
+  --text-muted: #6b5a64;
+  --text-inverse: #120a10;
   
-  /* Accent colors */
-  --accent-primary: #3b82f6;
-  --accent-primary-hover: #60a5fa;
-  --accent-secondary: #2563eb;
-  --accent-bg: rgba(59, 130, 246, 0.15);
-  --accent-text: #93c5fd;
-  
+  /* Accent colors - Hot Pink */
+  --accent-primary: #ff69b4;
+  --accent-primary-hover: #ff85c0;
+  --accent-secondary: #ff1493;
+  --accent-bg: rgba(255, 20, 147, 0.15);
+  --accent-text: #ffb6c1;
+
   /* Border colors */
-  --border-primary: #334155;
-  --border-secondary: #475569;
-  --border-accent: #3b82f6;
-  
+  --border-primary: #2d1f28;
+  --border-secondary: #3d2d38;
+  --border-accent: #ff69b4;
+
   /* Code block colors */
-  --code-bg: #1e293b;
-  --code-header-bg: #0f172a;
-  --code-text: #e2e8f0;
-  --code-border: #334155;
-  
+  --code-bg: #1a1015;
+  --code-header-bg: #120a10;
+  --code-text: #f0e4eb;
+  --code-border: #3d2d38;
+
   /* Inline code */
-  --inline-code-bg: #334155;
-  --inline-code-text: #f472b6;
-  
+  --inline-code-bg: #2a1a24;
+  --inline-code-text: #ff85c0;
+
   /* Blockquote */
-  --blockquote-bg: rgba(51, 65, 85, 0.5);
-  --blockquote-border: #3b82f6;
-  --blockquote-text: #94a3b8;
-  
+  --blockquote-bg: rgba(255, 105, 180, 0.08);
+  --blockquote-border: #ff69b4;
+  --blockquote-text: #a8919e;
+
   /* Tags */
-  --tag-bg: rgba(59, 130, 246, 0.2);
-  --tag-text: #93c5fd;
+  --tag-bg: rgba(255, 105, 180, 0.2);
+  --tag-text: #ffb6c1;
   
   /* Category badge */
-  --category-bg: #334155;
-  --category-text: #e2e8f0;
+  --category-bg: #2a1a24;
+  --category-text: #f0e4eb;
 }
 
 @theme inline {
