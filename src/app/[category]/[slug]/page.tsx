@@ -40,10 +40,10 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <header className="border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-3xl mx-auto px-6 py-6">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
           <Link 
             href="/" 
-            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 sm:gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -53,42 +53,42 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
       </header>
 
-      <article className="max-w-3xl mx-auto px-6">
+      <article className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Post Header */}
-        <header className="pt-12 pb-10 border-b border-gray-100 dark:border-gray-800">
-          <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-6">
+        <header className="pt-8 sm:pt-12 pb-8 sm:pb-10 border-b border-gray-100 dark:border-gray-800">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-4 sm:mb-6">
             <Link
               href={`/${post.category}`}
-              className="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+              className="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium"
             >
               {post.category}
             </Link>
             <span className="text-gray-300 dark:text-gray-600">·</span>
-            <time dateTime={post.date}>
+            <time dateTime={post.date} className="text-xs sm:text-sm">
               {new Date(post.date).toLocaleDateString('ko-KR', {
                 year: 'numeric',
-                month: 'long',
+                month: 'short',
                 day: 'numeric',
               })}
             </time>
             <span className="text-gray-300 dark:text-gray-600">·</span>
-            <span>{post.readingTime}</span>
+            <span className="text-xs sm:text-sm">{post.readingTime}</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
             {post.title}
           </h1>
           
-          <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+          <p className="text-base sm:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
             {post.description}
           </p>
           
           {post.tags && post.tags.length > 0 && (
-            <div className="flex gap-2 mt-6 flex-wrap">
+            <div className="flex gap-2 mt-4 sm:mt-6 flex-wrap">
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-default"
+                  className="text-xs sm:text-sm text-gray-500 dark:text-gray-400"
                 >
                   #{tag}
                 </span>
@@ -98,15 +98,15 @@ export default async function PostPage({ params }: PostPageProps) {
         </header>
 
         {/* Post Content */}
-        <div className="py-12 text-lg">
+        <div className="py-8 sm:py-12 text-base sm:text-lg">
           <MDXContent source={post.content} />
         </div>
         
         {/* Footer */}
-        <footer className="py-12 border-t border-gray-100 dark:border-gray-800">
+        <footer className="py-8 sm:py-12 border-t border-gray-100 dark:border-gray-800">
           <Link 
             href="/" 
-            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 sm:gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />

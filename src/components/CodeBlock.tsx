@@ -19,29 +19,32 @@ export default function CodeBlock({ children, language = 'code' }: CodeBlockProp
   };
 
   return (
-    <div className="relative group my-6 rounded-lg overflow-hidden">
+    <div className="relative group my-4 sm:my-6 rounded-lg overflow-hidden -mx-4 sm:mx-0">
       {/* Header */}
-      <div className="flex items-center justify-between bg-[#1e1e1e] text-gray-400 px-4 py-2 text-sm border-b border-gray-700">
+      <div className="flex items-center justify-between bg-[#1e1e1e] text-gray-400 px-3 sm:px-4 py-2 text-xs sm:text-sm border-b border-gray-700">
         <span className="font-mono text-xs uppercase tracking-wide">{language}</span>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 hover:text-white transition-colors text-xs"
+          className="flex items-center gap-1 sm:gap-1.5 hover:text-white active:text-green-400 transition-colors text-xs touch-manipulation"
         >
           {copied ? (
             <>
               <CheckIcon />
-              <span>Copied!</span>
+              <span className="hidden sm:inline">Copied!</span>
             </>
           ) : (
             <>
               <CopyIcon />
-              <span>Copy</span>
+              <span className="hidden sm:inline">Copy</span>
             </>
           )}
         </button>
       </div>
-      {/* Code - shiki handles the styling */}
-      <div ref={preRef} className="[&>pre]:!m-0 [&>pre]:!rounded-none [&>pre]:p-4">
+      {/* Code - scrollable on mobile */}
+      <div 
+        ref={preRef} 
+        className="overflow-x-auto [&>pre]:!m-0 [&>pre]:!rounded-none [&>pre]:p-3 sm:[&>pre]:p-4 text-xs sm:text-sm"
+      >
         {children}
       </div>
     </div>
@@ -50,7 +53,7 @@ export default function CodeBlock({ children, language = 'code' }: CodeBlockProp
 
 function CopyIcon() {
   return (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="w-4 h-4 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
     </svg>
   );
@@ -58,7 +61,7 @@ function CopyIcon() {
 
 function CheckIcon() {
   return (
-    <svg className="w-3.5 h-3.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
     </svg>
   );

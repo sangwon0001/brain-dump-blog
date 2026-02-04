@@ -31,28 +31,34 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      <header className="border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <Link href="/" className="text-blue-600 dark:text-blue-400 hover:underline">
-            ← Home
+      <header className="border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Home
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mt-4">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mt-4">
             {category}
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <p className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">
             {posts.length} posts
           </p>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         {/* Categories */}
-        <nav className="mb-8">
-          <ul className="flex gap-4 flex-wrap">
+        <nav className="mb-6 sm:mb-10 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+          <ul className="flex gap-3 sm:gap-4 flex-nowrap sm:flex-wrap min-w-max sm:min-w-0">
             <li>
               <Link
                 href="/"
-                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                className="text-sm sm:text-base text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 whitespace-nowrap"
               >
                 All
               </Link>
@@ -61,11 +67,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <li key={cat}>
                 <Link
                   href={`/${cat}`}
-                  className={
+                  className={`text-sm sm:text-base whitespace-nowrap ${
                     cat === category
                       ? 'text-blue-600 dark:text-blue-400 font-medium'
                       : 'text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
-                  }
+                  }`}
                 >
                   {cat}
                 </Link>
@@ -75,7 +81,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </nav>
 
         {/* Posts */}
-        <div className="grid gap-6">
+        <div className="grid gap-4 sm:gap-6">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
