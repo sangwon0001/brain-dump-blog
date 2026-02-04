@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
+import { staggerContainer, staggerItem } from '@/lib/animations'
 
 type Period = 'daily' | 'weekly' | 'monthly' | 'total'
 
@@ -64,38 +66,67 @@ export function PopularPosts({
         )}
       </div>
 
-      {loading ? (
-        <div className="text-[var(--color-text-secondary)] text-sm">로딩 중...</div>
-      ) : rankings.length === 0 ? (
-        <div className="text-[var(--color-text-secondary)] text-sm">아직 데이터가 없습니다</div>
-      ) : (
-        <ol className="space-y-3">
-          {rankings.map((item, index) => {
-            const post = postTitles[item.slug]
-            const href = post ? `/${post.category}/${item.slug}` : `#`
-            const title = post?.title || item.slug
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="text-[var(--color-text-secondary)] text-sm"
+          >
+            로딩 중...
+          </motion.div>
+        ) : rankings.length === 0 ? (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="text-[var(--color-text-secondary)] text-sm"
+          >
+            아직 데이터가 없습니다
+          </motion.div>
+        ) : (
+          <motion.ol
+            key={period}
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="space-y-3"
+          >
+            {rankings.map((item, index) => {
+              const post = postTitles[item.slug]
+              const href = post ? `/${post.category}/${item.slug}` : `#`
+              const title = post?.title || item.slug
 
-            return (
-              <li key={item.slug} className="flex gap-3">
-                <span className="text-[var(--color-text-secondary)] font-mono text-sm w-5">
-                  {index + 1}.
-                </span>
-                <div className="flex-1 min-w-0">
-                  <Link
-                    href={href}
-                    className="text-sm hover:text-[var(--color-primary)] transition-colors line-clamp-2"
-                  >
-                    {title}
-                  </Link>
-                  <span className="text-xs text-[var(--color-text-secondary)]">
-                    {item.views.toLocaleString()} views
+              return (
+                <motion.li
+                  key={item.slug}
+                  variants={staggerItem}
+                  className="flex gap-3"
+                >
+                  <span className="text-[var(--color-text-secondary)] font-mono text-sm w-5">
+                    {index + 1}.
                   </span>
-                </div>
-              </li>
-            )
-          })}
-        </ol>
-      )}
+                  <div className="flex-1 min-w-0">
+                    <Link
+                      href={href}
+                      className="text-sm hover:text-[var(--color-primary)] transition-colors line-clamp-2"
+                    >
+                      {title}
+                    </Link>
+                    <span className="text-xs text-[var(--color-text-secondary)]">
+                      {item.views.toLocaleString()} views
+                    </span>
+                  </div>
+                </motion.li>
+              )
+            })}
+          </motion.ol>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

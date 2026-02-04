@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { iconRotate } from '@/lib/animations';
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
@@ -18,7 +20,7 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
@@ -34,7 +36,7 @@ export default function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-9 h-9" /> // Placeholder to prevent layout shift
+      <div className="w-9 h-9" />
     );
   }
 
@@ -44,11 +46,29 @@ export default function ThemeToggle() {
       className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors"
       aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
     >
-      {theme === 'dark' ? (
-        <SunIcon className="w-5 h-5 text-[var(--text-secondary)]" />
-      ) : (
-        <MoonIcon className="w-5 h-5 text-[var(--text-secondary)]" />
-      )}
+      <AnimatePresence mode="wait" initial={false}>
+        {theme === 'dark' ? (
+          <motion.div
+            key="sun"
+            variants={iconRotate}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            <SunIcon className="w-5 h-5 text-[var(--text-secondary)]" />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="moon"
+            variants={iconRotate}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            <MoonIcon className="w-5 h-5 text-[var(--text-secondary)]" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </button>
   );
 }

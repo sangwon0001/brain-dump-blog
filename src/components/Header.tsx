@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 import SearchModal from './SearchModal';
 import { PostMeta } from '@/lib/mdx';
+import { backdropFade, slideFromRight } from '@/lib/animations';
 
 interface HeaderProps {
   categories?: string[];
@@ -16,7 +18,6 @@ export default function Header({ categories = [], currentCategory, posts = [] }:
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // Cmd/Ctrl + K 단축키
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -91,71 +92,69 @@ export default function Header({ categories = [], currentCategory, posts = [] }:
       />
 
       {/* Mobile Drawer */}
-      {isDrawerOpen && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 z-50 bg-black/50 sm:hidden"
-            onClick={() => setIsDrawerOpen(false)}
-          />
+      <AnimatePresence>
+        {isDrawerOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              variants={backdropFade}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="fixed inset-0 z-50 bg-black/50 sm:hidden"
+              onClick={() => setIsDrawerOpen(false)}
+            />
 
-          {/* Drawer */}
-          <div className="fixed top-0 right-0 z-50 h-full w-64 bg-[var(--bg-primary)] shadow-xl sm:hidden animate-slide-in">
-            <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
-              <span className="font-semibold text-[var(--text-primary)]">메뉴</span>
-              <button
-                onClick={() => setIsDrawerOpen(false)}
-                className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors"
-                aria-label="메뉴 닫기"
-              >
-                <CloseIcon className="w-5 h-5 text-[var(--text-secondary)]" />
-              </button>
-            </div>
+            {/* Drawer */}
+            <motion.div
+              variants={slideFromRight}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="fixed top-0 right-0 z-50 h-full w-64 bg-[var(--bg-primary)] shadow-xl sm:hidden"
+            >
+              <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
+                <span className="font-semibold text-[var(--text-primary)]">메뉴</span>
+                <button
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors"
+                  aria-label="메뉴 닫기"
+                >
+                  <CloseIcon className="w-5 h-5 text-[var(--text-secondary)]" />
+                </button>
+              </div>
 
-            <nav className="p-4">
-              <ul className="space-y-1">
-                <li>
-                  <Link
-                    href="/"
-                    onClick={() => setIsDrawerOpen(false)}
-                    className="block px-3 py-2 rounded-lg text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
-                  >
-                    홈
-                  </Link>
-                </li>
-                {categories.map((cat) => (
-                  <li key={cat}>
+              <nav className="p-4">
+                <ul className="space-y-1">
+                  <li>
                     <Link
-                      href={`/${cat}`}
+                      href="/"
                       onClick={() => setIsDrawerOpen(false)}
-                      className={`block px-3 py-2 rounded-lg transition-colors ${cat === currentCategory
-                        ? 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
-                        : 'text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
-                        }`}
+                      className="block px-3 py-2 rounded-lg text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
                     >
-                      {cat}
+                      홈
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-        </>
-      )}
-
-      <style jsx>{`
-        @keyframes slide-in {
-          from {
-            transform: translateX(100%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-        .animate-slide-in {
-          animation: slide-in 0.2s ease-out;
-        }
-      `}</style>
+                  {categories.map((cat) => (
+                    <li key={cat}>
+                      <Link
+                        href={`/${cat}`}
+                        onClick={() => setIsDrawerOpen(false)}
+                        className={`block px-3 py-2 rounded-lg transition-colors ${cat === currentCategory
+                          ? 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
+                          : 'text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
+                          }`}
+                      >
+                        {cat}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

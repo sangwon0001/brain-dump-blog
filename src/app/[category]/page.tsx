@@ -87,8 +87,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
         {/* Posts */}
         <div className="grid gap-4 sm:gap-6">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
+          {posts.map((post, index) => (
+            <PostCard key={post.slug} post={post} index={index} />
           ))}
         </div>
       </main>

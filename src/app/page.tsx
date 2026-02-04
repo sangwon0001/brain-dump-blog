@@ -72,8 +72,8 @@ export default function Home() {
             최근 덤프
           </h2>
           <div className="grid gap-4 sm:gap-6">
-            {recentPosts.map((post) => (
-              <PostCard key={`${post.category}/${post.slug}`} post={post} />
+            {recentPosts.map((post, index) => (
+              <PostCard key={`${post.category}/${post.slug}`} post={post} index={index} />
             ))}
           </div>
         </section>

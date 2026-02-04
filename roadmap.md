@@ -6,7 +6,17 @@
 
 ## 📋 To Do
 
-(현재 계획된 작업 없음)
+### 🟡 Medium Priority
+
+- [ ] **Floating 마스코트 캐릭터**
+  - 페이지에서 둥둥 떠다니는 캐릭터
+  - 랜덤하게 위치 이동 (자연스러운 패스)
+  - 눈/시선이 마우스 포인터 따라감
+  - 클릭하면 반응 (점프? 인사?)
+  - 드래그로 이동 가능?
+  - 너무 방해되면 숨기기 옵션
+  - **Phase 1**: 간단한 SVG 캐릭터
+  - **Phase 2**: 도트 기반 캐릭터 + 스프라이트 애니메이션
 
 ---
 
@@ -19,6 +29,15 @@
 ## ✅ Done
 
 ### 2026-02-04
+
+- [x] **Framer Motion 마이크로인터랙션**
+  - 공유 애니메이션 유틸리티 (`src/lib/animations.ts`)
+  - ThemeToggle: 아이콘 회전 + scale 전환 (AnimatePresence)
+  - BackToTop: fade + slide 등장/퇴장 애니메이션
+  - PostCard: hover lift (-4px) + 스크롤 등장 애니메이션 (stagger)
+  - SearchModal: backdrop fade + modal scale 애니메이션
+  - Header: 모바일 드로어 slide 애니메이션 (CSS → Framer Motion)
+  - PopularPosts: 기간 변경 시 리스트 stagger 전환
 
 - [x] **인기글 랭킹**
   - Neon PostgreSQL + Prisma 7 기반 조회수 추적

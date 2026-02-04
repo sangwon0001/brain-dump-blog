@@ -1,13 +1,29 @@
+'use client';
+
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { PostMeta } from '@/lib/mdx';
+import { cardEntrance, springs } from '@/lib/animations';
 
 interface PostCardProps {
   post: PostMeta;
+  index?: number;
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, index = 0 }: PostCardProps) {
   return (
-    <article className="border border-[var(--border-primary)] rounded-lg p-4 sm:p-6 hover:shadow-[var(--shadow-md)] transition-shadow bg-[var(--bg-primary)]">
+    <motion.article
+      variants={cardEntrance}
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, margin: '-50px' }}
+      custom={index}
+      whileHover={{
+        y: -4,
+        transition: springs.bouncy,
+      }}
+      className="border border-[var(--border-primary)] rounded-lg p-4 sm:p-6 hover:shadow-[var(--shadow-md)] transition-shadow bg-[var(--bg-primary)]"
+    >
       <Link href={`/${post.category}/${post.slug}`}>
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-[var(--text-muted)] mb-2 sm:mb-3">
@@ -30,17 +46,17 @@ export default function PostCard({ post }: PostCardProps) {
           <span className="text-[var(--border-primary)]">·</span>
           <span className="text-xs sm:text-sm">{post.readingTime}</span>
         </div>
-        
+
         {/* Title */}
         <h2 className="text-base sm:text-xl font-bold mb-1.5 sm:mb-2 text-[var(--text-primary)] leading-snug hover:text-[var(--accent-primary)] transition-colors">
           {post.title}
         </h2>
-        
+
         {/* Description */}
         <p className="text-sm sm:text-base text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
           {post.description}
         </p>
-        
+
         {/* Tags */}
         {post.tags && post.tags.length > 0 && (
           <div className="flex gap-1.5 sm:gap-2 mt-2.5 sm:mt-3 flex-wrap">
@@ -60,6 +76,6 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
         )}
       </Link>
-    </article>
+    </motion.article>
   );
 }
