@@ -2,11 +2,17 @@ import Link from 'next/link';
 import { getRecentPosts, getCategories, getAllPosts } from '@/lib/mdx';
 import PostCard from '@/components/PostCard';
 import Header from '@/components/Header';
+import { PopularPosts } from '@/components/PopularPosts';
 
 export default function Home() {
   const allPosts = getAllPosts();
   const recentPosts = allPosts.slice(0, 10);
   const categories = getCategories();
+
+  // Create postTitles map for PopularPosts
+  const postTitles = Object.fromEntries(
+    allPosts.map(post => [post.slug, { title: post.title, category: post.category }])
+  );
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
@@ -49,6 +55,16 @@ export default function Home() {
             ))}
           </ul>
         </nav>
+
+        {/* Popular Posts */}
+        <section className="mb-8 sm:mb-12">
+          <PopularPosts
+            limit={5}
+            showPeriodSelector={true}
+            postTitles={postTitles}
+            className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-4 sm:p-6"
+          />
+        </section>
 
         {/* Recent Posts */}
         <section>

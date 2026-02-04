@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model PageView {
+  id        Int      @id @default(autoincrement())
+  slug      String
+  ipHash    String   @map("ip_hash")
+  viewedAt  DateTime @default(now()) @map("viewed_at")
+
+  @@index([slug])
+  @@index([viewedAt])
+  @@index([slug, ipHash, viewedAt])
+  @@map("page_views")
+}

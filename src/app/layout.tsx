@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics, Hotjar } from "@/components/Analytics";
 import "./globals.css";
 import { WebsiteJsonLd } from "@/components/JsonLd";
 import BackToTop from "@/components/BackToTop";
@@ -97,6 +98,8 @@ export default function RootLayout({
         {children}
         <BackToTop />
         <Analytics />
+        <GoogleAnalytics />
+        <Hotjar />
       </body>
     </html>
   );

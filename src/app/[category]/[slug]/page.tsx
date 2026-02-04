@@ -9,6 +9,7 @@ import TableOfContents from '@/components/TableOfContents';
 import { ArticleJsonLd } from '@/components/JsonLd';
 import ReadingProgress from '@/components/ReadingProgress';
 import Comments from '@/components/Comments';
+import { ViewCounter } from '@/components/ViewCounter';
 
 interface PostPageProps {
   params: Promise<{ category: string; slug: string }>;
@@ -114,6 +115,8 @@ export default async function PostPage({ params }: PostPageProps) {
             </time>
             <span className="text-[var(--border-secondary)]">·</span>
             <span className="text-xs sm:text-sm">{post.readingTime}</span>
+            <span className="text-[var(--border-secondary)]">·</span>
+            <ViewCounter slug={slug} className="text-xs sm:text-sm" />
           </div>
           
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4 sm:mb-6 leading-tight">
