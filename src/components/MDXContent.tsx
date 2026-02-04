@@ -3,6 +3,7 @@ import { createHighlighter } from 'shiki';
 import Image from 'next/image';
 import CodeBlock from './CodeBlock';
 import Callout from './Callout';
+import remarkGfm from 'remark-gfm';
 
 interface MDXContentProps {
   source: string;
@@ -175,6 +176,27 @@ const components = {
   },
   // Callout component for MDX
   Callout,
+  // Table elements
+  table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
+    <div className="overflow-x-auto my-6 sm:my-8">
+      <table className="w-full border-collapse text-sm sm:text-base" {...props} />
+    </div>
+  ),
+  thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <thead className="bg-[var(--bg-tertiary)]" {...props} />
+  ),
+  tbody: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <tbody className="divide-y divide-[var(--border-primary)]" {...props} />
+  ),
+  tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => (
+    <tr className="border-b border-[var(--border-primary)]" {...props} />
+  ),
+  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+    <th className="px-3 sm:px-4 py-2 sm:py-3 text-left font-semibold text-[var(--text-primary)] border border-[var(--border-primary)]" {...props} />
+  ),
+  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <td className="px-3 sm:px-4 py-2 sm:py-3 text-[var(--text-secondary)] border border-[var(--border-primary)]" {...props} />
+  ),
 };
 
 export default function MDXContent({ source }: MDXContentProps) {
@@ -182,6 +204,11 @@ export default function MDXContent({ source }: MDXContentProps) {
     <MDXRemote
       source={source}
       components={components}
+      options={{
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      }}
     />
   );
 }
