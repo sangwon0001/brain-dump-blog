@@ -16,6 +16,8 @@ export async function generateStaticParams() {
   }));
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon.dev";
+
 export async function generateMetadata({ params }: PostPageProps) {
   const { category, slug } = await params;
   const post = getPostBySlug(category, slug);
@@ -24,9 +26,24 @@ export async function generateMetadata({ params }: PostPageProps) {
     return { title: 'Not Found' };
   }
 
+  const url = `${SITE_URL}/${category}/${slug}`;
+
   return {
-    title: `${post.title} - My Blog`,
+    title: post.title,
     description: post.description,
+    openGraph: {
+      type: "article",
+      url,
+      title: post.title,
+      description: post.description,
+      publishedTime: post.date,
+      tags: post.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+    },
   };
 }
 

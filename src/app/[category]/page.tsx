@@ -13,11 +13,22 @@ export async function generateStaticParams() {
   return categories.map((category) => ({ category }));
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon.dev";
+
 export async function generateMetadata({ params }: CategoryPageProps) {
   const { category } = await params;
+  const description = `${category} 카테고리의 글 목록`;
+  const url = `${SITE_URL}/${category}`;
+
   return {
-    title: `${category} - My Blog`,
-    description: `${category} 카테고리의 글 목록`,
+    title: category,
+    description,
+    openGraph: {
+      type: "website",
+      url,
+      title: `${category} | 뇌 용량 확보용`,
+      description,
+    },
   };
 }
 
