@@ -1,0 +1,276 @@
+---
+title: "Claude Code로 블로그 뚝딱 만들기 (2편: 커스터마이징)"
+description: "핫핑크 테마, SEO 최적화, 이미지 자동 압축, AI한테 글 쓰게 하는 법까지. 블로그 완성도를 높이는 작업들."
+date: "2025-02-04"
+tags: ["claude-code", "nextjs", "seo", "theming"]
+---
+
+## 들어가며
+
+[1편](/tech/blog-with-claude-code-1)에서 블로그 뼈대를 만들었다. 이번엔 살을 붙일 차례.
+
+- 테마 커스터마이징 (핫핑크 🩷)
+- SEO 최적화
+- 이미지 자동 최적화
+- AI한테 글 쓰게 하는 시스템
+
+## 테마 커스터마이징
+
+### 핫핑크로 가자
+
+기본 파란색 테마가 마음에 안 들었다.
+
+```
+나: "테마 색 바꾸자. 마음에 안 들어"
+Claude: "어떤 스타일 원해요? 그린, 퍼플, 오렌지, 로즈..."
+나: "남자는 핫핑크지"
+```
+
+그래서 핫핑크가 됐다.
+
+### CSS 변수 구조
+
+Next.js + Tailwind 조합에서 테마는 CSS 변수로 관리하면 편하다.
+
+```css
+/* globals.css */
+:root {
+  /* Light mode */
+  --accent-primary: #ff1493;      /* Deep Pink */
+  --accent-primary-hover: #db1076;
+  --bg-primary: #ffffff;
+}
+
+.dark {
+  /* Dark mode */
+  --accent-primary: #ff69b4;      /* Hot Pink */
+  --bg-primary: #120a10;          /* 마젠타 틴트 블랙 */
+}
+```
+
+이렇게 해두면 컴포넌트에서 `var(--accent-primary)` 쓰면 자동으로 테마 따라감.
+
+### 다크모드 배경
+
+핫핑크에 그냥 검정 배경은 안 어울렸다. Claude한테 물어봤다.
+
+```
+나: "다크모드 배경색도 핫핑크랑 어울리게 해줘"
+```
+
+결과: 살짝 마젠타/버건디 톤이 섞인 어두운 색 (`#120a10`)
+
+이런 미세한 색감 조정은 AI가 잘한다. 색상 코드 일일이 찾아볼 필요 없음.
+
+## SEO 최적화
+
+블로그면 검색에 걸려야 의미가 있다.
+
+### 한 번에 다 해달라고 함
+
+```
+나: "SEO 작업 들어갈까?"
+Claude: "현재 상태 확인해볼게요... sitemap ❌, robots.txt ❌, OG tags ❌"
+Claude: "전부 추가할게요"
+```
+
+### 추가된 것들
+
+**1. 메타데이터 (OG, Twitter)**
+
+```typescript
+// layout.tsx
+export const metadata: Metadata = {
+  title: {
+    default: "뇌 용량 확보용",
+    template: `%s | 뇌 용량 확보용`,
+  },
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    siteName: "뇌 용량 확보용",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+};
+```
+
+**2. sitemap.xml**
+
+```typescript
+// app/sitemap.ts
+export default function sitemap(): MetadataRoute.Sitemap {
+  const posts = getAllPosts();
+  return [
+    { url: SITE_URL, priority: 1 },
+    ...posts.map((post) => ({
+      url: `${SITE_URL}/${post.category}/${post.slug}`,
+      lastModified: new Date(post.date),
+    })),
+  ];
+}
+```
+
+글 추가하면 자동으로 sitemap에 들어간다.
+
+**3. robots.txt**
+
+```typescript
+// app/robots.ts
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: { userAgent: "*", allow: "/" },
+    sitemap: `${SITE_URL}/sitemap.xml`,
+  };
+}
+```
+
+## 이미지 최적화
+
+마크다운에서 `![alt](/images/pic.png)` 쓰면 그냥 `<img>` 태그가 된다. 최적화 안 됨.
+
+### Next.js Image 컴포넌트로 교체
+
+MDX 컴포넌트에서 `img`를 오버라이드했다:
+
+```tsx
+// MDXContent.tsx
+img: (props) => {
+  const { src, alt } = props;
+  return (
+    <Image
+      src={src}
+      alt={alt || ''}
+      width={0}
+      height={0}
+      sizes="100vw"
+      style={{ width: '100%', height: 'auto' }}
+    />
+  );
+},
+```
+
+### 설정
+
+```typescript
+// next.config.ts
+const nextConfig: NextConfig = {
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+  },
+};
+```
+
+이제 마크다운에서 이미지 쓰면:
+- ✅ 자동 WebP/AVIF 변환 (용량 70% 감소)
+- ✅ Lazy loading
+- ✅ 반응형 사이즈
+
+## AI한테 글 쓰게 하기
+
+이게 좀 재밌는 부분이다.
+
+### 아이디어
+
+```
+나: "템플릿 마크다운 만들어서 AI가 읽고 글 쓸 수 있게 해줘"
+```
+
+AI한테 블로그 글 써달라고 할 때마다 스타일 가이드 설명하기 귀찮으니까, 걍 URL로 던져주면 알아서 읽게 하자.
+
+### 결과물
+
+`public/ai/` 폴더에 두 파일:
+
+**blog-guide.md** - 전체 가이드
+```markdown
+# 블로그 글 작성 가이드
+
+## 톤 & 스타일
+- 반말 사용, 친근하게
+- 예시:
+  ❌ "알아보겠습니다"
+  ✅ "알아봤는데 괜찮더라"
+
+## Frontmatter 형식
+title, description, date, tags 필수
+...
+```
+
+**template.md** - 빈 템플릿
+```markdown
+---
+title: ""
+description: ""
+date: "2025-02-04"
+tags: []
+---
+
+## 들어가며
+
+## 본론
+
+## 마무리
+```
+
+### 사용법
+
+ChatGPT든 Claude든 이렇게 말하면 됨:
+
+> "https://blog.sangwon0001.xyz/ai/blog-guide.md 읽고, React Server Components에 대한 글 써줘"
+
+AI가 가이드 읽고 내 블로그 스타일에 맞춰서 글 써준다.
+
+## 기타 자잘한 것들
+
+### Favicon
+
+```
+나: "favicon도 뇌 모양으로 가능?"
+```
+
+Next.js에서 이모지 favicon 만드는 법:
+
+```tsx
+// app/icon.tsx
+import { ImageResponse } from 'next/og';
+
+export default function Icon() {
+  return new ImageResponse(
+    <div style={{ fontSize: 28 }}>🧠</div>,
+    { width: 32, height: 32 }
+  );
+}
+```
+
+이게 된다. 이모지가 favicon이 됨.
+
+### 블로그 이름
+
+```
+나: "블로그 제목 '뇌 용량 확보용' 이런 느낌으로"
+Claude: (몇 가지 제안)
+나: "뇌 용량 확보용으로 가자"
+```
+
+설명도 맞춰서: "머릿속 비우고 RAM 확보하는 블로그"
+
+## 마무리
+
+2편에서 한 것들:
+- 🩷 핫핑크 테마 (다크모드 포함)
+- 🔍 SEO (sitemap, robots, OG tags)
+- 🖼️ 이미지 자동 최적화
+- 🤖 AI 글쓰기 시스템
+
+총 작업 시간? Claude Code랑 대화한 시간 합치면 1-2시간 정도?
+
+솔직히 이 정도면 "블로그 만들기"의 진입장벽이 거의 없어진 것 같다. 디자인 감각 없어도, 프론트 잘 몰라도, AI한테 시키면 된다.
+
+물론 "뭘 만들고 싶은지"는 알아야 한다. AI는 내 머릿속을 읽진 못하니까.
+
+---
+
+*참고로 이 글도, 1편도, Claude Code한테 "지금까지 한 거 정리해줘"라고 해서 나온 거다.*
