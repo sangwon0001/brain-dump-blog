@@ -6,46 +6,10 @@
 
 ## 📋 To Do
 
-### 🟡 Medium Priority
-
-- [ ] **OG 이미지 자동 생성**
-  - `@vercel/og` 사용
-  - 글 제목, 카테고리 포함
-  - 일관된 브랜딩
-
-- [ ] **JSON-LD 스키마**
-  - Article, BlogPosting 마크업
-  - 구조화된 데이터로 SEO 강화
-
-- [ ] **Analytics**
-  - Vercel Analytics 또는 Plausible
-  - 페이지뷰, 인기글 추적
-
-- [ ] **Callout 컴포넌트**
-  - NOTE, WARNING, TIP 등
-  - MDX에서 쉽게 사용
-
-- [ ] **읽기 진행 표시기**
-  - 상단 고정 프로그레스 바
-  - 스크롤에 따라 진행률 표시
-
 ### 🟢 Low Priority
 
-- [ ] **댓글 시스템**
-  - Giscus (GitHub Discussions 기반)
-  - 다크모드 연동
 
-- [ ] **태그 아카이브**
-  - `/tags` 전체 태그 목록
-  - `/tags/[tag]` 태그별 글 목록
 
-- [ ] **Back to Top 버튼**
-  - 일정 스크롤 후 표시
-  - 부드러운 스크롤 애니메이션
-
-- [ ] **프린트 스타일**
-  - 인쇄 친화적 CSS
-  - 불필요한 요소 숨김
 
 - [ ] **인기글 랭킹**
   - Analytics 기반
@@ -60,6 +24,50 @@
 ---
 
 ## ✅ Done
+
+### 2026-02-04
+
+- [x] **Back to Top 버튼**
+  - 스크롤 400px 후 표시
+  - 부드러운 스크롤 애니메이션
+  - hover 시 scale 효과
+
+- [x] **프린트 스타일**
+  - 인쇄 친화적 CSS (@media print)
+  - 불필요한 요소 숨김 (nav, buttons, ToC 등)
+  - 외부 링크 URL 표시
+  - 코드블록/이미지 page-break 처리
+
+- [x] **태그 아카이브**
+  - `/tags` 전체 태그 목록 (태그 클라우드)
+  - `/tags/[tag]` 태그별 글 목록
+  - 태그 크기 가중치 (사용 빈도 기반)
+
+- [x] **댓글 시스템**
+  - Giscus (GitHub Discussions 기반)
+  - 다크모드 자동 연동 (MutationObserver)
+  - 커스텀 테마 (`/giscus/theme-light.css`, `/giscus/theme-dark.css`)
+
+- [x] **OG 이미지 자동 생성**
+  - `@vercel/og` 사용한 Edge Function
+  - 글 제목, 카테고리 포함
+  - 다크 테마 기반 브랜딩
+
+- [x] **JSON-LD 스키마**
+  - Article, BlogPosting 마크업
+  - WebSite 스키마 추가
+  - 구조화된 데이터로 SEO 강화
+
+- [x] **Vercel Analytics**
+  - 페이지뷰 추적 활성화
+
+- [x] **Callout 컴포넌트**
+  - NOTE, WARNING, TIP, DANGER, INFO 타입 지원
+  - MDX에서 `<Callout type="tip">` 형태로 사용
+
+- [x] **읽기 진행 표시기**
+  - 상단 고정 프로그레스 바
+  - 스크롤에 따라 진행률 표시
 
 ### 2025-02-04
 

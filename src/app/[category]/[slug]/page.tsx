@@ -6,6 +6,9 @@ import Header from '@/components/Header';
 import SeriesNav from '@/components/SeriesNav';
 import RelatedPosts from '@/components/RelatedPosts';
 import TableOfContents from '@/components/TableOfContents';
+import { ArticleJsonLd } from '@/components/JsonLd';
+import ReadingProgress from '@/components/ReadingProgress';
+import Comments from '@/components/Comments';
 
 interface PostPageProps {
   params: Promise<{ category: string; slug: string }>;
@@ -31,6 +34,8 @@ export async function generateMetadata({ params }: PostPageProps) {
 
   const url = `${SITE_URL}/${category}/${slug}`;
 
+  const ogImageUrl = `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(category)}`;
+
   return {
     title: post.title,
     description: post.description,
@@ -41,11 +46,20 @@ export async function generateMetadata({ params }: PostPageProps) {
       description: post.description,
       publishedTime: post.date,
       tags: post.tags,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: [ogImageUrl],
     },
   };
 }
@@ -64,9 +78,21 @@ export default async function PostPage({ params }: PostPageProps) {
   const relatedPosts = getRelatedPosts(post, 3);
   const toc = extractToc(post.content);
 
+  const url = `${SITE_URL}/${category}/${slug}`;
+
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
-      <Header categories={categories} currentCategory={post.category} posts={allPosts} />
+    <>
+      <ArticleJsonLd
+        title={post.title}
+        description={post.description}
+        publishedTime={post.date}
+        url={url}
+        category={category}
+        tags={post.tags}
+      />
+      <ReadingProgress />
+      <div className="min-h-screen bg-[var(--bg-primary)]">
+        <Header categories={categories} currentCategory={post.category} posts={allPosts} />
 
       <article className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Post Header */}
@@ -178,7 +204,10 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
           </div>
         )}
-        
+
+        {/* Comments */}
+        <Comments />
+
         {/* Footer */}
         <footer className="py-8 sm:py-12 border-t border-[var(--border-primary)]">
           <Link 
@@ -192,6 +221,7 @@ export default async function PostPage({ params }: PostPageProps) {
           </Link>
         </footer>
       </article>
-    </div>
+      </div>
+    </>
   );
 }

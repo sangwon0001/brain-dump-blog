@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import { WebsiteJsonLd } from "@/components/JsonLd";
+import BackToTop from "@/components/BackToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,11 +38,20 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: `${SITE_URL}/api/og?title=${encodeURIComponent(SITE_NAME)}`,
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+    images: [`${SITE_URL}/api/og?title=${encodeURIComponent(SITE_NAME)}`],
   },
   robots: {
     index: true,
@@ -77,7 +89,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <WebsiteJsonLd
+          name={SITE_NAME}
+          description={SITE_DESCRIPTION}
+          url={SITE_URL}
+        />
         {children}
+        <BackToTop />
+        <Analytics />
       </body>
     </html>
   );

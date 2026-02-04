@@ -212,6 +212,27 @@ export function getRelatedPosts(currentPost: PostMeta, count: number = 3): PostM
   return scored.slice(0, count).map(({ post }) => post);
 }
 
+// 모든 태그 가져오기 (사용 횟수 포함)
+export function getAllTags(): { tag: string; count: number }[] {
+  const posts = getAllPosts();
+  const tagCount = new Map<string, number>();
+
+  posts.forEach((post) => {
+    (post.tags || []).forEach((tag) => {
+      tagCount.set(tag, (tagCount.get(tag) || 0) + 1);
+    });
+  });
+
+  return Array.from(tagCount.entries())
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+// 특정 태그의 글 가져오기
+export function getPostsByTag(tag: string): PostMeta[] {
+  return getAllPosts().filter((post) => post.tags?.includes(tag));
+}
+
 // TOC를 위한 헤딩 추출
 export interface TocItem {
   level: number;

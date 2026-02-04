@@ -1,0 +1,93 @@
+/*! Giscus Custom Theme - Light */
+main {
+  --color-prettylights-syntax-comment: #6b7280;
+  --color-prettylights-syntax-constant: #db2777;
+  --color-prettylights-syntax-entity: #8b5cf6;
+  --color-prettylights-syntax-storage-modifier-import: #111827;
+  --color-prettylights-syntax-entity-tag: #10b981;
+  --color-prettylights-syntax-keyword: #db2777;
+  --color-prettylights-syntax-string: #059669;
+  --color-prettylights-syntax-variable: #ea580c;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #dc2626;
+  --color-prettylights-syntax-invalid-illegal-text: #fef2f2;
+  --color-prettylights-syntax-invalid-illegal-bg: #dc2626;
+  --color-prettylights-syntax-carriage-return-text: #fef2f2;
+  --color-prettylights-syntax-carriage-return-bg: #dc2626;
+  --color-prettylights-syntax-string-regexp: #059669;
+  --color-prettylights-syntax-markup-list: #ca8a04;
+  --color-prettylights-syntax-markup-heading: #1d4ed8;
+  --color-prettylights-syntax-markup-italic: #111827;
+  --color-prettylights-syntax-markup-bold: #111827;
+  --color-prettylights-syntax-markup-deleted-text: #7f1d1d;
+  --color-prettylights-syntax-markup-deleted-bg: #fee2e2;
+  --color-prettylights-syntax-markup-inserted-text: #14532d;
+  --color-prettylights-syntax-markup-inserted-bg: #dcfce7;
+  --color-prettylights-syntax-markup-changed-text: #9a3412;
+  --color-prettylights-syntax-markup-changed-bg: #ffedd5;
+  --color-prettylights-syntax-markup-ignored-text: #e5e7eb;
+  --color-prettylights-syntax-markup-ignored-bg: #1d4ed8;
+  --color-prettylights-syntax-meta-diff-range: #7c3aed;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #9ca3af;
+
+  --color-canvas-default: #ffffff;
+  --color-canvas-overlay: #ffffff;
+  --color-canvas-inset: #f9fafb;
+  --color-canvas-subtle: #f3f4f6;
+
+  --color-border-default: #e5e7eb;
+  --color-border-muted: #d1d5db;
+  --color-border-subtle: rgba(0, 0, 0, 0.1);
+
+  --color-neutral-muted: rgba(107, 114, 128, 0.2);
+  --color-neutral-subtle: rgba(107, 114, 128, 0.1);
+  --color-neutral-emphasis-plus: #111827;
+  --color-neutral-emphasis: #4b5563;
+
+  --color-accent-fg: #ff1493;
+  --color-accent-emphasis: #ff1493;
+  --color-accent-muted: rgba(255, 20, 147, 0.4);
+  --color-accent-subtle: rgba(255, 20, 147, 0.1);
+
+  --color-fg-default: #111827;
+  --color-fg-muted: #4b5563;
+  --color-fg-subtle: #6b7280;
+  --color-fg-on-emphasis: #ffffff;
+
+  --color-btn-text: #111827;
+  --color-btn-bg: #f3f4f6;
+  --color-btn-border: #d1d5db;
+  --color-btn-hover-bg: #e5e7eb;
+  --color-btn-hover-border: #d1d5db;
+  --color-btn-active-bg: #e5e7eb;
+  --color-btn-active-border: #d1d5db;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-bg: #ff1493;
+  --color-btn-primary-border: #ff1493;
+  --color-btn-primary-hover-bg: #db1076;
+  --color-btn-primary-hover-border: #db1076;
+
+  --color-social-reaction-bg-hover: #f3f4f6;
+  --color-social-reaction-bg-reacted-hover: rgba(255, 20, 147, 0.2);
+}
+
+main .gsc-reactions-button {
+  border-color: #e5e7eb;
+}
+
+main .gsc-reactions-button:hover {
+  background-color: #f3f4f6;
+}
+
+main .gsc-reactions-button.has-reacted {
+  border-color: #ff1493;
+  background-color: rgba(255, 20, 147, 0.1);
+}
+
+main .gsc-comment-box-textarea:focus {
+  border-color: #ff1493;
+  box-shadow: 0 0 0 3px rgba(255, 20, 147, 0.2);
+}
+
+main .gsc-reply-box {
+  border-color: #e5e7eb;
+}

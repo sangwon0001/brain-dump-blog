@@ -1,0 +1,101 @@
+/*! Giscus Custom Theme - Dark (Magenta/Pink tinted) */
+main {
+  --color-prettylights-syntax-comment: #a8919e;
+  --color-prettylights-syntax-constant: #ff85c0;
+  --color-prettylights-syntax-entity: #a78bfa;
+  --color-prettylights-syntax-storage-modifier-import: #f9f1f6;
+  --color-prettylights-syntax-entity-tag: #34d399;
+  --color-prettylights-syntax-keyword: #ff85c0;
+  --color-prettylights-syntax-string: #6ee7b7;
+  --color-prettylights-syntax-variable: #fb923c;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #f87171;
+  --color-prettylights-syntax-invalid-illegal-text: #fef2f2;
+  --color-prettylights-syntax-invalid-illegal-bg: #dc2626;
+  --color-prettylights-syntax-carriage-return-text: #fef2f2;
+  --color-prettylights-syntax-carriage-return-bg: #dc2626;
+  --color-prettylights-syntax-string-regexp: #6ee7b7;
+  --color-prettylights-syntax-markup-list: #fde047;
+  --color-prettylights-syntax-markup-heading: #60a5fa;
+  --color-prettylights-syntax-markup-italic: #f9f1f6;
+  --color-prettylights-syntax-markup-bold: #f9f1f6;
+  --color-prettylights-syntax-markup-deleted-text: #fecaca;
+  --color-prettylights-syntax-markup-deleted-bg: #450a0a;
+  --color-prettylights-syntax-markup-inserted-text: #bbf7d0;
+  --color-prettylights-syntax-markup-inserted-bg: #052e16;
+  --color-prettylights-syntax-markup-changed-text: #fed7aa;
+  --color-prettylights-syntax-markup-changed-bg: #431407;
+  --color-prettylights-syntax-markup-ignored-text: #2d1f28;
+  --color-prettylights-syntax-markup-ignored-bg: #3b82f6;
+  --color-prettylights-syntax-meta-diff-range: #a78bfa;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #6b5a64;
+
+  --color-canvas-default: #120a10;
+  --color-canvas-overlay: #1e1219;
+  --color-canvas-inset: #0d0709;
+  --color-canvas-subtle: #1e1219;
+
+  --color-border-default: #2d1f28;
+  --color-border-muted: #3d2d38;
+  --color-border-subtle: rgba(255, 255, 255, 0.1);
+
+  --color-neutral-muted: rgba(168, 145, 158, 0.2);
+  --color-neutral-subtle: rgba(168, 145, 158, 0.1);
+  --color-neutral-emphasis-plus: #f9f1f6;
+  --color-neutral-emphasis: #a8919e;
+
+  --color-accent-fg: #ff69b4;
+  --color-accent-emphasis: #ff69b4;
+  --color-accent-muted: rgba(255, 105, 180, 0.4);
+  --color-accent-subtle: rgba(255, 105, 180, 0.15);
+
+  --color-fg-default: #f9f1f6;
+  --color-fg-muted: #d4c4cf;
+  --color-fg-subtle: #a8919e;
+  --color-fg-on-emphasis: #120a10;
+
+  --color-btn-text: #f9f1f6;
+  --color-btn-bg: #2a1a24;
+  --color-btn-border: #3d2d38;
+  --color-btn-hover-bg: #3d2d38;
+  --color-btn-hover-border: #4d3d48;
+  --color-btn-active-bg: #3d2d38;
+  --color-btn-active-border: #4d3d48;
+  --color-btn-primary-text: #120a10;
+  --color-btn-primary-bg: #ff69b4;
+  --color-btn-primary-border: #ff69b4;
+  --color-btn-primary-hover-bg: #ff85c0;
+  --color-btn-primary-hover-border: #ff85c0;
+
+  --color-social-reaction-bg-hover: #2a1a24;
+  --color-social-reaction-bg-reacted-hover: rgba(255, 105, 180, 0.25);
+}
+
+main .gsc-reactions-button {
+  border-color: #3d2d38;
+}
+
+main .gsc-reactions-button:hover {
+  background-color: #2a1a24;
+}
+
+main .gsc-reactions-button.has-reacted {
+  border-color: #ff69b4;
+  background-color: rgba(255, 105, 180, 0.15);
+}
+
+main .gsc-comment-box-textarea:focus {
+  border-color: #ff69b4;
+  box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.25);
+}
+
+main .gsc-reply-box {
+  border-color: #3d2d38;
+}
+
+main .gsc-comment {
+  background-color: #1e1219;
+}
+
+main .gsc-timeline {
+  border-color: #2d1f28;
+}
