@@ -53,6 +53,12 @@
   /* Category badge */
   --category-bg: #f3f4f6;
   --category-text: #374151;
+
+  /* Mascot colors */
+  --mascot-body: #ffb6c1;
+  --mascot-fold: #f08080;
+  --mascot-pupil: #2d1f28;
+  --mascot-blush: #ff69b4;
 }
 
 .dark {
@@ -103,6 +109,12 @@
   /* Category badge */
   --category-bg: #2a1a24;
   --category-text: #f0e4eb;
+
+  /* Mascot colors */
+  --mascot-body: #dda0dd;
+  --mascot-fold: #ba55d3;
+  --mascot-pupil: #1a0a1a;
+  --mascot-blush: #ff1493;
 }
 
 @theme inline {
@@ -173,7 +185,10 @@ body {
   .series-nav,
   .related-posts,
   .toc-container,
-  .mobile-menu {
+  .mobile-menu,
+  .mascot,
+  [class*="z-[998]"],
+  [class*="z-[997]"] {
     display: none !important;
   }
 

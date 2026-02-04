@@ -5,6 +5,7 @@ import { GoogleAnalytics, Hotjar } from "@/components/Analytics";
 import "./globals.css";
 import { WebsiteJsonLd } from "@/components/JsonLd";
 import BackToTop from "@/components/BackToTop";
+import { Mascot } from "@/components/mascot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -97,6 +98,7 @@ export default function RootLayout({
         />
         {children}
         <BackToTop />
+        <Mascot />
         <Analytics />
         <GoogleAnalytics />
         <Hotjar />
