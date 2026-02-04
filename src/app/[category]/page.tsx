@@ -13,7 +13,7 @@ export async function generateStaticParams() {
   return categories.map((category) => ({ category }));
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon0001.xyz";
 
 export async function generateMetadata({ params }: CategoryPageProps) {
   const { category } = await params;

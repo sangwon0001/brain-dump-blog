@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon0001.xyz";
 const SITE_NAME = "뇌 용량 확보용";
 const SITE_DESCRIPTION = "머릿속 비우고 RAM 확보하는 블로그. 개발, AI, 잡생각 투기장.";
 

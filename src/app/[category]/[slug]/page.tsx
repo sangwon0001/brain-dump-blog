@@ -16,7 +16,7 @@ export async function generateStaticParams() {
   }));
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon0001.xyz";
 
 export async function generateMetadata({ params }: PostPageProps) {
   const { category, slug } = await params;

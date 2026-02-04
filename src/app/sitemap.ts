@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { getAllPosts, getCategories } from "@/lib/mdx";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon0001.xyz";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts();
