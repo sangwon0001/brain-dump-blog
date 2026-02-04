@@ -1,7 +1,7 @@
 ---
 title: "Claude Code로 블로그 뚝딱 만들기 (4편: 검색, RSS, 목차, Draft)"
 description: "개선점 찾아서 로드맵 만들고, 하나씩 알아서 구현하게 시키기. 검색, RSS, TOC, Draft까지."
-date: "2025-02-04"
+date: "2026-02-04"
 tags: ["claude-code", "nextjs", "blog", "search", "rss"]
 ---
 
@@ -142,7 +142,7 @@ draft: true
 ```markdown
 ## ✅ Done
 
-### 2025-02-04
+### 2026-02-04
 - [x] 검색 기능
 - [x] RSS 피드
 - [x] TOC (목차)

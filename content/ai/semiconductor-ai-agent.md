@@ -1,7 +1,7 @@
 ---
 title: "0.1나노의 공학, 그리고 미분 불가능한 코드의 최적화"
 description: "반도체 설계에 AI Agent가 왜 필요한가. LLM이 코드라는 불연속적 공간에서 최적화를 가능하게 하는 구조에 대해 정리해봤다."
-date: "2025-02-04"
+date: "2026-02-04"
 tags: ["ai", "semiconductor", "llm", "engineering", "automation"]
 thumbnail: "/images/semiconductor-ai/banner.png"
 ---
