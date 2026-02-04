@@ -8,6 +8,8 @@ import SearchModal from './SearchModal';
 import { PostMeta } from '@/lib/mdx';
 import { backdropFade, slideFromRight } from '@/lib/animations';
 
+const MASCOT_STORAGE_KEY = "mascot-visible";
+
 interface HeaderProps {
   categories?: string[];
   currentCategory?: string;
@@ -17,6 +19,7 @@ interface HeaderProps {
 export default function Header({ categories = [], currentCategory, posts = [] }: HeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMascotVisible, setIsMascotVisible] = useState(true);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -26,9 +29,28 @@ export default function Header({ categories = [], currentCategory, posts = [] }:
       }
     };
 
+    // Load mascot visibility from localStorage
+    const stored = localStorage.getItem(MASCOT_STORAGE_KEY);
+    if (stored !== null) {
+      setIsMascotVisible(stored === "true");
+    }
+
+    // Listen for mascot toggle changes
+    const handleMascotToggle = () => {
+      setIsMascotVisible(prev => !prev);
+    };
+    window.addEventListener("toggle-mascot", handleMascotToggle);
+
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("toggle-mascot", handleMascotToggle);
+    };
   }, []);
+
+  const toggleMascot = () => {
+    window.dispatchEvent(new CustomEvent("toggle-mascot"));
+  };
 
   return (
     <>
@@ -71,6 +93,16 @@ export default function Header({ categories = [], currentCategory, posts = [] }:
             </button>
 
             <ThemeToggle />
+
+            {/* Mascot toggle */}
+            <button
+              onClick={toggleMascot}
+              className="p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+              aria-label={isMascotVisible ? "마스코트 숨기기" : "마스코트 보이기"}
+              title={isMascotVisible ? "마스코트 숨기기" : "마스코트 보이기"}
+            >
+              <MascotIcon className="w-5 h-5" isVisible={isMascotVisible} />
+            </button>
 
             {/* Mobile menu button */}
             <button
@@ -150,6 +182,17 @@ export default function Header({ categories = [], currentCategory, posts = [] }:
                     </li>
                   ))}
                 </ul>
+
+                {/* Mascot toggle in drawer */}
+                <div className="mt-4 pt-4 border-t border-[var(--border-primary)]">
+                  <button
+                    onClick={toggleMascot}
+                    className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+                  >
+                    <MascotIcon className="w-5 h-5" isVisible={isMascotVisible} />
+                    <span>{isMascotVisible ? "마스코트 숨기기" : "마스코트 보이기"}</span>
+                  </button>
+                </div>
               </nav>
             </motion.div>
           </>
@@ -184,6 +227,26 @@ function CloseIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  );
+}
+
+function MascotIcon({ className, isVisible }: { className?: string; isVisible: boolean }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" style={{ opacity: isVisible ? 1 : 0.4 }}>
+      <ellipse cx="12" cy="11" rx="8" ry="7" fill="var(--mascot-body)" />
+      <path d="M6 8 Q9 6 12 8 Q15 6 18 8" stroke="var(--mascot-fold)" strokeWidth="1" strokeLinecap="round" fill="none" />
+      <path d="M5 11 Q9 9 12 11 Q15 9 19 11" stroke="var(--mascot-fold)" strokeWidth="1" strokeLinecap="round" fill="none" />
+      <path d="M6 14 Q9 12 12 14 Q15 12 18 14" stroke="var(--mascot-fold)" strokeWidth="1" strokeLinecap="round" fill="none" />
+      <circle cx="9" cy="10" r="1.5" fill="white" />
+      <circle cx="9" cy="10" r="0.8" fill="var(--mascot-pupil)" />
+      <circle cx="15" cy="10" r="1.5" fill="white" />
+      <circle cx="15" cy="10" r="0.8" fill="var(--mascot-pupil)" />
+      <path d="M5 15 Q3 18 4 20" stroke="var(--mascot-fold)" strokeWidth="1" strokeLinecap="round" fill="none" />
+      <path d="M19 15 Q21 18 20 20" stroke="var(--mascot-fold)" strokeWidth="1" strokeLinecap="round" fill="none" />
+      {!isVisible && (
+        <line x1="4" y1="20" x2="20" y2="4" stroke="var(--text-secondary)" strokeWidth="2" strokeLinecap="round" />
+      )}
     </svg>
   );
 }

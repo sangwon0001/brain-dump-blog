@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import MascotCharacter from "./MascotCharacter";
-import MascotToggle from "./MascotToggle";
 
 const STORAGE_KEY = "mascot-visible";
 
@@ -17,37 +16,37 @@ export default function Mascot() {
       setIsVisible(stored === "true");
     }
     setIsHydrated(true);
-  }, []);
 
-  const toggleVisibility = () => {
-    setIsVisible((prev) => {
-      const newValue = !prev;
-      localStorage.setItem(STORAGE_KEY, String(newValue));
-      return newValue;
-    });
-  };
+    // Listen for toggle event from Header
+    const handleToggle = () => {
+      setIsVisible((prev) => {
+        const newValue = !prev;
+        localStorage.setItem(STORAGE_KEY, String(newValue));
+        return newValue;
+      });
+    };
+
+    window.addEventListener("toggle-mascot", handleToggle);
+    return () => window.removeEventListener("toggle-mascot", handleToggle);
+  }, []);
 
   if (!isHydrated) {
     return null;
   }
 
   return (
-    <>
-      <AnimatePresence>
-        {isVisible && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.3 }}
-            className="print:hidden"
-          >
-            <MascotCharacter />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <MascotToggle isVisible={isVisible} onToggle={toggleVisibility} />
-    </>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          transition={{ duration: 0.3 }}
+          className="print:hidden"
+        >
+          <MascotCharacter />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
