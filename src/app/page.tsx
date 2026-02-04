@@ -1,15 +1,16 @@
 import Link from 'next/link';
-import { getRecentPosts, getCategories } from '@/lib/mdx';
+import { getRecentPosts, getCategories, getAllPosts } from '@/lib/mdx';
 import PostCard from '@/components/PostCard';
 import Header from '@/components/Header';
 
 export default function Home() {
-  const recentPosts = getRecentPosts(10);
+  const allPosts = getAllPosts();
+  const recentPosts = allPosts.slice(0, 10);
   const categories = getCategories();
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <Header categories={categories} />
+      <Header categories={categories} posts={allPosts} />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         {/* Hero */}

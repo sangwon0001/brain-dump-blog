@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import { getPostBySlug, getAllPosts, getCategories, getSeriesNavigation, getRelatedPosts } from '@/lib/mdx';
+import { getPostBySlug, getAllPosts, getCategories, getSeriesNavigation, getRelatedPosts, extractToc } from '@/lib/mdx';
 import { notFound } from 'next/navigation';
 import MDXContent from '@/components/MDXContent';
 import Header from '@/components/Header';
 import SeriesNav from '@/components/SeriesNav';
 import RelatedPosts from '@/components/RelatedPosts';
+import TableOfContents from '@/components/TableOfContents';
 
 interface PostPageProps {
   params: Promise<{ category: string; slug: string }>;
@@ -52,6 +53,7 @@ export async function generateMetadata({ params }: PostPageProps) {
 export default async function PostPage({ params }: PostPageProps) {
   const { category, slug } = await params;
   const post = getPostBySlug(category, slug);
+  const allPosts = getAllPosts();
   const categories = getCategories();
 
   if (!post) {
@@ -60,10 +62,11 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const seriesNav = getSeriesNavigation(post);
   const relatedPosts = getRelatedPosts(post, 3);
+  const toc = extractToc(post.content);
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <Header categories={categories} currentCategory={post.category} />
+      <Header categories={categories} currentCategory={post.category} posts={allPosts} />
 
       <article className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Post Header */}
@@ -117,6 +120,13 @@ export default async function PostPage({ params }: PostPageProps) {
               posts={seriesNav.posts}
               currentIndex={seriesNav.currentIndex}
             />
+          </div>
+        )}
+
+        {/* Table of Contents */}
+        {toc.length > 0 && (
+          <div className="pt-8 sm:pt-10">
+            <TableOfContents items={toc} />
           </div>
         )}
 

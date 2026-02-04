@@ -42,6 +42,7 @@ export interface PostMeta {
   readingTime: string;
   series?: string;
   seriesOrder?: number;
+  draft?: boolean;
 }
 
 export interface Post extends PostMeta {
@@ -63,6 +64,9 @@ function getFilesRecursively(dir: string): string[] {
 
   return files;
 }
+
+// 개발 모드인지 확인
+const isDev = process.env.NODE_ENV === 'development';
 
 export function getAllPosts(): PostMeta[] {
   const files = getFilesRecursively(contentDirectory);
@@ -89,10 +93,14 @@ export function getAllPosts(): PostMeta[] {
       readingTime: readingTime(content).text,
       series,
       seriesOrder: order,
+      draft: data.draft || false,
     };
   });
 
-  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  // 프로덕션에서는 draft 제외, 개발 모드에서는 모두 표시
+  const filteredPosts = isDev ? posts : posts.filter((post) => !post.draft);
+
+  return filteredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function getPostsByCategory(category: string): PostMeta[] {
@@ -121,6 +129,11 @@ export function getPostBySlug(category: string, slug: string): Post | null {
   const fileContents = fs.readFileSync(actualPath, 'utf8');
   const { data, content } = matter(fileContents);
 
+  // 프로덕션에서 draft 글 접근 시 null 반환
+  if (!isDev && data.draft) {
+    return null;
+  }
+
   const title = data.title || slug;
   const { series, order } = extractSeriesInfo(title, data.series);
 
@@ -135,6 +148,7 @@ export function getPostBySlug(category: string, slug: string): Post | null {
     readingTime: readingTime(content).text,
     series,
     seriesOrder: order,
+    draft: data.draft || false,
     content,
   };
 }
@@ -196,4 +210,38 @@ export function getRelatedPosts(currentPost: PostMeta, count: number = 3): PostM
     .sort((a, b) => b.score - a.score);
 
   return scored.slice(0, count).map(({ post }) => post);
+}
+
+// TOC를 위한 헤딩 추출
+export interface TocItem {
+  level: number;
+  text: string;
+  slug: string;
+}
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9가-힣\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
+
+export function extractToc(content: string): TocItem[] {
+  const headingRegex = /^(#{2,4})\s+(.+)$/gm;
+  const toc: TocItem[] = [];
+  let match;
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    toc.push({
+      level,
+      text,
+      slug: slugify(text),
+    });
+  }
+
+  return toc;
 }

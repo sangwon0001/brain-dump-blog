@@ -11,6 +11,11 @@ export default function PostCard({ post }: PostCardProps) {
       <Link href={`/${post.category}/${post.slug}`}>
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-[var(--text-muted)] mb-2 sm:mb-3">
+          {post.draft && (
+            <span className="bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 px-2 py-0.5 sm:py-1 rounded text-xs font-medium">
+              DRAFT
+            </span>
+          )}
           <span className="bg-[var(--category-bg)] text-[var(--category-text)] px-2 py-0.5 sm:py-1 rounded text-xs">
             {post.category}
           </span>

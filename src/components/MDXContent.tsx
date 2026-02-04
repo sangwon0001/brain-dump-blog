@@ -7,6 +7,28 @@ interface MDXContentProps {
   source: string;
 }
 
+// 텍스트를 slug로 변환
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9가-힣\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
+
+// 헤딩에서 텍스트 추출
+function extractText(children: React.ReactNode): string {
+  if (typeof children === 'string') return children;
+  if (typeof children === 'number') return String(children);
+  if (Array.isArray(children)) return children.map(extractText).join('');
+  if (children && typeof children === 'object' && 'props' in children) {
+    const element = children as { props?: { children?: React.ReactNode } };
+    return extractText(element.props?.children);
+  }
+  return '';
+}
+
 // Shiki highlighter (cached)
 const highlighterPromise = createHighlighter({
   themes: ['github-dark'],
@@ -59,18 +81,22 @@ async function HighlightedCode({ code, language }: { code: string; language: str
 }
 
 const components = {
-  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1 className="text-2xl sm:text-4xl font-bold mt-10 sm:mt-16 mb-4 sm:mb-6 leading-tight text-[var(--text-primary)]" {...props} />
-  ),
-  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="text-xl sm:text-2xl font-bold mt-10 sm:mt-14 mb-4 sm:mb-5 leading-snug text-[var(--text-primary)]" {...props} />
-  ),
-  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="text-lg sm:text-xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 leading-snug text-[var(--text-primary)]" {...props} />
-  ),
-  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4 className="text-base sm:text-lg font-semibold mt-6 sm:mt-8 mb-2 sm:mb-3 text-[var(--text-primary)]" {...props} />
-  ),
+  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const id = slugify(extractText(props.children));
+    return <h1 id={id} className="text-2xl sm:text-4xl font-bold mt-10 sm:mt-16 mb-4 sm:mb-6 leading-tight text-[var(--text-primary)] scroll-mt-20" {...props} />;
+  },
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const id = slugify(extractText(props.children));
+    return <h2 id={id} className="text-xl sm:text-2xl font-bold mt-10 sm:mt-14 mb-4 sm:mb-5 leading-snug text-[var(--text-primary)] scroll-mt-20" {...props} />;
+  },
+  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const id = slugify(extractText(props.children));
+    return <h3 id={id} className="text-lg sm:text-xl font-semibold mt-8 sm:mt-10 mb-3 sm:mb-4 leading-snug text-[var(--text-primary)] scroll-mt-20" {...props} />;
+  },
+  h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const id = slugify(extractText(props.children));
+    return <h4 id={id} className="text-base sm:text-lg font-semibold mt-6 sm:mt-8 mb-2 sm:mb-3 text-[var(--text-primary)] scroll-mt-20" {...props} />;
+  },
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p className="my-4 sm:my-6 leading-7 sm:leading-8 text-[var(--text-secondary)]" {...props} />
   ),

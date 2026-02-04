@@ -1,16 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
+import SearchModal from './SearchModal';
+import { PostMeta } from '@/lib/mdx';
 
 interface HeaderProps {
   categories?: string[];
   currentCategory?: string;
+  posts?: PostMeta[];
 }
 
-export default function Header({ categories = [], currentCategory }: HeaderProps) {
+export default function Header({ categories = [], currentCategory, posts = [] }: HeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // Cmd/Ctrl + K 단축키
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -38,7 +55,20 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
           </nav>
 
           {/* Right actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
+            {/* Search button */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
+              aria-label="검색"
+            >
+              <SearchIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline text-sm">검색</span>
+              <kbd className="hidden lg:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs text-[var(--text-tertiary)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded">
+                <span className="text-[10px]">⌘</span>K
+              </kbd>
+            </button>
+
             <ThemeToggle />
 
             {/* Mobile menu button */}
@@ -52,6 +82,13 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
           </div>
         </div>
       </header>
+
+      {/* Search Modal */}
+      <SearchModal
+        posts={posts}
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
 
       {/* Mobile Drawer */}
       {isDrawerOpen && (
@@ -120,6 +157,19 @@ export default function Header({ categories = [], currentCategory }: HeaderProps
         }
       `}</style>
     </>
+  );
+}
+
+function SearchIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      />
+    </svg>
   );
 }
 

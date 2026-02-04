@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getPostsByCategory, getCategories } from '@/lib/mdx';
+import { getPostsByCategory, getCategories, getAllPosts } from '@/lib/mdx';
 import PostCard from '@/components/PostCard';
 import Header from '@/components/Header';
 import { notFound } from 'next/navigation';
@@ -34,7 +34,8 @@ export async function generateMetadata({ params }: CategoryPageProps) {
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category } = await params;
-  const posts = getPostsByCategory(category);
+  const allPosts = getAllPosts();
+  const posts = allPosts.filter((p) => p.category === category);
   const categories = getCategories();
 
   if (posts.length === 0) {
@@ -43,7 +44,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <Header categories={categories} currentCategory={category} />
+      <Header categories={categories} currentCategory={category} posts={allPosts} />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         {/* Category Header */}
