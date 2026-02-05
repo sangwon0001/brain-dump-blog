@@ -157,6 +157,14 @@ https://raw.githubusercontent.com/sangwon0001/brain-dump-blog/main/public/ai/blo
 
 blog-guide.md에 페르소나 참조가 들어있어서, 저것만 읽어도 된다.
 
+### 왜 GitHub raw URL인가
+
+처음엔 `https://blog.sangwon0001.xyz/ai/blog-guide.md`로 하려고 했다. Vercel에서 public 폴더 파일은 그냥 서빙되니까.
+
+근데 ChatGPT는 되는데 Gemini가 안 됐다. Vercel 호스팅 사이트를 못 읽는 것 같았다.
+
+API 라우트 만들어서 텍스트로 뿌려볼까도 했는데, 그럴 바에 GitHub raw URL 쓰는 게 낫다. 어차피 둘 다 텍스트 반환이고, GitHub raw는 모든 AI가 잘 읽는다.
+
 ## 실제 효과
 
 ### Before (페르소나 없이)
