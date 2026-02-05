@@ -157,17 +157,19 @@ https://blog.sangwon0001.xyz/ai/blog-guide.md 참고해서 [주제] 글 써줘.
 
 blog-guide.md에 페르소나 참조가 들어있어서, 저것만 읽어도 된다.
 
-### 추가: Gemini는 안 된다
+### 추가: AI가 URL을 못 읽는다
 
-위 URL로 하려고 했는데, ChatGPT는 되고 Gemini가 안 됐다. Vercel 호스팅 사이트를 못 읽는 것 같다.
+위 URL로 하려고 했는데, ChatGPT랑 Gemini 둘 다 못 읽었다. Vercel에서 `.md` 파일 서빙하는 건 문제없는데, AI들이 접근을 못 하더라.
 
-API 라우트 만들어서 텍스트로 뿌려볼까도 했는데, 그럴 바에 GitHub raw URL 쓰는 게 낫더라. 어차피 둘 다 텍스트고, GitHub raw는 모든 AI가 잘 읽는다.
+그래서 API 라우트 만들어서 텍스트로 뿌렸다. `/api/ai-guide/blog-guide` 이런 식으로. 그랬더니 ChatGPT는 됐는데 Gemini는 여전히 안 됐다.
 
-그래서 실제로는 이걸 쓴다:
+결국 GitHub raw URL로 갔다. 이건 둘 다 잘 읽는다.
 
 ```
 https://raw.githubusercontent.com/sangwon0001/brain-dump-blog/main/public/ai/blog-guide.md 참고해서 [주제] 글 써줘.
 ```
+
+API 라우트는 redundant해서 날렸다. 어차피 GitHub raw가 되면 그게 제일 간단하다.
 
 ## 실제 효과
 
