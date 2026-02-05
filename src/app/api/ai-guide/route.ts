@@ -10,17 +10,23 @@ const AI_DOCS = [
 
 export async function GET() {
   const baseUrl = 'https://blog.sangwon0001.xyz/api/ai-guide';
+  const githubRaw = 'https://raw.githubusercontent.com/sangwon0001/brain-dump-blog/main/public/ai';
 
   const content = `# AI Writing Guide - 뇌 용량 확보용
 
 ## 문서 목록
 ${AI_DOCS.map(doc => `- ${doc.title}: ${baseUrl}/${doc.slug}`).join('\n')}
 
-## 사용법
-AI에게 글 요청 시:
+## 사용법 (ChatGPT)
 ${baseUrl}/blog-guide 읽고,
 ${baseUrl}/persona_base 읽고,
 ${baseUrl}/persona_blogger 읽고,
+[주제]에 대한 블로그 글 써줘.
+
+## 사용법 (Gemini - GitHub URL)
+${githubRaw}/blog-guide.md 읽고,
+${githubRaw}/persona_base.md 읽고,
+${githubRaw}/persona_blogger.md 읽고,
 [주제]에 대한 블로그 글 써줘.
 `;
 
