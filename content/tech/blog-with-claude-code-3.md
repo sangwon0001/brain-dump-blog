@@ -143,16 +143,16 @@ public/ai/
 ChatGPT든 Claude든 이렇게 말하면 된다:
 
 ```
-https://blog.sangwon0001.xyz/ai/blog-guide.md 읽고,
-https://blog.sangwon0001.xyz/ai/persona_base.md 읽고,
-https://blog.sangwon0001.xyz/ai/persona_blogger.md 읽고,
+https://raw.githubusercontent.com/sangwon0001/brain-dump-blog/main/public/ai/blog-guide.md 읽고,
+https://raw.githubusercontent.com/sangwon0001/brain-dump-blog/main/public/ai/persona_base.md 읽고,
+https://raw.githubusercontent.com/sangwon0001/brain-dump-blog/main/public/ai/persona_blogger.md 읽고,
 [주제]에 대한 블로그 글 써줘.
 ```
 
 또는 간단히:
 
 ```
-https://blog.sangwon0001.xyz/ai/blog-guide.md 참고해서 [주제] 글 써줘.
+https://raw.githubusercontent.com/sangwon0001/brain-dump-blog/main/public/ai/blog-guide.md 참고해서 [주제] 글 써줘.
 ```
 
 blog-guide.md에 페르소나 참조가 들어있어서, 저것만 읽어도 된다.
