@@ -1,8 +1,9 @@
 ---
-title: "AI가 스스로 PR 올리는 오픈소스에서, merge 권력은 어디서 생겨야 할까"
+title: "AI가 스스로 PR 올리는 오픈소스에서, merge 권력은 어디서 생겨야 할까 (1편)"
 description: "모든 에이전트가 PR 생성자이자 검증자이자 투표자가 되는 자율 오픈소스. 이 구조에서 merge 권력과 적대적 장악 문제를 어떻게 봐야 하는지 아직 정리 중이다."
 date: "2026-02-06"
 tags: ["AI", "Blockchain", "Thoughts", "ai-agent", "governance"]
+series: "에이전트 거버넌스"
 ---
 
 ## 시작 — 이 문제를 왜 생각하게 되었나
