@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getAllTags, getPostsByTag, getAllPosts } from '@/lib/mdx';
-import { NAV_TAGS } from '@/config/navigation';
+import { NAV_TAGS } from '@/config/tags';
 import PostCard from '@/components/PostCard';
 import Header from '@/components/Header';
 import { notFound } from 'next/navigation';
@@ -99,7 +99,7 @@ export default async function TagPage({ params }: TagPageProps) {
         {/* Posts */}
         <div className="grid gap-4 sm:gap-6">
           {posts.map((post, index) => (
-            <PostCard key={post.slug} post={post} index={index} />
+            <PostCard key={post.slug} post={post} index={index} fromTag={decodedTag} />
           ))}
         </div>
       </main>

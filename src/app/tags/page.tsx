@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getAllTags, getAllPosts } from '@/lib/mdx';
-import { NAV_TAGS } from '@/config/navigation';
+import { NAV_TAGS } from '@/config/tags';
 import Header from '@/components/Header';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon0001.xyz";

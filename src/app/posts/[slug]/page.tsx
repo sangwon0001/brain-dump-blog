@@ -1,11 +1,13 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { getPostBySlug, getAllPosts, getSeriesNavigation, getRelatedPosts, extractToc } from '@/lib/mdx';
-import { NAV_TAGS } from '@/config/navigation';
+import { NAV_TAGS } from '@/config/tags';
 import { notFound } from 'next/navigation';
 import MDXContent from '@/components/MDXContent';
 import Header from '@/components/Header';
+import PostPageHeader from '@/components/PostPageHeader';
 import SeriesNav from '@/components/SeriesNav';
-import RelatedPosts from '@/components/RelatedPosts';
+import RelatedPostsWithContext from '@/components/RelatedPostsWithContext';
 import TableOfContents from '@/components/TableOfContents';
 import { ArticleJsonLd } from '@/components/JsonLd';
 import ReadingProgress from '@/components/ReadingProgress';
@@ -74,7 +76,7 @@ export default async function PostPage({ params }: PostPageProps) {
   }
 
   const seriesNav = getSeriesNavigation(post);
-  const relatedPosts = getRelatedPosts(post, 3);
+  const relatedPosts = getRelatedPosts(post, 6);
   const toc = extractToc(post.content);
 
   const url = `${SITE_URL}/posts/${slug}`;
@@ -90,7 +92,9 @@ export default async function PostPage({ params }: PostPageProps) {
       />
       <ReadingProgress />
       <div className="min-h-screen bg-[var(--bg-primary)]">
-        <Header navTags={[...NAV_TAGS]} posts={allPosts} />
+        <Suspense fallback={<Header navTags={[...NAV_TAGS]} posts={allPosts} />}>
+          <PostPageHeader posts={allPosts} />
+        </Suspense>
 
       <article className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Post Header */}
@@ -164,7 +168,11 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
 
         {/* Related Posts */}
-        {relatedPosts.length > 0 && <RelatedPosts posts={relatedPosts} />}
+        {relatedPosts.length > 0 && (
+          <Suspense fallback={null}>
+            <RelatedPostsWithContext posts={relatedPosts} count={3} />
+          </Suspense>
+        )}
 
         {/* Series Navigation (하단 - 이전/다음) */}
         {seriesNav && (seriesNav.prev || seriesNav.next) && (

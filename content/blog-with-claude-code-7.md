@@ -2,7 +2,7 @@
 title: "Claude Code로 블로그 뚝딱 만들기 (7편: 인기글 랭킹과 Analytics)"
 description: "Neon + Prisma 7로 조회수 추적, 인기글 랭킹 구현. GA4, Hotjar까지 한 번에."
 date: "2026-02-04"
-tags: ["claude-code", "nextjs", "blog", "prisma", "neon", "analytics"]
+tags: ["claude-code", "nextjs", "blog", "prisma", "neon", "analytics", "Develop"]
 ---
 
 ## 마지막 남은 것

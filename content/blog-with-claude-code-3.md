@@ -2,7 +2,7 @@
 title: "Claude Code로 블로그 뚝딱 만들기 (3편: AI 글쓰기 시스템)"
 description: "ChatGPT 대화에서 내 페르소나 뽑아내고, AI한테 내 스타일로 글 쓰게 하는 법. 사고방식 페르소나 + 용도별 페르소나 조합."
 date: "2026-02-04"
-tags: ["claude-code", "ai", "persona", "writing"]
+tags: ["claude-code", "AI", "persona", "writing", "Develop"]
 ---
 
 ## AI한테 글을 쓰게 하고 싶었다

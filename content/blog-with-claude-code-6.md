@@ -2,7 +2,7 @@
 title: "Claude Code로 블로그 뚝딱 만들기 (6편: 댓글, 태그, UX 개선)"
 description: "Low Priority 싹 정리. Back to Top, 프린트 스타일, 태그 아카이브, Giscus 댓글까지."
 date: "2026-02-04"
-tags: ["claude-code", "nextjs", "blog", "giscus", "ux"]
+tags: ["claude-code", "nextjs", "blog", "giscus", "ux", "Develop"]
 ---
 
 ## 빨리 끝나는 거 먼저

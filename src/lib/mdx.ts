@@ -2,8 +2,20 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
+import { BLOG_TAGS, type BlogTag } from '@/config/tags';
 
 const contentDirectory = path.join(process.cwd(), 'content');
+
+const blogTagSet = new Set<string>(BLOG_TAGS);
+
+function validateTags(tags: string[], slug: string): BlogTag[] {
+  return tags.map((tag) => {
+    if (!blogTagSet.has(tag)) {
+      console.warn(`[mdx] Unknown tag "${tag}" in "${slug}". Register it in src/config/tags.ts`);
+    }
+    return tag as BlogTag;
+  });
+}
 
 // 시리즈 자동 감지: "(1편", "(2편", "1편:", "Part 1" 등의 패턴
 function extractSeriesInfo(title: string, frontmatterSeries?: string): { series?: string; order?: number } {
@@ -36,7 +48,7 @@ export interface PostMeta {
   title: string;
   description: string;
   date: string;
-  tags?: string[];
+  tags?: BlogTag[];
   thumbnail?: string;
   readingTime: string;
   series?: string;
@@ -70,7 +82,7 @@ export function getAllPosts(): PostMeta[] {
       title,
       description: data.description || '',
       date: data.date || new Date().toISOString(),
-      tags: data.tags || [],
+      tags: validateTags(data.tags || [], slug),
       thumbnail: data.thumbnail,
       readingTime: readingTime(content).text,
       series,
@@ -114,7 +126,7 @@ export function getPostBySlug(slug: string): Post | null {
     title,
     description: data.description || '',
     date: data.date || new Date().toISOString(),
-    tags: data.tags || [],
+    tags: validateTags(data.tags || [], slug),
     thumbnail: data.thumbnail,
     readingTime: readingTime(content).text,
     series,
@@ -170,7 +182,7 @@ export function getRelatedPosts(currentPost: PostMeta, count: number = 3): PostM
   // 태그 매칭 점수 계산
   const scored = allPosts
     .filter((post) => post.slug !== currentPost.slug)
-    .filter((post) => post.series !== currentPost.series) // 같은 시리즈는 제외
+    .filter((post) => !post.series || !currentPost.series || post.series !== currentPost.series) // 같은 시리즈는 제외 (둘 다 시리즈 없으면 통과)
     .map((post) => {
       const matchingTags = (post.tags || []).filter((tag) =>
         currentPost.tags!.includes(tag)
@@ -201,7 +213,7 @@ export function getAllTags(): { tag: string; count: number }[] {
 
 // 특정 태그의 글 가져오기
 export function getPostsByTag(tag: string): PostMeta[] {
-  return getAllPosts().filter((post) => post.tags?.includes(tag));
+  return getAllPosts().filter((post) => (post.tags as string[] | undefined)?.includes(tag));
 }
 
 // TOC를 위한 헤딩 추출

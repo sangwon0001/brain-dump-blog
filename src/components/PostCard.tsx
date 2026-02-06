@@ -8,9 +8,10 @@ import { cardEntrance, springs } from '@/lib/animations';
 interface PostCardProps {
   post: PostMeta;
   index?: number;
+  fromTag?: string;
 }
 
-export default function PostCard({ post, index = 0 }: PostCardProps) {
+export default function PostCard({ post, index = 0, fromTag }: PostCardProps) {
   return (
     <motion.article
       variants={cardEntrance}
@@ -24,7 +25,7 @@ export default function PostCard({ post, index = 0 }: PostCardProps) {
       }}
       className="border border-[var(--border-primary)] rounded-lg p-4 sm:p-6 hover:shadow-[var(--shadow-md)] transition-shadow bg-[var(--bg-primary)]"
     >
-      <Link href={`/posts/${post.slug}`}>
+      <Link href={`/posts/${post.slug}${fromTag ? `?from=${encodeURIComponent(fromTag)}` : ''}`}>
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-[var(--text-muted)] mb-2 sm:mb-3">
           {post.draft && (

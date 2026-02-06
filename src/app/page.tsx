@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getAllPosts } from '@/lib/mdx';
-import { NAV_TAGS } from '@/config/navigation';
+import { NAV_TAGS } from '@/config/tags';
 import PostCard from '@/components/PostCard';
 import Header from '@/components/Header';
 import { PopularPosts } from '@/components/PopularPosts';
