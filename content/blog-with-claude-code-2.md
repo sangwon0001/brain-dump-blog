@@ -3,6 +3,7 @@ title: "Claude Code로 블로그 뚝딱 만들기 (2편: 커스터마이징)"
 description: "핫핑크 테마, SEO, 이미지 최적화, 시리즈 자동 감지까지. 살 좀 붙여봤다."
 date: "2026-02-04"
 tags: ["claude-code", "nextjs", "seo", "theming", "Develop"]
+series: "블로그 딸깍 해서 만들기"
 ---
 
 ## 1편에서 뼈대 만들었고

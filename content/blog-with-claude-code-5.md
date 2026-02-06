@@ -3,6 +3,7 @@ title: "Claude Code로 블로그 뚝딱 만들기 (5편: OG 이미지, SEO, Anal
 description: "Medium Priority 다 해봐. OG 이미지 자동 생성, JSON-LD, Analytics, Callout, 읽기 진행바까지."
 date: "2026-02-04"
 tags: ["claude-code", "nextjs", "blog", "seo", "og-image", "Develop"]
+series: "블로그 딸깍 해서 만들기"
 ---
 
 ## 다 해봐

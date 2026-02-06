@@ -3,6 +3,7 @@ title: "Claude Code로 블로그 뚝딱 만들기 (8편: 마스코트 캐릭터)
 description: "Framer Motion으로 둥둥 떠다니는 뇌 마스코트 구현. 눈동자 추적, 수줍은 회피, 클릭 반응까지."
 date: "2026-02-04"
 tags: ["claude-code", "nextjs", "blog", "framer-motion", "animation", "Develop"]
+series: "블로그 딸깍 해서 만들기"
 ---
 
 ## 뭔가 허전하다

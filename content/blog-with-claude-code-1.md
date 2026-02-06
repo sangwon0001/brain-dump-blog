@@ -3,6 +3,7 @@ title: "Claude Code로 블로그 뚝딱 만들기 (1편: 설계)"
 description: "요즘 업무 90%를 Claude Code로 하고 있다. 블로그도 금방 뽑아낼 수 있을 것 같아서 만들어봤다."
 date: "2026-02-04"
 tags: ["claude-code", "nextjs", "blog", "AI", "Develop"]
+series: "블로그 딸깍 해서 만들기"
 ---
 
 ## 블로그 하나 만들려고 했다
