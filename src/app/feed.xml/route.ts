@@ -16,7 +16,7 @@ export async function GET() {
 
   const items = posts
     .map((post) => {
-      const url = `${SITE_URL}/${post.category}/${post.slug}`;
+      const url = `${SITE_URL}/posts/${post.slug}`;
       const pubDate = new Date(post.date).toUTCString();
 
       return `
@@ -26,7 +26,6 @@ export async function GET() {
       <guid isPermaLink="true">${url}</guid>
       <description>${escapeXml(post.description)}</description>
       <pubDate>${pubDate}</pubDate>
-      <category>${escapeXml(post.category)}</category>
       ${post.tags?.map((tag) => `<category>${escapeXml(tag)}</category>`).join('\n      ') || ''}
     </item>`;
     })

@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { getAllTags, getCategories, getAllPosts } from '@/lib/mdx';
+import { getAllTags, getAllPosts } from '@/lib/mdx';
+import { NAV_TAGS } from '@/config/navigation';
 import Header from '@/components/Header';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon0001.xyz";
@@ -17,7 +18,6 @@ export const metadata = {
 
 export default function TagsPage() {
   const tags = getAllTags();
-  const categories = getCategories();
   const allPosts = getAllPosts();
 
   // 태그 크기 계산 (최소 1, 최대 개수 기준)
@@ -34,7 +34,7 @@ export default function TagsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <Header categories={categories} posts={allPosts} />
+      <Header navTags={[...NAV_TAGS]} posts={allPosts} />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         {/* Page Header */}

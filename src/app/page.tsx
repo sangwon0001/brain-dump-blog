@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { getRecentPosts, getCategories, getAllPosts } from '@/lib/mdx';
+import { getAllPosts } from '@/lib/mdx';
+import { NAV_TAGS } from '@/config/navigation';
 import PostCard from '@/components/PostCard';
 import Header from '@/components/Header';
 import { PopularPosts } from '@/components/PopularPosts';
@@ -7,16 +8,15 @@ import { PopularPosts } from '@/components/PopularPosts';
 export default function Home() {
   const allPosts = getAllPosts();
   const recentPosts = allPosts.slice(0, 10);
-  const categories = getCategories();
 
   // Create postTitles map for PopularPosts
   const postTitles = Object.fromEntries(
-    allPosts.map(post => [post.slug, { title: post.title, category: post.category }])
+    allPosts.map(post => [post.slug, { title: post.title }])
   );
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <Header categories={categories} posts={allPosts} />
+      <Header navTags={[...NAV_TAGS]} posts={allPosts} />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         {/* Hero */}
@@ -32,7 +32,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Categories */}
+        {/* Tags */}
         <nav className="mb-6 sm:mb-10 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           <ul className="flex gap-2 sm:gap-3 flex-nowrap sm:flex-wrap min-w-max sm:min-w-0">
             <li>
@@ -43,13 +43,13 @@ export default function Home() {
                 All
               </Link>
             </li>
-            {categories.map((category) => (
-              <li key={category}>
+            {NAV_TAGS.map((tag) => (
+              <li key={tag}>
                 <Link
-                  href={`/${category}`}
+                  href={`/tags/${encodeURIComponent(tag)}`}
                   className="inline-block px-3 py-1.5 rounded-full text-xs sm:text-sm text-[var(--text-secondary)] bg-[var(--bg-tertiary)] hover:bg-[var(--border-primary)] transition-colors whitespace-nowrap"
                 >
-                  {category}
+                  {tag}
                 </Link>
               </li>
             ))}
@@ -73,7 +73,7 @@ export default function Home() {
           </h2>
           <div className="grid gap-4 sm:gap-6">
             {recentPosts.map((post, index) => (
-              <PostCard key={`${post.category}/${post.slug}`} post={post} index={index} />
+              <PostCard key={post.slug} post={post} index={index} />
             ))}
           </div>
         </section>

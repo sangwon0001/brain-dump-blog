@@ -16,8 +16,8 @@ This is a Next.js 16 (App Router) MDX blog with SSG (Static Site Generation).
 
 ### Content System
 
-- **Blog posts**: Markdown files in `content/[category]/[slug].md`
-- **Categories**: Directory names under `content/` become categories
+- **Blog posts**: Markdown files in `content/[slug].md` (flat structure, no subdirectories)
+- **Navigation**: Tag-based (curated tags in `src/config/navigation.ts`)
 - **Frontmatter**: Required fields: `title`, `description`, `date`. Optional: `tags`, `thumbnail`, `series`
 
 ```yaml
@@ -55,6 +55,7 @@ series: "Claude Code로 블로그 만들기"
 ### Core Files
 
 - `src/lib/mdx.ts` - MDX parsing, series detection, related posts
+- `src/config/navigation.ts` - Curated nav tags (AI, Tech, Thoughts, Blockchain, Daily)
 - `src/components/MDXContent.tsx` - MDX renderer with Shiki syntax highlighting
 - `src/components/SeriesNav.tsx` - Series table of contents
 - `src/components/RelatedPosts.tsx` - Related posts by tags
@@ -62,9 +63,11 @@ series: "Claude Code로 블로그 만들기"
 
 ### Routing
 
-- `/` - Home page (recent posts)
-- `/[category]` - Category listing
-- `/[category]/[slug]` - Individual post (with series nav & related posts)
+- `/` - Home page (recent posts, nav tags)
+- `/posts/[slug]` - Individual post (with series nav & related posts)
+- `/tags` - All tags listing
+- `/tags/[tag]` - Posts filtered by tag
+- Old URLs (`/ai/*`, `/tech/*`) redirect via 301 in `next.config.ts`
 
 ### Theming
 
@@ -72,7 +75,7 @@ All colors use CSS variables defined in `globals.css`. To change theme colors, m
 
 ### Adding a New Post
 
-1. Create `content/[category]/[slug].md` with frontmatter
+1. Create `content/[slug].md` with frontmatter
 2. Add images to `public/images/[slug]/`
 3. Reference images as `/images/[slug]/filename.png`
 4. Series posts: use `(N편:` pattern in title or add `series` field

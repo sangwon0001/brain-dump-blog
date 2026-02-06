@@ -36,7 +36,6 @@ export interface PostMeta {
   title: string;
   description: string;
   date: string;
-  category: string;
   tags?: string[];
   thumbnail?: string;
   readingTime: string;
@@ -49,36 +48,20 @@ export interface Post extends PostMeta {
   content: string;
 }
 
-function getFilesRecursively(dir: string): string[] {
-  const files: string[] = [];
-  const items = fs.readdirSync(dir, { withFileTypes: true });
-
-  for (const item of items) {
-    const fullPath = path.join(dir, item.name);
-    if (item.isDirectory()) {
-      files.push(...getFilesRecursively(fullPath));
-    } else if (item.name.endsWith('.md') || item.name.endsWith('.mdx')) {
-      files.push(fullPath);
-    }
-  }
-
-  return files;
-}
-
 // 개발 모드인지 확인
 const isDev = process.env.NODE_ENV === 'development';
 
 export function getAllPosts(): PostMeta[] {
-  const files = getFilesRecursively(contentDirectory);
+  const files = fs.readdirSync(contentDirectory).filter(
+    (file) => file.endsWith('.md') || file.endsWith('.mdx')
+  );
 
-  const posts = files.map((filePath) => {
+  const posts = files.map((file) => {
+    const filePath = path.join(contentDirectory, file);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
 
-    const relativePath = path.relative(contentDirectory, filePath);
-    const category = path.dirname(relativePath);
-    const slug = path.basename(relativePath, path.extname(relativePath));
-
+    const slug = path.basename(file, path.extname(file));
     const title = data.title || slug;
     const { series, order } = extractSeriesInfo(title, data.series);
 
@@ -87,7 +70,6 @@ export function getAllPosts(): PostMeta[] {
       title,
       description: data.description || '',
       date: data.date || new Date().toISOString(),
-      category: category === '.' ? 'uncategorized' : category,
       tags: data.tags || [],
       thumbnail: data.thumbnail,
       readingTime: readingTime(content).text,
@@ -103,19 +85,9 @@ export function getAllPosts(): PostMeta[] {
   return filteredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getPostsByCategory(category: string): PostMeta[] {
-  return getAllPosts().filter((post) => post.category === category);
-}
-
-export function getCategories(): string[] {
-  const posts = getAllPosts();
-  const categories = [...new Set(posts.map((post) => post.category))];
-  return categories.sort();
-}
-
-export function getPostBySlug(category: string, slug: string): Post | null {
-  const filePath = path.join(contentDirectory, category, `${slug}.md`);
-  const mdxPath = path.join(contentDirectory, category, `${slug}.mdx`);
+export function getPostBySlug(slug: string): Post | null {
+  const filePath = path.join(contentDirectory, `${slug}.md`);
+  const mdxPath = path.join(contentDirectory, `${slug}.mdx`);
 
   let actualPath = '';
   if (fs.existsSync(filePath)) {
@@ -142,7 +114,6 @@ export function getPostBySlug(category: string, slug: string): Post | null {
     title,
     description: data.description || '',
     date: data.date || new Date().toISOString(),
-    category,
     tags: data.tags || [],
     thumbnail: data.thumbnail,
     readingTime: readingTime(content).text,
@@ -176,7 +147,7 @@ export function getSeriesNavigation(currentPost: PostMeta): {
 
   const posts = getSeriesPosts(currentPost.series);
   const currentIndex = posts.findIndex(
-    (p) => p.slug === currentPost.slug && p.category === currentPost.category
+    (p) => p.slug === currentPost.slug
   );
 
   if (currentIndex === -1) return null;
@@ -198,7 +169,7 @@ export function getRelatedPosts(currentPost: PostMeta, count: number = 3): PostM
 
   // 태그 매칭 점수 계산
   const scored = allPosts
-    .filter((post) => !(post.slug === currentPost.slug && post.category === currentPost.category))
+    .filter((post) => post.slug !== currentPost.slug)
     .filter((post) => post.series !== currentPost.series) // 같은 시리즈는 제외
     .map((post) => {
       const matchingTags = (post.tags || []).filter((tag) =>

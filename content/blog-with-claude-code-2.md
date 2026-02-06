@@ -7,7 +7,7 @@ tags: ["claude-code", "nextjs", "seo", "theming"]
 
 ## 1편에서 뼈대 만들었고
 
-[1편](/tech/blog-with-claude-code-1)에서 블로그 기본 구조 만들었다. 이번엔 살을 좀 붙여봤다.
+[1편](/posts/blog-with-claude-code-1)에서 블로그 기본 구조 만들었다. 이번엔 살을 좀 붙여봤다.
 
 - 테마 커스터마이징 (핫핑크 🩷)
 - SEO 최적화

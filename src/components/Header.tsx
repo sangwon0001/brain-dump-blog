@@ -11,12 +11,12 @@ import { backdropFade, slideFromRight } from '@/lib/animations';
 const MASCOT_STORAGE_KEY = "mascot-visible";
 
 interface HeaderProps {
-  categories?: string[];
-  currentCategory?: string;
+  navTags?: string[];
+  currentTag?: string;
   posts?: PostMeta[];
 }
 
-export default function Header({ categories = [], currentCategory, posts = [] }: HeaderProps) {
+export default function Header({ navTags = [], currentTag, posts = [] }: HeaderProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMascotVisible, setIsMascotVisible] = useState(true);
@@ -63,16 +63,16 @@ export default function Header({ categories = [], currentCategory, posts = [] }:
 
           {/* Desktop Nav */}
           <nav className="hidden sm:flex items-center gap-6">
-            {categories.map((cat) => (
+            {navTags.map((tag) => (
               <Link
-                key={cat}
-                href={`/${cat}`}
-                className={`text-sm transition-colors ${cat === currentCategory
+                key={tag}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                className={`text-sm transition-colors ${tag === currentTag
                   ? 'text-[var(--accent-primary)] font-medium'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
               >
-                {cat}
+                {tag}
               </Link>
             ))}
           </nav>
@@ -179,17 +179,17 @@ export default function Header({ categories = [], currentCategory, posts = [] }:
                       홈
                     </Link>
                   </li>
-                  {categories.map((cat) => (
-                    <li key={cat}>
+                  {navTags.map((tag) => (
+                    <li key={tag}>
                       <Link
-                        href={`/${cat}`}
+                        href={`/tags/${encodeURIComponent(tag)}`}
                         onClick={() => setIsDrawerOpen(false)}
-                        className={`block px-3 py-2 rounded-lg transition-colors ${cat === currentCategory
+                        className={`block px-3 py-2 rounded-lg transition-colors ${tag === currentTag
                           ? 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
                           : 'text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
                           }`}
                       >
-                        {cat}
+                        {tag}
                       </Link>
                     </li>
                   ))}

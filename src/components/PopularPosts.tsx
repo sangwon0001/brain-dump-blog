@@ -17,7 +17,7 @@ interface PopularPostsProps {
   limit?: number
   showPeriodSelector?: boolean
   className?: string
-  postTitles?: Record<string, { title: string; category: string }>
+  postTitles?: Record<string, { title: string }>
 }
 
 const periodLabels: Record<Period, string> = {
@@ -98,7 +98,7 @@ export function PopularPosts({
           >
             {rankings.map((item, index) => {
               const post = postTitles[item.slug]
-              const href = post ? `/${post.category}/${item.slug}` : `#`
+              const href = post ? `/posts/${item.slug}` : `#`
               const title = post?.title || item.slug
 
               return (

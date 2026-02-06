@@ -24,7 +24,7 @@ export default function PostCard({ post, index = 0 }: PostCardProps) {
       }}
       className="border border-[var(--border-primary)] rounded-lg p-4 sm:p-6 hover:shadow-[var(--shadow-md)] transition-shadow bg-[var(--bg-primary)]"
     >
-      <Link href={`/${post.category}/${post.slug}`}>
+      <Link href={`/posts/${post.slug}`}>
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-[var(--text-muted)] mb-2 sm:mb-3">
           {post.draft && (
@@ -32,9 +32,11 @@ export default function PostCard({ post, index = 0 }: PostCardProps) {
               DRAFT
             </span>
           )}
-          <span className="bg-[var(--category-bg)] text-[var(--category-text)] px-2 py-0.5 sm:py-1 rounded text-xs">
-            {post.category}
-          </span>
+          {post.tags && post.tags[0] && (
+            <span className="bg-[var(--category-bg)] text-[var(--category-text)] px-2 py-0.5 sm:py-1 rounded text-xs">
+              {post.tags[0]}
+            </span>
+          )}
           <span className="hidden sm:inline text-[var(--border-primary)]">·</span>
           <time dateTime={post.date} className="text-xs sm:text-sm">
             {new Date(post.date).toLocaleDateString('ko-KR', {

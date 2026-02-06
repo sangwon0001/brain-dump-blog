@@ -3,7 +3,6 @@ interface ArticleJsonLdProps {
   description: string;
   publishedTime: string;
   url: string;
-  category: string;
   tags?: string[];
   authorName?: string;
 }
@@ -13,7 +12,6 @@ export function ArticleJsonLd({
   description,
   publishedTime,
   url,
-  category,
   tags = [],
   authorName = '서상원',
 }: ArticleJsonLdProps) {
@@ -37,7 +35,7 @@ export function ArticleJsonLd({
       '@type': 'WebPage',
       '@id': url,
     },
-    articleSection: category,
+    articleSection: tags[0] || '',
     keywords: tags.join(', '),
     inLanguage: 'ko-KR',
   };

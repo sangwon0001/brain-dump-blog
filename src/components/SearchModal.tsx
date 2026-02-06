@@ -59,7 +59,7 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
       setSelectedIndex((prev) => Math.max(prev - 1, 0));
     } else if (e.key === 'Enter' && results[selectedIndex]) {
       e.preventDefault();
-      window.location.href = `/${results[selectedIndex].category}/${results[selectedIndex].slug}`;
+      window.location.href = `/posts/${results[selectedIndex].slug}`;
       onClose();
     } else if (e.key === 'Escape') {
       onClose();
@@ -123,8 +123,8 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
 
                 {results.map((post, index) => (
                   <Link
-                    key={`${post.category}/${post.slug}`}
-                    href={`/${post.category}/${post.slug}`}
+                    key={post.slug}
+                    href={`/posts/${post.slug}`}
                     onClick={onClose}
                     className={`block px-4 py-3 transition-colors ${
                       index === selectedIndex
@@ -134,7 +134,7 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
                   >
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs text-[var(--accent-primary)]">
-                        {post.category}
+                        {post.tags?.[0] || ''}
                       </span>
                       <span className="text-xs text-[var(--text-tertiary)]">
                         {post.date}

@@ -20,7 +20,7 @@ export default function SeriesNav({ series, posts, currentIndex }: SeriesNavProp
         {posts.map((post, index) => {
           const isCurrent = index === currentIndex;
           return (
-            <li key={`${post.category}-${post.slug}`} className="flex items-start gap-3">
+            <li key={post.slug} className="flex items-start gap-3">
               <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
                 isCurrent
                   ? 'bg-[var(--accent-primary)] text-white'
@@ -34,7 +34,7 @@ export default function SeriesNav({ series, posts, currentIndex }: SeriesNavProp
                 </span>
               ) : (
                 <Link
-                  href={`/${post.category}/${post.slug}`}
+                  href={`/posts/${post.slug}`}
                   className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors pt-0.5"
                 >
                   {post.title}

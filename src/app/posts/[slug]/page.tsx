@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { getPostBySlug, getAllPosts, getCategories, getSeriesNavigation, getRelatedPosts, extractToc } from '@/lib/mdx';
+import { getPostBySlug, getAllPosts, getSeriesNavigation, getRelatedPosts, extractToc } from '@/lib/mdx';
+import { NAV_TAGS } from '@/config/navigation';
 import { notFound } from 'next/navigation';
 import MDXContent from '@/components/MDXContent';
 import Header from '@/components/Header';
@@ -12,13 +13,12 @@ import Comments from '@/components/Comments';
 import { ViewCounter } from '@/components/ViewCounter';
 
 interface PostPageProps {
-  params: Promise<{ category: string; slug: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
   return posts.map((post) => ({
-    category: post.category,
     slug: post.slug,
   }));
 }
@@ -26,16 +26,15 @@ export async function generateStaticParams() {
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon0001.xyz";
 
 export async function generateMetadata({ params }: PostPageProps) {
-  const { category, slug } = await params;
-  const post = getPostBySlug(category, slug);
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
 
   if (!post) {
     return { title: 'Not Found' };
   }
 
-  const url = `${SITE_URL}/${category}/${slug}`;
-
-  const ogImageUrl = `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(category)}`;
+  const url = `${SITE_URL}/posts/${slug}`;
+  const ogImageUrl = `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(post.tags?.[0] || '')}`;
 
   return {
     title: post.title,
@@ -66,10 +65,9 @@ export async function generateMetadata({ params }: PostPageProps) {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const { category, slug } = await params;
-  const post = getPostBySlug(category, slug);
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
   const allPosts = getAllPosts();
-  const categories = getCategories();
 
   if (!post) {
     notFound();
@@ -79,7 +77,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const relatedPosts = getRelatedPosts(post, 3);
   const toc = extractToc(post.content);
 
-  const url = `${SITE_URL}/${category}/${slug}`;
+  const url = `${SITE_URL}/posts/${slug}`;
 
   return (
     <>
@@ -88,23 +86,24 @@ export default async function PostPage({ params }: PostPageProps) {
         description={post.description}
         publishedTime={post.date}
         url={url}
-        category={category}
         tags={post.tags}
       />
       <ReadingProgress />
       <div className="min-h-screen bg-[var(--bg-primary)]">
-        <Header categories={categories} currentCategory={post.category} posts={allPosts} />
+        <Header navTags={[...NAV_TAGS]} posts={allPosts} />
 
       <article className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Post Header */}
         <header className="pt-8 sm:pt-12 pb-8 sm:pb-10 border-b border-[var(--border-primary)]">
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-[var(--text-muted)] mb-4 sm:mb-6">
-            <Link
-              href={`/${post.category}`}
-              className="bg-[var(--accent-bg)] text-[var(--accent-primary)] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium hover:bg-[var(--accent-primary)] hover:text-white transition-colors"
-            >
-              {post.category}
-            </Link>
+            {post.tags && post.tags[0] && (
+              <Link
+                href={`/tags/${encodeURIComponent(post.tags[0])}`}
+                className="bg-[var(--accent-bg)] text-[var(--accent-primary)] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm font-medium hover:bg-[var(--accent-primary)] hover:text-white transition-colors"
+              >
+                {post.tags[0]}
+              </Link>
+            )}
             <span className="text-[var(--border-secondary)]">·</span>
             <time dateTime={post.date} className="text-xs sm:text-sm">
               {new Date(post.date).toLocaleDateString('ko-KR', {
@@ -118,15 +117,15 @@ export default async function PostPage({ params }: PostPageProps) {
             <span className="text-[var(--border-secondary)]">·</span>
             <ViewCounter slug={slug} className="text-xs sm:text-sm" />
           </div>
-          
+
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4 sm:mb-6 leading-tight">
             {post.title}
           </h1>
-          
+
           <p className="text-base sm:text-xl text-[var(--text-secondary)] leading-relaxed">
             {post.description}
           </p>
-          
+
           {post.tags && post.tags.length > 0 && (
             <div className="flex gap-2 mt-4 sm:mt-6 flex-wrap">
               {post.tags.map((tag) => (
@@ -173,7 +172,7 @@ export default async function PostPage({ params }: PostPageProps) {
             <div className="flex justify-between gap-4">
               {seriesNav.prev ? (
                 <Link
-                  href={`/${seriesNav.prev.category}/${seriesNav.prev.slug}`}
+                  href={`/posts/${seriesNav.prev.slug}`}
                   className="flex-1 group p-3 sm:p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg hover:border-[var(--accent-primary)] transition-colors"
                 >
                   <span className="text-xs text-[var(--text-muted)] flex items-center gap-1">
@@ -190,7 +189,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
               {seriesNav.next ? (
                 <Link
-                  href={`/${seriesNav.next.category}/${seriesNav.next.slug}`}
+                  href={`/posts/${seriesNav.next.slug}`}
                   className="flex-1 group p-3 sm:p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg hover:border-[var(--accent-primary)] transition-colors text-right"
                 >
                   <span className="text-xs text-[var(--text-muted)] flex items-center justify-end gap-1">
@@ -213,8 +212,8 @@ export default async function PostPage({ params }: PostPageProps) {
 
         {/* Footer */}
         <footer className="py-8 sm:py-12 border-t border-[var(--border-primary)]">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="inline-flex items-center gap-1.5 sm:gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

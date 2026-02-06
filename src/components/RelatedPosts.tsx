@@ -18,8 +18,8 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
       <div className="grid gap-3">
         {posts.map((post) => (
           <Link
-            key={`${post.category}-${post.slug}`}
-            href={`/${post.category}/${post.slug}`}
+            key={post.slug}
+            href={`/posts/${post.slug}`}
             className="group p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg hover:border-[var(--accent-primary)] transition-colors"
           >
             <div className="flex items-start justify-between gap-4">
@@ -31,9 +31,11 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
                   {post.description}
                 </p>
               </div>
-              <span className="flex-shrink-0 text-xs text-[var(--accent-primary)] bg-[var(--accent-bg)] px-2 py-1 rounded">
-                {post.category}
-              </span>
+              {post.tags && post.tags[0] && (
+                <span className="flex-shrink-0 text-xs text-[var(--accent-primary)] bg-[var(--accent-bg)] px-2 py-1 rounded">
+                  {post.tags[0]}
+                </span>
+              )}
             </div>
 
             {post.tags && post.tags.length > 0 && (

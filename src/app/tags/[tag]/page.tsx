@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { getAllTags, getPostsByTag, getCategories, getAllPosts } from '@/lib/mdx';
+import { getAllTags, getPostsByTag, getAllPosts } from '@/lib/mdx';
+import { NAV_TAGS } from '@/config/navigation';
 import PostCard from '@/components/PostCard';
 import Header from '@/components/Header';
 import { notFound } from 'next/navigation';
@@ -37,7 +38,6 @@ export default async function TagPage({ params }: TagPageProps) {
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
   const posts = getPostsByTag(decodedTag);
-  const categories = getCategories();
   const allPosts = getAllPosts();
   const allTags = getAllTags();
 
@@ -47,7 +47,7 @@ export default async function TagPage({ params }: TagPageProps) {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <Header categories={categories} posts={allPosts} />
+      <Header navTags={[...NAV_TAGS]} currentTag={decodedTag} posts={allPosts} />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         {/* Tag Header */}
@@ -99,7 +99,7 @@ export default async function TagPage({ params }: TagPageProps) {
         {/* Posts */}
         <div className="grid gap-4 sm:gap-6">
           {posts.map((post, index) => (
-            <PostCard key={`${post.category}/${post.slug}`} post={post} index={index} />
+            <PostCard key={post.slug} post={post} index={index} />
           ))}
         </div>
       </main>
