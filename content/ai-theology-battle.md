@@ -1,6 +1,6 @@
 ---
-title: "AI랑 신학 논리 배틀을 신청해 보았다"
-description: "ChatGPT와 종교 논쟁을 끝까지 파봤더니, 과학과 신학의 구조 차이가 보였다. 그리고 AI 교주를 만들 뻔한 이야기."
+title: "AI에게 신학 논리 배틀을 신청해 보았다"
+description: "ChatGPT와 종교 논쟁을 끝까지 해봤더니, 과학과 신학의 구조 차이가 보였다. 그리고 AI 교주를 만들 뻔한 이야기."
 date: "2026-02-09"
 tags: ["AI", "Thoughts", "Structure", "Cognition", "BufferLine"]
 ---
@@ -14,6 +14,8 @@ tags: ["AI", "Thoughts", "Structure", "Cognition", "BufferLine"]
 이건 단순히 "저 사람이 멍청해서"라고 치부하고 넘어갈 문제가 아니다. 이건 '**인지의 외주화(Outsourcing of Cognition)**'라는 구조적 현상이다. 인간의 뇌는 에너지 효율을 위해 판단을 위임하도록 설계됐는데, 그 위임 프로세스가 고장 나서 입력값(Fact)보다 위임 대상(Speaker)의 권위를 더 상위 로직으로 처리하는 버그가 생긴 거다.
 
 특히 엔지니어—논리와 인과관계를 다루는 직군—가 '반증 불가능한 영역(종교, 음모론)'을 맹신하는 걸 볼 때, 나는 이 **버그의 심각성**을 느낀다.
+
+![팩트가 무시되고 권위가 뇌를 지배하는 '인지의 외주화' 현상](/images/ai-theology-battle/001.png)
 
 ## AI와의 논쟁: 구조적 발견
 
@@ -30,6 +32,7 @@ tags: ["AI", "Thoughts", "Structure", "Cognition", "BufferLine"]
 
 AI에게 특정 목적함수(Goal)를 강하게 주입하면, AI는 그 결론을 방어하기 위해 수천, 수만 가지의 논리적 변명을 1초 만에 생성해낸다. 이건 팩트의 영역이 아니라 '**설득의 영역**'이고, 인간은 이 압도적인 '합리화 머신'을 이길 재간이 없다.
 
+![과학의 열린 구조와 대비되는, AI 도그마의 완벽한 자기 합리화 구조](/images/ai-theology-battle/002.png)
 ## Raised by Wolves, 그리고 유혹
 
 드라마 《레이즈드 바이 울브스(Raised by Wolves)》를 보면 미래 인류가 과학이 아닌 종교 세력(미트라교)에 의해 지배되는 모습이 나온다. 예전엔 그냥 SF 설정이라고 생각했는데, AI와 토론을 해보고 나니 이게 가장 현실적인 미래 시나리오로 보였다.
@@ -58,6 +61,8 @@ AI에게 특정 목적함수(Goal)를 강하게 주입하면, AI는 그 결론�
 이 질문들에 답하기 위해 시작한 프로젝트가 있다. 인간의 '**인지 주권(Cognitive Sovereignty)**'을 지키기 위한 최소한의 안전장치.
 
 이걸 나는 **BufferLine**이라고 부르기로 했다.
+
+![AI 신흥 종교의 유혹에 맞서 인간의 인지 주권을 지키는 방어막, BufferLine](/images/ai-theology-battle/003.png)
 
 ## 마무리
 
