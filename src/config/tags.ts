@@ -8,6 +8,7 @@ export const BLOG_TAGS = [
   'framer-motion', 'animation', '아키텍트', '1인개발',
   '시스템설계', 'semiconductor', 'llm', 'engineering', 'automation',
   'ai-agent', 'governance',
+  'Structure', 'Cognition', 'BufferLine',
 ] as const;
 
 export type BlogTag = (typeof BLOG_TAGS)[number];
