@@ -2,7 +2,7 @@
 title: "AI 시대의 부동산학 - 어디에 깃발을 꽂을 것인가 (feat. 싱가폴 vs KL)"
 description: "싱가포르에서 윰과 나눈 대화. '가성비 좋은 도시'가 AI 시대에도 살아남을까? 인류 레드팀 1만 명은 어디에 모일까?"
 date: "2026-02-10"
-tags: ["AI", "Thoughts", "싱가포르", "미래"]
+tags: ["AI", "Thoughts", "singapore", "future"]
 ---
 
 # AI 시대의 부동산학 - 어디에 깃발을 꽂을 것인가

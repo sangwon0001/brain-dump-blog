@@ -5,6 +5,7 @@ export const BLOG_TAGS = [
   'Tech', 'claude-code', 'nextjs', 'blog', 'seo', 'theming',
   'persona', 'writing', 'search', 'rss', 'og-image',
   'giscus', 'ux', 'prisma', 'neon', 'analytics',
+  'future', 'singapore',
   'framer-motion', 'animation', '아키텍트', '1인개발',
   '시스템설계', 'semiconductor', 'llm', 'engineering', 'automation',
   'ai-agent', 'governance',
