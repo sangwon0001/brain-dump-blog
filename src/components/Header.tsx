@@ -145,7 +145,7 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
               initial="initial"
               animate="animate"
               exit="exit"
-              className="fixed inset-0 z-50 bg-black/50 sm:hidden"
+              className="fixed inset-0 z-[70] bg-black/50 sm:hidden"
               onClick={() => setIsDrawerOpen(false)}
             />
 
@@ -155,7 +155,7 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
               initial="initial"
               animate="animate"
               exit="exit"
-              className="fixed top-0 right-0 z-50 h-full w-64 bg-[var(--bg-primary)] shadow-xl sm:hidden"
+              className="fixed top-0 right-0 z-[80] h-full w-64 bg-[var(--bg-primary)] shadow-xl sm:hidden"
             >
               <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
                 <span className="font-semibold text-[var(--text-primary)]">메뉴</span>
