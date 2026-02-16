@@ -10,6 +10,8 @@ export const BLOG_TAGS = [
   '시스템설계', 'semiconductor', 'llm', 'engineering', 'automation',
   'ai-agent', 'governance',
   'Structure', 'Cognition', 'BufferLine',
+  // New Tags added
+  'OpenClaw', 'WebMCP', 'Matrix', 'Tech Insight',
 ] as const;
 
 export type BlogTag = (typeof BLOG_TAGS)[number];
