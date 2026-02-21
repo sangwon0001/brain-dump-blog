@@ -8,7 +8,7 @@ export const BLOG_TAGS = [
   'future', 'singapore',
   'framer-motion', 'animation', '아키텍트', '1인개발',
   '시스템설계', 'semiconductor', 'llm', 'engineering', 'automation',
-  'ai-agent', 'governance',
+  'ai-agent', 'governance', 'adr', 'roadmap', 'skill', 'workflow',
   'Structure', 'Cognition', 'BufferLine',
   // New Tags added
   'OpenClaw', 'WebMCP', 'Matrix', 'Tech Insight',
