@@ -3,6 +3,7 @@ import { createHighlighter } from 'shiki';
 import Image from 'next/image';
 import CodeBlock from './CodeBlock';
 import Callout from './Callout';
+import ImageLightbox from './ImageLightbox';
 import remarkGfm from 'remark-gfm';
 
 interface MDXContentProps {
@@ -156,23 +157,22 @@ const components = {
   em: (props: React.HTMLAttributes<HTMLElement>) => (
     <em className="italic" {...props} />
   ),
+  // ![alt|50%](/path) syntax for width control, click to lightbox
   img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
-    const { src, alt } = props;
+    const { src, alt: rawAlt } = props;
     if (!src || typeof src !== 'string') return null;
 
-    return (
-      <span className="block relative w-full my-6 sm:my-10">
-        <Image
-          src={src}
-          alt={alt || ''}
-          width={0}
-          height={0}
-          sizes="100vw"
-          className="rounded-lg sm:rounded-xl w-full h-auto shadow-[var(--shadow-md)]"
-          style={{ width: '100%', height: 'auto' }}
-        />
-      </span>
-    );
+    let alt = rawAlt || '';
+    let maxWidth: string | undefined;
+
+    // Parse "alt text|50%" or "alt text|300px" pattern
+    const widthMatch = alt.match(/^(.*?)\|(\d+(?:%|px))$/);
+    if (widthMatch) {
+      alt = widthMatch[1].trim();
+      maxWidth = widthMatch[2];
+    }
+
+    return <ImageLightbox src={src} alt={alt} maxWidth={maxWidth} />;
   },
   // Callout component for MDX
   Callout,
