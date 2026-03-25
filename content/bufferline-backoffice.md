@@ -99,7 +99,7 @@ export-2026-03/
 
 ![모바일에서 Claude dispatch로 에이전트한테 명령|50%](/images/bufferline-backoffice/mobile-dispatch.png)
 
-만들어진 인보이스 PDF. PayNow QR 코드가 포함되어 있어서 DBS/OCBC/UOB 앱에서 바로 스캔 가능하다.
+만들어진 인보이스 PDF. 라인아이템별 GST 세금코드와 breakdown이 자동으로 들어간다.
 
 ![생성된 인보이스 PDF 예시|50%](/images/bufferline-backoffice/invoice-sample.png)
 
