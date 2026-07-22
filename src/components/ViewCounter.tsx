@@ -21,7 +21,7 @@ export function ViewCounter({ slug, className = '' }: ViewCounterProps) {
     // Get view count
     fetch(`/api/views?slug=${encodeURIComponent(slug)}`)
       .then(res => res.json())
-      .then(data => setViews(data.count))
+      .then(data => setViews(typeof data.count === 'number' ? data.count : null))
       .catch(console.error)
   }, [slug])
 

@@ -12,7 +12,7 @@ export const BLOG_TAGS = [
   'Structure', 'Cognition', 'BufferLine',
   // New Tags added
   'OpenClaw', 'WebMCP', 'Matrix', 'Tech Insight',
-  'Education', 'System',
+  'Education', 'System', 'complexity', 'kpop',
 ] as const;
 
 export type BlogTag = (typeof BLOG_TAGS)[number];
