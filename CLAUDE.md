@@ -16,9 +16,11 @@ This is a Next.js 16 (App Router) MDX blog with SSG (Static Site Generation).
 
 ### Content System
 
-- **Blog posts**: Markdown files in `content/[slug].md` (flat structure, no subdirectories)
-- **Navigation**: Tag-based (curated tags in `src/config/navigation.ts`)
-- **Frontmatter**: Required fields: `title`, `description`, `date`. Optional: `tags`, `thumbnail`, `series`
+- **Blog posts**: Markdown files in `content/[locale]/[slug].md` (flat inside each locale, no deeper subdirectories)
+  - `content/ko/[slug].md` - Korean (default locale)
+  - `content/en/[slug].md` - English translation of the same slug
+- **Navigation**: Tag-based (curated tags in `src/config/tags.ts`)
+- **Frontmatter**: Required fields: `title`, `description`, `date`. Optional: `tags`, `thumbnail`, `series`, `draft`
 
 ```yaml
 ---
@@ -30,6 +32,27 @@ series: "시리즈명"  # optional, auto-detected from title pattern
 ---
 ```
 
+**Translation rules** (keep the two locales in sync):
+- Same `slug`, same `date`, same `tags` (tag keys are canonical and never translated — only their display label is, via `TAG_LABELS` in `src/config/tags.ts`)
+- `title` / `description` / `series` / body / image alt text are translated
+- Image paths stay identical (`/images/[slug]/...` is shared across locales)
+- Internal links must carry the locale prefix in the `en` copy: `/posts/foo` → `/en/posts/foo`
+
+### Multilingual (i18n)
+
+Two locales: `ko` (default, unprefixed URLs) and `en` (`/en/...`).
+
+- `src/i18n/config.ts` - `LOCALES`, `DEFAULT_LOCALE`, `localizePath()`, `switchLocalePath()`
+- `src/i18n/dictionaries/{ko,en}.ts` - UI strings. `en` is typed as `typeof ko`, so a missing key is a compile error.
+- `src/i18n/index.ts` - `getDictionary(locale)` for **server** components
+- `src/i18n/client.ts` - `useLocale()` / `useDictionary()` for **client** components (locale is read from the pathname, so no prop drilling)
+
+Dictionary values can be functions (e.g. `post.seriesTitle(name)`), so **never pass a dictionary object as a prop** from a server component to a client one — use the hooks instead.
+
+**Fallback**: if `content/en/[slug].md` is missing, the Korean original is served at `/en/posts/[slug]` with a notice banner. Fallback posts are excluded from the sitemap and from `hreflang`, so an untranslated post is never advertised as English.
+
+**Adding a locale**: add it to `LOCALES`, add `src/i18n/dictionaries/[locale].ts`, create `content/[locale]/`, and add a route tree under `src/app/[locale]/` mirroring `src/app/en/`.
+
 ### Series System
 
 시리즈 글은 자동으로 감지되거나 명시할 수 있다.
@@ -38,6 +61,9 @@ series: "시리즈명"  # optional, auto-detected from title pattern
 - `제목 (1편: 부제)` → 시리즈명: "제목", 순서: 1
 - `제목 (2편)` → 시리즈명: "제목", 순서: 2
 - `제목 1편:` → 시리즈명: "제목", 순서: 1
+- `Title (Part 1: Subtitle)` → 시리즈명: "Title", 순서: 1 (영어 글)
+
+시리즈는 로케일 안에서 묶인다. 영어 번역본은 `series`를 영어 시리즈명으로 명시하고, 제목에 `(Part N`을 넣어 순서를 맞춘다.
 
 **명시적 지정:**
 ```yaml
@@ -54,20 +80,32 @@ series: "Claude Code로 블로그 만들기"
 
 ### Core Files
 
-- `src/lib/mdx.ts` - MDX parsing, series detection, related posts
-- `src/config/navigation.ts` - Curated nav tags (AI, Tech, Thoughts, Blockchain, Daily)
+- `src/lib/mdx.ts` - Locale-aware MDX parsing, series detection, related posts, fallback
+- `src/config/tags.ts` - Tag registry, curated nav tags, per-locale tag labels
+- `src/i18n/` - Locale config, dictionaries, server/client accessors
+- `src/views/` - Shared page implementations (`HomeView`, `PostView`, `TagsView`, `TagView`), metadata & RSS builders
 - `src/components/MDXContent.tsx` - MDX renderer with Shiki syntax highlighting
 - `src/components/SeriesNav.tsx` - Series table of contents
 - `src/components/RelatedPosts.tsx` - Related posts by tags
+- `src/components/LocaleSwitcher.tsx` - KO/EN switch (keeps the current path)
 - `src/app/globals.css` - CSS variables for theming
 
 ### Routing
 
-- `/` - Home page (recent posts, nav tags)
-- `/posts/[slug]` - Individual post (with series nav & related posts)
-- `/tags` - All tags listing
-- `/tags/[tag]` - Posts filtered by tag
+Routes under `src/app/` hold only the locale wiring; the actual page bodies live in `src/views/`.
+
+| Korean (default) | English |
+|---|---|
+| `/` | `/en` |
+| `/posts/[slug]` | `/en/posts/[slug]` |
+| `/tags` | `/en/tags` |
+| `/tags/[tag]` | `/en/tags/[tag]` |
+| `/feed.xml` | `/en/feed.xml` |
+
+- Korean URLs stay unprefixed so existing links and SEO are preserved.
 - Old URLs (`/ai/*`, `/tech/*`) redirect via 301 in `next.config.ts`
+- `src/app/en/layout.tsx` sets the English `<title>` template and marks the subtree `lang="en-US"`.
+- `sitemap.ts` emits both locales with `hreflang` alternates; per-post alternates only list locales that actually have a translation.
 
 ### Theming
 
@@ -75,10 +113,11 @@ All colors use CSS variables defined in `globals.css`. To change theme colors, m
 
 ### Adding a New Post
 
-1. Create `content/[slug].md` with frontmatter
+1. Create `content/ko/[slug].md` with frontmatter
 2. Add images to `public/images/[slug]/`
 3. Reference images as `/images/[slug]/filename.png`
 4. Series posts: use `(N편:` pattern in title or add `series` field
+5. Add the English translation at `content/en/[slug].md` (same slug/date/tags). Skipping this is safe — `/en` falls back to the Korean original with a notice — but the post won't be indexed as English until the translation exists.
 
 ## AI Writing System
 
