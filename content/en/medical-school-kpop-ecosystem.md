@@ -9,15 +9,15 @@ tags: ["Thoughts", "Daily", "System", "Cognition", "complexity", "kpop"]
 
 The thing in Korea right now is RESCENE.
 
-They started as a "small-business idol" group. Small agency, tight budget, promotion they had to handle themselves. Starting from that, they're now the dominant group in Korean entertainment.
+They started as what Koreans call a "mom-and-pop idol" group. Small agency, tight budget, promotion they had to handle themselves. Starting from that, they're now the dominant group in Korean entertainment.
 
 Let me state one thing up front. This post isn't written to trash RESCENE or the idol industry. The opposite, actually. So let me start with why I like them.
 
-- **Wonhee** — adored for Karina-tier looks and still easygoing and honest. A leader with a gap in the best way.
+- **Woni** — adored for Karina-tier looks and still easygoing and honest. A leader whose charm is in the contrast.
 - **Minami** — came all the way from Japan to be an idol in Korea, went through every kind of hardship, and never lost her thoughtfulness. She grows on you.
 - **Liv** — tireless energy and enthusiasm that never grates. She puts the viewer in a good mood.
 - **May** — cute chattering that fills the audio 24 hours a day, with thoughtful lines hidden inside it.
-- **Kaeun** — just cute.
+- **Zena** — just cute.
 
 I had no particular interest in Korean idols and I've been deep in RESCENE videos lately. I assume most people arrived via roughly the same path.
 
