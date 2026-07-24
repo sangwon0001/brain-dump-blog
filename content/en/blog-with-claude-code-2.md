@@ -179,7 +179,7 @@ Once you have a lot of multi-part posts, you need navigation.
 me: "can you link between posts? and show a table of contents automatically for series"
 ```
 
-I made it detect the "(Part 1", "(Part 2" pattern from the title.
+I made it detect the "(1편", "(2편" pattern from the title (편 = "part").
 
 ```typescript
 // mdx.ts
@@ -236,7 +236,7 @@ This works. The emoji becomes the favicon.
 ### The blog's name
 
 ```
-me: "blog title, something like 'storage for brain capacity'"
+me: "blog title, something along the lines of 뇌 용량 확보용 — 'for freeing up brain capacity'"
 Claude: (a few suggestions)
 me: "let's go with 뇌 용량 확보용"
 ```

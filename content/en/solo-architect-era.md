@@ -7,7 +7,7 @@ tags: ["AI", "Tech", "Thoughts", "아키텍트", "1인개발", "시스템설계"
 
 # I thought I was a Galápagos of one
 
-Working on projects lately, I kept wondering whether I was digging too deep on my own — turning into a Galápagos species.
+Working on projects lately, I kept wondering whether I was digging too deep on my own — turning into a Galápagos Sangwon.
 
 Then today I happened across **["MoltBot's creator: I ship code I haven't read"](https://news.hada.io/topic?id=26222)** and slapped the table. This developer, who codes at home for fun, says **he ships AI-written code without bothering to read it**. He doesn't spend energy on tedious implementation review; he pours all of it into **system design**. And thanks to that, working alone, he's producing output at something like big-tech pace.
 

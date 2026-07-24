@@ -6,11 +6,11 @@ tags: ["Thoughts", "Structure", "Education", "System"]
 series: "Debugging the Collapsed Classroom"
 ---
 
-Part 1 argued that people cheering for the drama 《참교육》 reads as a signal that "the system has stopped." It left a question hanging. **Why doesn't anything change when everyone knows it's broken? And why can't politics fix it?**
+Part 1 argued that people cheering for the drama 《참교육》 (*Teacher's Revenge*) reads as a signal that "the system has stopped." It left a question hanging. **Why doesn't anything change when everyone knows it's broken? And why can't politics fix it?**
 
 ## What snagged
 
-Seo-i Elementary, Sookmyung Girls' High, Lee Su-ji's recent satire — there were clear, painful milestones and the system fundamentally didn't change. Satire indicts the abnormality and people still push their kids into a collapsing classroom.
+Seo-i Elementary (the 2023 teacher's death), Sookmyung Girls' High (the grade-tampering scandal), comedian Lee Su-ji's recent satire — there were clear, painful milestones and the system fundamentally didn't change. Satire indicts the abnormality and people still push their kids into a collapsing classroom.
 
 That didn't add up for me. Alternative schools, homeschooling, edtech... there *appear* to be plenty of detours, so why does nobody leave? The usual filing is "public school is still the safe option" and move on.
 

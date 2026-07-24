@@ -41,7 +41,7 @@ Back to my main work, software development.
 2.  **Implementation (coding):** performance, maintainability? Modularize properly and it's faster than me.
 3.  **System design:** AI can't do this alone yet.
 
-But duct-tape a bunch of **agents** together into a pipeline? That's better than me. Right now connecting and coordinating those agents is hard enough that my role survives, but looking at yesterday's `Claude Code` update, even that multi-agent coordination is being automated.
+But duct-tape a bunch of **agents** together into a pipeline? That's better than 'Sangwon'. Right now connecting and coordinating those agents is hard enough that my role survives, but looking at yesterday's `Claude Code` update, even that multi-agent coordination is being automated.
 
 The complex design work I do now will compress into one click in the future.
 

@@ -11,7 +11,7 @@ Over lunch in Singapore I had a fairly deep conversation with Yum. The topic its
 
 > "Where and how do we have to work to survive?"
 
-Yum, a consensus/governance/systems specialist, and me, someone who's run a grab bag of projects at startups. We ran a simulation across three options: Singapore, KL (Kuala Lumpur), and Korea.
+Yum, a consensus/governance/systems specialist, and me (Sangwon), someone who's run a grab bag of projects at startups. We ran a simulation across three options: Singapore, KL (Kuala Lumpur), and Korea.
 
 ## Yum's view: "KL is the developer hub of the future"
 
@@ -22,7 +22,7 @@ Yum was fairly positive on KL.
 
 Won't KL rise as a future center of gravity for developers? That was Yum's take.
 
-## My rebuttal: "the end of value-for-money is zero"
+## ENTP Sangwon's rebuttal: "the end of value-for-money is zero"
 
 But as an ENTP I couldn't hold back a rebuttal. As an AI believer, I think KL's developer community disappears within five years.
 
@@ -67,4 +67,4 @@ All of this fantasy comes with preconditions, of course.
 1. Where exactly does the sanctum for the human red team get built?
 2. Can we get into the red team? *(or do we want to? or do we just want to trail behind them?)*
 
-That's the end of my science fiction.
+That's the end of Sangwon's science fiction.

@@ -42,7 +42,7 @@ export default function BackToTop() {
   if (!show) return null;
 
   return (
-    <button onClick={scrollToTop} aria-label="맨 위로 이동">
+    <button onClick={scrollToTop} aria-label="Back to top">
       ↑
     </button>
   );
@@ -59,7 +59,7 @@ Hide the unnecessary parts so printing comes out clean.
 /* globals.css */
 @media print {
   /* things to hide */
-  header, footer, nav, button[aria-label="맨 위로 이동"],
+  header, footer, nav, button[aria-label="Back to top"],
   .theme-toggle, .search-button, .toc-container {
     display: none !important;
   }
