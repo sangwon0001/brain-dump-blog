@@ -1,19 +1,29 @@
 import Link from 'next/link';
 import { PostMeta } from '@/lib/mdx';
+import { getDictionary } from '@/i18n';
+import { DEFAULT_LOCALE, localizePath, type Locale } from '@/i18n/config';
 
 interface SeriesNavProps {
   series: string;
   posts: PostMeta[];
   currentIndex: number;
+  locale?: Locale;
 }
 
-export default function SeriesNav({ series, posts, currentIndex }: SeriesNavProps) {
+export default function SeriesNav({
+  series,
+  posts,
+  currentIndex,
+  locale = DEFAULT_LOCALE,
+}: SeriesNavProps) {
+  const t = getDictionary(locale);
+
   return (
     <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-4 sm:p-6 mb-8 sm:mb-10">
       <div className="flex items-center gap-2 mb-4">
         <span className="text-lg">📚</span>
-        <h3 className="font-semibold text-[var(--text-primary)]">{series} 시리즈</h3>
-        <span className="text-sm text-[var(--text-muted)]">({posts.length}편)</span>
+        <h3 className="font-semibold text-[var(--text-primary)]">{t.post.seriesTitle(series)}</h3>
+        <span className="text-sm text-[var(--text-muted)]">{t.post.seriesCount(posts.length)}</span>
       </div>
 
       <ol className="space-y-2">
@@ -34,7 +44,7 @@ export default function SeriesNav({ series, posts, currentIndex }: SeriesNavProp
                 </span>
               ) : (
                 <Link
-                  href={`/posts/${post.slug}`}
+                  href={localizePath(locale, `/posts/${post.slug}`)}
                   className="text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors pt-0.5"
                 >
                   {post.title}

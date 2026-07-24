@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PostMeta } from '@/lib/mdx';
 import { backdropFade, scaleIn } from '@/lib/animations';
+import { useDictionary, useLocale } from '@/i18n/client';
+import { localizePath } from '@/i18n/config';
+import { tagLabel } from '@/config/tags';
 
 interface SearchModalProps {
   posts: PostMeta[];
@@ -13,6 +16,8 @@ interface SearchModalProps {
 }
 
 export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps) {
+  const locale = useLocale();
+  const t = useDictionary();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<PostMeta[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -59,7 +64,7 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
       setSelectedIndex((prev) => Math.max(prev - 1, 0));
     } else if (e.key === 'Enter' && results[selectedIndex]) {
       e.preventDefault();
-      window.location.href = `/posts/${results[selectedIndex].slug}`;
+      window.location.href = localizePath(locale, `/posts/${results[selectedIndex].slug}`);
       onClose();
     } else if (e.key === 'Escape') {
       onClose();
@@ -105,7 +110,7 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="검색어를 입력하세요..."
+                  placeholder={t.search.placeholder}
                   className="flex-1 py-4 bg-transparent text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none"
                 />
                 <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] rounded">
@@ -117,14 +122,14 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
               <div ref={resultsRef} className="max-h-[60vh] overflow-y-auto">
                 {query && results.length === 0 && (
                   <div className="px-4 py-8 text-center text-[var(--text-secondary)]">
-                    검색 결과가 없습니다
+                    {t.search.noResults}
                   </div>
                 )}
 
                 {results.map((post, index) => (
                   <Link
                     key={post.slug}
-                    href={`/posts/${post.slug}`}
+                    href={localizePath(locale, `/posts/${post.slug}`)}
                     onClick={onClose}
                     className={`block px-4 py-3 transition-colors ${
                       index === selectedIndex
@@ -134,7 +139,7 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
                   >
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs text-[var(--accent-primary)]">
-                        {post.tags?.[0] || ''}
+                        {post.tags?.[0] ? tagLabel(post.tags[0], locale) : ''}
                       </span>
                       <span className="text-xs text-[var(--text-tertiary)]">
                         {post.date}
@@ -153,7 +158,7 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
                             key={tag}
                             className="text-xs px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-tertiary)]"
                           >
-                            {tag}
+                            {tagLabel(tag, locale)}
                           </span>
                         ))}
                       </div>
@@ -165,9 +170,9 @@ export default function SearchModal({ posts, isOpen, onClose }: SearchModalProps
               {/* Footer */}
               {!query && (
                 <div className="px-4 py-3 border-t border-[var(--border-primary)] text-xs text-[var(--text-tertiary)]">
-                  <span className="mr-4">↑↓ 이동</span>
-                  <span className="mr-4">↵ 선택</span>
-                  <span>esc 닫기</span>
+                  <span className="mr-4">{t.search.hintMove}</span>
+                  <span className="mr-4">{t.search.hintSelect}</span>
+                  <span>{t.search.hintClose}</span>
                 </div>
               )}
             </div>

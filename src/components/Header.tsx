@@ -5,8 +5,12 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 import SearchModal from './SearchModal';
+import LocaleSwitcher from './LocaleSwitcher';
 import { PostMeta } from '@/lib/mdx';
 import { backdropFade, slideFromRight } from '@/lib/animations';
+import { useDictionary, useLocale } from '@/i18n/client';
+import { localizePath } from '@/i18n/config';
+import { tagLabel } from '@/config/tags';
 
 const MASCOT_STORAGE_KEY = "mascot-visible";
 
@@ -17,6 +21,9 @@ interface HeaderProps {
 }
 
 export default function Header({ navTags = [], currentTag, posts = [] }: HeaderProps) {
+  const locale = useLocale();
+  const t = useDictionary();
+  const href = (path: string) => localizePath(locale, path);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMascotVisible, setIsMascotVisible] = useState(true);
@@ -57,8 +64,8 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
       <header className="sticky top-0 z-40 border-b border-[var(--border-primary)] bg-[var(--bg-primary)]/80 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
-            블로그임
+          <Link href={href('/')} className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
+            {t.header.logo}
           </Link>
 
           {/* Desktop Nav */}
@@ -66,13 +73,13 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
             {navTags.map((tag) => (
               <Link
                 key={tag}
-                href={`/tags/${encodeURIComponent(tag)}`}
+                href={href(`/tags/${encodeURIComponent(tag)}`)}
                 className={`text-sm transition-colors ${tag === currentTag
                   ? 'text-[var(--accent-primary)] font-medium'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
               >
-                {tag}
+                {tagLabel(tag, locale)}
               </Link>
             ))}
           </nav>
@@ -83,14 +90,18 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
             <button
               onClick={() => setIsSearchOpen(true)}
               className="flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
-              aria-label="검색"
+              aria-label={t.header.search}
             >
               <SearchIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="hidden sm:inline text-sm">검색</span>
+              <span className="hidden sm:inline text-sm">{t.header.search}</span>
               <kbd className="hidden lg:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs text-[var(--text-tertiary)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded">
                 <span className="text-[10px]">⌘</span>K
               </kbd>
             </button>
+
+            <div className="hidden sm:block">
+              <LocaleSwitcher />
+            </div>
 
             <ThemeToggle />
 
@@ -110,8 +121,8 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
             <button
               onClick={toggleMascot}
               className="p-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
-              aria-label={isMascotVisible ? "마스코트 숨기기" : "마스코트 보이기"}
-              title={isMascotVisible ? "마스코트 숨기기" : "마스코트 보이기"}
+              aria-label={isMascotVisible ? t.header.hideMascot : t.header.showMascot}
+              title={isMascotVisible ? t.header.hideMascot : t.header.showMascot}
             >
               <MascotIcon className="w-5 h-5" isVisible={isMascotVisible} />
             </button>
@@ -120,7 +131,7 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
             <button
               onClick={() => setIsDrawerOpen(true)}
               className="sm:hidden p-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors"
-              aria-label="메뉴 열기"
+              aria-label={t.header.openMenu}
             >
               <MenuIcon className="w-5 h-5 text-[var(--text-secondary)]" />
             </button>
@@ -158,11 +169,11 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
               className="fixed top-0 right-0 z-[80] h-full w-64 bg-[var(--bg-primary)] shadow-xl sm:hidden"
             >
               <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
-                <span className="font-semibold text-[var(--text-primary)]">메뉴</span>
+                <span className="font-semibold text-[var(--text-primary)]">{t.header.menu}</span>
                 <button
                   onClick={() => setIsDrawerOpen(false)}
                   className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors"
-                  aria-label="메뉴 닫기"
+                  aria-label={t.header.closeMenu}
                 >
                   <CloseIcon className="w-5 h-5 text-[var(--text-secondary)]" />
                 </button>
@@ -172,28 +183,34 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
                 <ul className="space-y-1">
                   <li>
                     <Link
-                      href="/"
+                      href={href('/')}
                       onClick={() => setIsDrawerOpen(false)}
                       className="block px-3 py-2 rounded-lg text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
                     >
-                      홈
+                      {t.header.home}
                     </Link>
                   </li>
                   {navTags.map((tag) => (
                     <li key={tag}>
                       <Link
-                        href={`/tags/${encodeURIComponent(tag)}`}
+                        href={href(`/tags/${encodeURIComponent(tag)}`)}
                         onClick={() => setIsDrawerOpen(false)}
                         className={`block px-3 py-2 rounded-lg transition-colors ${tag === currentTag
                           ? 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
                           : 'text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]'
                           }`}
                       >
-                        {tag}
+                        {tagLabel(tag, locale)}
                       </Link>
                     </li>
                   ))}
                 </ul>
+
+                {/* Language switcher in drawer */}
+                <div className="mt-4 pt-4 border-t border-[var(--border-primary)]">
+                  <p className="px-3 pb-2 text-xs text-[var(--text-muted)]">{t.header.switchLanguage}</p>
+                  <LocaleSwitcher variant="full" onNavigate={() => setIsDrawerOpen(false)} />
+                </div>
 
                 {/* Mascot toggle in drawer */}
                 <div className="mt-4 pt-4 border-t border-[var(--border-primary)]">
@@ -202,7 +219,7 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
                     className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] transition-colors"
                   >
                     <MascotIcon className="w-5 h-5" isVisible={isMascotVisible} />
-                    <span>{isMascotVisible ? "마스코트 숨기기" : "마스코트 보이기"}</span>
+                    <span>{isMascotVisible ? t.header.hideMascot : t.header.showMascot}</span>
                   </button>
                   <a
                     href="https://github.com/sangwon0001/brain-dump-blog"

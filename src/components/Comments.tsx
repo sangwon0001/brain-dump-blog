@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDictionary } from "@/i18n/client";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://blog.sangwon0001.xyz";
 const THEME_LIGHT = `${SITE_URL}/giscus/theme-light.css`;
 const THEME_DARK = `${SITE_URL}/giscus/theme-dark.css`;
 
 export default function Comments() {
+  const t = useDictionary();
+  const giscusLang = t.giscusLang;
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,7 +30,7 @@ export default function Comments() {
     script.setAttribute("data-reactions-enabled", "1");
     script.setAttribute("data-emit-metadata", "0");
     script.setAttribute("data-input-position", "bottom");
-    script.setAttribute("data-lang", "ko");
+    script.setAttribute("data-lang", giscusLang);
     script.setAttribute("data-loading", "lazy");
 
     // 커스텀 테마 적용
@@ -35,7 +38,7 @@ export default function Comments() {
     script.setAttribute("data-theme", isDark ? THEME_DARK : THEME_LIGHT);
 
     ref.current.appendChild(script);
-  }, []);
+  }, [giscusLang]);
 
   // 테마 변경 감지
   useEffect(() => {
@@ -69,7 +72,7 @@ export default function Comments() {
   return (
     <section className="mt-12 pt-8 border-t border-[var(--border-primary)]">
       <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6">
-        댓글
+        {t.post.comments}
       </h2>
       <div ref={ref} />
     </section>

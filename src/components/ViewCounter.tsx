@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useDictionary } from '@/i18n/client'
 
 interface ViewCounterProps {
   slug: string
@@ -8,6 +9,7 @@ interface ViewCounterProps {
 }
 
 export function ViewCounter({ slug, className = '' }: ViewCounterProps) {
+  const t = useDictionary()
   const [views, setViews] = useState<number | null>(null)
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export function ViewCounter({ slug, className = '' }: ViewCounterProps) {
 
   return (
     <span className={className}>
-      {views.toLocaleString()} views
+      {t.post.views(views.toLocaleString())}
     </span>
   )
 }

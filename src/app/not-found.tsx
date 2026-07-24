@@ -3,6 +3,8 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useDictionary, useLocale } from '@/i18n/client';
+import { localizePath } from '@/i18n/config';
 function MascotSvg({ size, style }: { size: number; style?: React.CSSProperties }) {
   return (
     <svg
@@ -58,6 +60,9 @@ function seededRandom(seed: number) {
 
 export default function NotFound() {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useDictionary();
+  const homeHref = localizePath(locale, '/');
   const [countdown, setCountdown] = useState(10);
 
   const mascots = useMemo<MascotData[]>(() => {
@@ -79,7 +84,7 @@ export default function NotFound() {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          router.push('/');
+          router.push(homeHref);
           return 0;
         }
         return prev - 1;
@@ -87,7 +92,7 @@ export default function NotFound() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [router]);
+  }, [router, homeHref]);
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col items-center justify-center relative overflow-hidden">
@@ -116,21 +121,21 @@ export default function NotFound() {
           404
         </h1>
         <p className="text-lg sm:text-xl text-[var(--text-secondary)] mb-8">
-          페이지를 찾을 수 없습니다
+          {t.notFound.message}
         </p>
 
         <Link
-          href="/"
+          href={homeHref}
           className="inline-block px-6 py-3 bg-[var(--accent-primary)] text-white rounded-lg font-medium hover:bg-[var(--accent-primary-hover)] transition-colors"
         >
-          홈으로 가기
+          {t.notFound.goHome}
         </Link>
 
         <p className="mt-6 text-sm text-[var(--text-muted)]">
           <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-secondary)] font-mono font-bold text-base mr-1">
             {countdown}
           </span>
-          초 후 자동으로 홈으로 이동합니다
+          {t.notFound.countdownSuffix}
         </p>
       </div>
 

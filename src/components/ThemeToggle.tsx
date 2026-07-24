@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { iconRotate } from '@/lib/animations';
+import { useDictionary } from '@/i18n/client';
 
 export default function ThemeToggle() {
+  const t = useDictionary();
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [mounted, setMounted] = useState(false);
 
@@ -44,7 +46,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       className="p-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors"
-      aria-label={theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환'}
+      aria-label={theme === 'dark' ? t.a11y.toLightMode : t.a11y.toDarkMode}
     >
       <AnimatePresence mode="wait" initial={false}>
         {theme === 'dark' ? (

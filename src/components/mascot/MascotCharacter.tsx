@@ -9,6 +9,7 @@ import {
   getRandomReaction,
   positionSpring,
 } from "./mascotAnimations";
+import { useDictionary } from "@/i18n/client";
 
 const MASCOT_SIZE = 120;
 const PADDING = 50;
@@ -16,6 +17,7 @@ const MOVE_INTERVAL_MIN = 8000;
 const MOVE_INTERVAL_MAX = 12000;
 
 export default function MascotCharacter() {
+  const t = useDictionary();
   const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 });
   const [reaction, setReaction] = useState<string | null>(null);
   const [position, setPosition] = useState({ x: 30, y: 100 });
@@ -153,7 +155,7 @@ export default function MascotCharacter() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               style={{ width: "100%", height: "100%" }}
-              aria-label="블로그 마스코트"
+              aria-label={t.a11y.mascot}
             >
               {/* Neuron tentacles */}
               <motion.path
