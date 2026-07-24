@@ -1,11 +1,20 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
+import { getDictionary } from '@/i18n';
+import { DEFAULT_LOCALE, isLocale } from '@/i18n/config';
 
 export const runtime = 'edge';
 
+/** 배지에 들어가는 한 글자 (로케일별 사이트명 머리글자) */
+const BADGE_GLYPH = { ko: '뇌', en: 'B' } as const;
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const title = searchParams.get('title') || '뇌 용량 확보용';
+  const localeParam = searchParams.get('locale') || '';
+  const locale = isLocale(localeParam) ? localeParam : DEFAULT_LOCALE;
+  const t = getDictionary(locale);
+
+  const title = searchParams.get('title') || t.site.name;
   const category = searchParams.get('category') || '';
 
   return new ImageResponse(
@@ -111,7 +120,7 @@ export async function GET(request: NextRequest) {
               fontWeight: 700,
             }}
           >
-            뇌
+            {BADGE_GLYPH[locale]}
           </div>
           <span
             style={{
@@ -119,7 +128,7 @@ export async function GET(request: NextRequest) {
               fontSize: '24px',
             }}
           >
-            뇌 용량 확보용
+            {t.site.name}
           </span>
         </div>
       </div>

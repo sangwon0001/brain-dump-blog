@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { PostMeta } from '@/lib/mdx';
 import { cardEntrance, springs } from '@/lib/animations';
+import { useDictionary, useLocale } from '@/i18n/client';
+import { LOCALE_TAGS, localizePath } from '@/i18n/config';
+import { tagLabel } from '@/config/tags';
 
 interface PostCardProps {
   post: PostMeta;
@@ -12,6 +15,9 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post, index = 0, fromTag }: PostCardProps) {
+  const locale = useLocale();
+  const t = useDictionary();
+
   return (
     <motion.article
       variants={cardEntrance}
@@ -25,7 +31,12 @@ export default function PostCard({ post, index = 0, fromTag }: PostCardProps) {
       }}
       className="border border-[var(--border-primary)] rounded-lg p-4 sm:p-6 hover:shadow-[var(--shadow-md)] transition-shadow bg-[var(--bg-primary)]"
     >
-      <Link href={`/posts/${post.slug}${fromTag ? `?from=${encodeURIComponent(fromTag)}` : ''}`}>
+      <Link
+        href={localizePath(
+          locale,
+          `/posts/${post.slug}${fromTag ? `?from=${encodeURIComponent(fromTag)}` : ''}`
+        )}
+      >
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-[var(--text-muted)] mb-2 sm:mb-3">
           {post.draft && (
@@ -35,19 +46,19 @@ export default function PostCard({ post, index = 0, fromTag }: PostCardProps) {
           )}
           {post.tags && post.tags[0] && (
             <span className="bg-[var(--category-bg)] text-[var(--category-text)] px-2 py-0.5 sm:py-1 rounded text-xs">
-              {post.tags[0]}
+              {tagLabel(post.tags[0], locale)}
             </span>
           )}
           <span className="hidden sm:inline text-[var(--border-primary)]">·</span>
           <time dateTime={post.date} className="text-xs sm:text-sm">
-            {new Date(post.date).toLocaleDateString('ko-KR', {
+            {new Date(post.date).toLocaleDateString(LOCALE_TAGS[locale], {
               year: 'numeric',
               month: 'short',
               day: 'numeric',
             })}
           </time>
           <span className="text-[var(--border-primary)]">·</span>
-          <span className="text-xs sm:text-sm">{post.readingTime}</span>
+          <span className="text-xs sm:text-sm">{t.post.readingTime(post.readingMinutes)}</span>
         </div>
 
         {/* Title */}
@@ -68,7 +79,7 @@ export default function PostCard({ post, index = 0, fromTag }: PostCardProps) {
                 key={tag}
                 className="text-xs bg-[var(--tag-bg)] text-[var(--tag-text)] px-1.5 sm:px-2 py-0.5 sm:py-1 rounded"
               >
-                #{tag}
+                #{tagLabel(tag, locale)}
               </span>
             ))}
             {post.tags.length > 3 && (

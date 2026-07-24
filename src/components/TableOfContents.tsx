@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { TocItem } from '@/lib/mdx';
+import { useDictionary } from '@/i18n/client';
 
 interface TableOfContentsProps {
   items: TocItem[];
 }
 
 export default function TableOfContents({ items }: TableOfContentsProps) {
+  const t = useDictionary();
   const [isOpen, setIsOpen] = useState(false);
 
   if (items.length === 0) return null;
@@ -21,7 +23,7 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
       >
         <span className="text-sm font-medium text-[var(--text-primary)] flex items-center gap-2">
           <ListIcon className="w-4 h-4" />
-          목차
+          {t.post.tableOfContents}
         </span>
         <ChevronIcon className={`w-4 h-4 text-[var(--text-secondary)] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>

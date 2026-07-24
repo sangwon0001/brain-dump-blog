@@ -1,3 +1,6 @@
+import { getDictionary } from '@/i18n';
+import { DEFAULT_LOCALE, LOCALE_TAGS, type Locale } from '@/i18n/config';
+
 interface ArticleJsonLdProps {
   title: string;
   description: string;
@@ -5,6 +8,7 @@ interface ArticleJsonLdProps {
   url: string;
   tags?: string[];
   authorName?: string;
+  locale?: Locale;
 }
 
 export function ArticleJsonLd({
@@ -13,8 +17,11 @@ export function ArticleJsonLd({
   publishedTime,
   url,
   tags = [],
-  authorName = '서상원',
+  locale = DEFAULT_LOCALE,
+  authorName,
 }: ArticleJsonLdProps) {
+  const author = authorName ?? getDictionary(locale).site.authorName;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -25,11 +32,11 @@ export function ArticleJsonLd({
     url: url,
     author: {
       '@type': 'Person',
-      name: authorName,
+      name: author,
     },
     publisher: {
       '@type': 'Person',
-      name: authorName,
+      name: author,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -37,7 +44,7 @@ export function ArticleJsonLd({
     },
     articleSection: tags[0] || '',
     keywords: tags.join(', '),
-    inLanguage: 'ko-KR',
+    inLanguage: LOCALE_TAGS[locale],
   };
 
   return (
@@ -52,16 +59,22 @@ interface WebsiteJsonLdProps {
   name: string;
   description: string;
   url: string;
+  locale?: Locale;
 }
 
-export function WebsiteJsonLd({ name, description, url }: WebsiteJsonLdProps) {
+export function WebsiteJsonLd({
+  name,
+  description,
+  url,
+  locale = DEFAULT_LOCALE,
+}: WebsiteJsonLdProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: name,
     description: description,
     url: url,
-    inLanguage: 'ko-KR',
+    inLanguage: LOCALE_TAGS[locale],
     potentialAction: {
       '@type': 'SearchAction',
       target: {

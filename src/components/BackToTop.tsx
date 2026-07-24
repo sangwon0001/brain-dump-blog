@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeSlideUp } from '@/lib/animations';
+import { useDictionary } from '@/i18n/client';
 
 export default function BackToTop() {
+  const t = useDictionary();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function BackToTop() {
           whileTap={{ scale: 0.95 }}
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-zinc-800 dark:bg-zinc-700 text-white shadow-lg hover:bg-zinc-700 dark:hover:bg-zinc-600"
-          aria-label="맨 위로 이동"
+          aria-label={t.a11y.backToTop}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

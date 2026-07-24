@@ -1,0 +1,82 @@
+const ko = {
+  site: {
+    name: '뇌 용량 확보용',
+    description: '머릿속 비우고 RAM 확보하는 블로그. 개발, AI, 잡생각 투기장.',
+    rssTitle: '스상워이의 뇌 가비지 컬렉터',
+    rssDescription: '머릿속 비우고 RAM 확보하기 위해 만든 블로그',
+    authorName: '서상원',
+  },
+  header: {
+    logo: '블로그임',
+    home: '홈',
+    menu: '메뉴',
+    openMenu: '메뉴 열기',
+    closeMenu: '메뉴 닫기',
+    search: '검색',
+    showMascot: '마스코트 보이기',
+    hideMascot: '마스코트 숨기기',
+    switchLanguage: '언어 전환',
+  },
+  home: {
+    heroTitle: '🧠 스상워이의 뇌 가비지 컬렉터',
+    heroSubtitle: '머릿속 비우고 RAM 확보하기 위해 만든 99%의 AI와 1%의 스상워이로 만들어진',
+    heroMeta: '개발자 · 풀스택(인 듯) · 블록체인 · AI(사용)',
+    allTag: 'All',
+    recentPosts: '최근 덤프',
+  },
+  search: {
+    placeholder: '검색어를 입력하세요...',
+    noResults: '검색 결과가 없습니다',
+    hintMove: '↑↓ 이동',
+    hintSelect: '↵ 선택',
+    hintClose: 'esc 닫기',
+  },
+  popular: {
+    title: '인기 글',
+    loading: '로딩 중...',
+    empty: '아직 데이터가 없습니다',
+    periods: {
+      daily: '오늘',
+      weekly: '이번 주',
+      monthly: '이번 달',
+      total: '전체',
+    },
+  },
+  post: {
+    seriesTitle: (series: string) => `${series} 시리즈`,
+    seriesCount: (count: number) => `(${count}편)`,
+    tableOfContents: '목차',
+    relatedPosts: '관련 글',
+    comments: '댓글',
+    prevPost: '이전 글',
+    nextPost: '다음 글',
+    backToAll: 'Back to all posts',
+    views: (count: string) => `${count} views`,
+    readingTime: (minutes: number) => `${minutes} min read`,
+    /** 번역본이 없어 한국어 원문을 그대로 보여줄 때의 안내. 한국어에서는 쓰이지 않는다. */
+    untranslatedNotice: '',
+  },
+  tags: {
+    title: '태그',
+    description: '모든 태그 목록',
+    tagCount: (count: number) => `${count}개의 태그`,
+    postCount: (count: number) => `${count}개의 글`,
+    allTags: '모든 태그',
+    more: '더보기...',
+    taggedWith: (tag: string) => `"${tag}" 태그가 포함된 글 목록`,
+  },
+  notFound: {
+    message: '페이지를 찾을 수 없습니다',
+    goHome: '홈으로 가기',
+    countdownSuffix: '초 후 자동으로 홈으로 이동합니다',
+  },
+  a11y: {
+    backToTop: '맨 위로 이동',
+    toLightMode: '라이트 모드로 전환',
+    toDarkMode: '다크 모드로 전환',
+    mascot: '블로그 마스코트',
+  },
+  giscusLang: 'ko',
+};
+
+export default ko;

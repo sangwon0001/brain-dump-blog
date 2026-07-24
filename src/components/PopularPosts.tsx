@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { staggerContainer, staggerItem } from '@/lib/animations'
+import { useDictionary, useLocale } from '@/i18n/client'
+import { localizePath } from '@/i18n/config'
 
 type Period = 'daily' | 'weekly' | 'monthly' | 'total'
 
@@ -20,12 +22,7 @@ interface PopularPostsProps {
   postTitles?: Record<string, { title: string }>
 }
 
-const periodLabels: Record<Period, string> = {
-  daily: '오늘',
-  weekly: '이번 주',
-  monthly: '이번 달',
-  total: '전체'
-}
+const PERIODS: Period[] = ['daily', 'weekly', 'monthly', 'total']
 
 export function PopularPosts({
   period: initialPeriod = 'total',
@@ -34,6 +31,8 @@ export function PopularPosts({
   className = '',
   postTitles = {}
 }: PopularPostsProps) {
+  const locale = useLocale()
+  const t = useDictionary()
   const [period, setPeriod] = useState<Period>(initialPeriod)
   const [rankings, setRankings] = useState<RankingItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -52,15 +51,15 @@ export function PopularPosts({
   return (
     <div className={className}>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-lg">인기 글</h3>
+        <h3 className="font-semibold text-lg">{t.popular.title}</h3>
         {showPeriodSelector && (
           <select
             value={period}
             onChange={(e) => setPeriod(e.target.value as Period)}
             className="text-sm bg-transparent border border-[var(--color-border)] rounded px-2 py-1"
           >
-            {Object.entries(periodLabels).map(([value, label]) => (
-              <option key={value} value={value}>{label}</option>
+            {PERIODS.map((value) => (
+              <option key={value} value={value}>{t.popular.periods[value]}</option>
             ))}
           </select>
         )}
@@ -75,7 +74,7 @@ export function PopularPosts({
             exit={{ opacity: 0 }}
             className="text-[var(--color-text-secondary)] text-sm"
           >
-            로딩 중...
+            {t.popular.loading}
           </motion.div>
         ) : rankings.length === 0 ? (
           <motion.div
@@ -85,7 +84,7 @@ export function PopularPosts({
             exit={{ opacity: 0 }}
             className="text-[var(--color-text-secondary)] text-sm"
           >
-            아직 데이터가 없습니다
+            {t.popular.empty}
           </motion.div>
         ) : (
           <motion.ol
@@ -98,7 +97,7 @@ export function PopularPosts({
           >
             {rankings.map((item, index) => {
               const post = postTitles[item.slug]
-              const href = post ? `/posts/${item.slug}` : `#`
+              const href = post ? localizePath(locale, `/posts/${item.slug}`) : `#`
               const title = post?.title || item.slug
 
               return (
@@ -118,7 +117,7 @@ export function PopularPosts({
                       {title}
                     </Link>
                     <span className="text-xs text-[var(--color-text-secondary)]">
-                      {item.views.toLocaleString()} views
+                      {t.post.views(item.views.toLocaleString())}
                     </span>
                   </div>
                 </motion.li>

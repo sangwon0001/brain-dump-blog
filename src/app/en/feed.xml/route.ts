@@ -1,5 +1,5 @@
 import { buildFeedResponse } from '@/views/feed';
 
 export async function GET() {
-  return buildFeedResponse('ko');
+  return buildFeedResponse('en');
 }

@@ -1,25 +1,33 @@
+'use client';
+
 import Link from 'next/link';
 import { PostMeta } from '@/lib/mdx';
+import { useDictionary, useLocale } from '@/i18n/client';
+import { localizePath } from '@/i18n/config';
+import { tagLabel } from '@/config/tags';
 
 interface RelatedPostsProps {
   posts: PostMeta[];
 }
 
 export default function RelatedPosts({ posts }: RelatedPostsProps) {
+  const locale = useLocale();
+  const t = useDictionary();
+
   if (posts.length === 0) return null;
 
   return (
     <div className="py-8 sm:py-10 border-t border-[var(--border-primary)]">
       <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4 flex items-center gap-2">
         <span>🔗</span>
-        관련 글
+        {t.post.relatedPosts}
       </h3>
 
       <div className="grid gap-3">
         {posts.map((post) => (
           <Link
             key={post.slug}
-            href={`/posts/${post.slug}`}
+            href={localizePath(locale, `/posts/${post.slug}`)}
             className="group p-4 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg hover:border-[var(--accent-primary)] transition-colors"
           >
             <div className="flex items-start justify-between gap-4">
@@ -33,7 +41,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
               </div>
               {post.tags && post.tags[0] && (
                 <span className="flex-shrink-0 text-xs text-[var(--accent-primary)] bg-[var(--accent-bg)] px-2 py-1 rounded">
-                  {post.tags[0]}
+                  {tagLabel(post.tags[0], locale)}
                 </span>
               )}
             </div>
@@ -42,7 +50,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
               <div className="flex gap-2 mt-2 flex-wrap">
                 {post.tags.slice(0, 3).map((tag) => (
                   <span key={tag} className="text-xs text-[var(--text-muted)]">
-                    #{tag}
+                    #{tagLabel(tag, locale)}
                   </span>
                 ))}
               </div>

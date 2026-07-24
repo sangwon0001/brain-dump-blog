@@ -2,7 +2,7 @@ import { getAllPosts } from '@/lib/mdx';
 import PostView from '@/views/PostView';
 import { buildPostMetadata } from '@/views/metadata';
 
-const LOCALE = 'ko' as const;
+const LOCALE = 'en' as const;
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PostPageProps) {
   return buildPostMetadata(LOCALE, slug);
 }
 
-export default async function PostPage({ params }: PostPageProps) {
+export default async function EnPostPage({ params }: PostPageProps) {
   const { slug } = await params;
   return <PostView locale={LOCALE} slug={slug} />;
 }
