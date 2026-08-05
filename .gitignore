@@ -43,3 +43,10 @@ yarn-error.log*
 next-env.d.ts
 
 .playwright-mcp
+
+*.omc
+.omc/
+
+# claude code (launch.json은 공유, 나머지는 로컬 전용)
+.claude/*
+!.claude/launch.json
