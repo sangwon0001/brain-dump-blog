@@ -35,7 +35,7 @@ So I kept chewing on it while drying my hair. What follows is in the order it ha
 
 ## 1. Do idols actually *need* a narrative?
 
-I'll grant that RESCENE is a narrative-type group. The trajectory from small-business idol to here is itself the content, and that trajectory is genuinely why I got into them. Wonyi being adored for Karina-tier looks while staying totally down-to-earth. Minami crossing over from Japan, going through all of it and still staying thoughtful. Riv's inexhaustible energy. May's chattering. Kkaengi. Once you know all this, the videos just look different. That's narrative.
+I'll grant that RESCENE is a narrative-type group. The trajectory from mom-and-pop idol to here is itself the content, and that trajectory is genuinely why I got into them. Woni being adored for Karina-tier looks while staying totally down-to-earth. Minami crossing over from Japan, going through all of it and still staying thoughtful. Liv's inexhaustible energy. May's chattering. Zena. Once you know all this, the videos just look different. That's narrative.
 
 But that's evidence that **narrative is powerful**, not evidence that **narrative is required**.
 
