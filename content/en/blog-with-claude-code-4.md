@@ -129,7 +129,7 @@ Put `draft: true` in the frontmatter and it won't show in production.
 
 ```yaml
 ---
-title: "작성 중인 글"
+title: "Work in progress"
 draft: true
 ---
 ```

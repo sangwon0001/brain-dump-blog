@@ -93,7 +93,7 @@ Same word, meaning flipped to its opposite. That looks like the result of "union
 
 Let's go back and doubt the phrase "moral panic." Panic implies "overreaction," but if the system really has stopped, that isn't excess — it could be an accurate reaction. Honestly, I don't know which it is yet.
 
-What's certain is that this drama isn't *a solution*. Seo-i Elementary, Sookmyung Girls' High, Lee Su-ji's recent kindergarten-teacher satire — there were that many real events and the system fundamentally didn't change. Real tragedies degenerated into camp logic and blame-shifting the moment they broke, then faded out. A well-made drama, on the other hand, bypasses that defense mechanism and intuitively imprints "how abnormal the current system is."
+What's certain is that this drama isn't *a solution*. Seo-i Elementary, Sookmyung Girls' High, comedian Lee Su-ji's recent kindergarten-teacher satire — there were that many real events and the system fundamentally didn't change. Real tragedies degenerated into camp logic and blame-shifting the moment they broke, then faded out. A well-made drama, on the other hand, bypasses that defense mechanism and intuitively imprints "how abnormal the current system is."
 
 So the maximum the media can do is *make the agenda visible*. The explosive that breaks the dam. The catharsis a viewer feels isn't agreement with "let's break the law and hit people in real life," it's closer to a scream: "please recognize this abnormal structure."
 

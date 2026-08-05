@@ -15,6 +15,7 @@ export const BLOG_TAGS = [
   // New Tags added
   'OpenClaw', 'WebMCP', 'Matrix', 'Tech Insight',
   'Education', 'System', 'complexity', 'kpop',
+  'accounting', 'cli', 'PC주의', '추상화',
 ] as const;
 
 export type BlogTag = (typeof BLOG_TAGS)[number];
@@ -31,6 +32,8 @@ export const TAG_LABELS: Record<Locale, Partial<Record<BlogTag, string>>> = {
     '아키텍트': 'Architect',
     '1인개발': 'Solo Dev',
     '시스템설계': 'System Design',
+    'PC주의': 'Political Correctness',
+    '추상화': 'Abstraction',
   },
 };
 
