@@ -15,7 +15,7 @@ export const BLOG_TAGS = [
   // New Tags added
   'OpenClaw', 'WebMCP', 'Matrix', 'Tech Insight',
   'Education', 'System', 'complexity', 'kpop',
-  'accounting', 'cli', 'PC주의', '추상화',
+  'accounting', 'cli', 'PC주의', '추상화', 'ClosedSystem',
 ] as const;
 
 export type BlogTag = (typeof BLOG_TAGS)[number];
