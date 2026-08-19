@@ -7,7 +7,7 @@ tags: ["Thoughts", "Daily", "System", "ClosedSystem", "Cognition"]
 
 ## What set this off
 
-Scrolling the news on the MRT into work again today, two stories snagged me. (With a little dramatization for entertainment value.)
+Scrolling the news on the MRT into work again today, two stories snagged me. (Filed under "banter" — really it's me rambling to myself.)
 
 One: the family in the Gangneung unintended-acceleration case is demanding the manufacturer hand over the "ECU specification." The other: a request that schools let Muslim students eat halal meals even if the families pay extra — and the comment section under it.
 
@@ -120,15 +120,6 @@ It's been a while since I wrote something this personal and this political.
 One thing to add: what today's two stories share is that **admitting a design flaw costs the system far more than blaming an individual**. Unintended acceleration ends with blaming the driver or blaming the manufacturer; school lunch ends with abusing Muslims or worrying about the lunch ladies. Nobody proposes touching the design. It's the most expensive option.
 
 If you want to argue: on the unintended-acceleration part I'm just right, and on everything else you're right.
-
----
-
-## Open questions
-
-- I wrote that belief in unintended acceleration has to be "cleared out," with no answer for what that concretely means. Is there any precedent for clearing out a belief through policy?
-- Are vouchers really that clean? Stigma and spending-control problems follow immediately, and I didn't go that far.
-- I said what percentage of exceptions should trigger a system rewrite purely on instinct. I don't know whether there's an actual threshold.
-- I think the direction on relief-payment inflation is right, but I didn't check the magnitude. (Needs fact-checking.)
 
 And then we're at Dhoby Ghaut. Today's banter ends here.
 
