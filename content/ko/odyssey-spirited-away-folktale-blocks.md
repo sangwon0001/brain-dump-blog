@@ -115,3 +115,7 @@ tags: ["Thoughts", "Cognition", "kpop", "Daily"]
 원이의 거제편이 사랑받은 데에는 여러 이유가 있겠지만, 오래된 귀향 설화의 구조와 연출할 수 없는 삶의 순간이 한 영상 안에서 만났다는 설명은 꽤 설득력 있게 들렸다.
 
 이 글을 정리하다 보니 그 말이 다시 생각났다.
+
+## 같이 만든 쇼츠
+
+<YouTubeShort videoId="SiF_5ZqoF6Y" title="How the Brain Invents Mythology" />

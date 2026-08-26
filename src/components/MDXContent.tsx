@@ -83,6 +83,26 @@ async function HighlightedCode({ code, language }: { code: string; language: str
   );
 }
 
+function YouTubeShort({ videoId, title }: { videoId: string; title: string }) {
+  if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) return null;
+
+  return (
+    <div className="my-6 sm:my-8 flex justify-center">
+      <div className="w-full max-w-[360px] overflow-hidden rounded-xl border border-[var(--border-primary)] bg-black shadow-sm">
+        <iframe
+          className="block aspect-[9/16] w-full"
+          src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        />
+      </div>
+    </div>
+  );
+}
+
 const components = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
     const id = slugify(extractText(props.children));
@@ -176,6 +196,8 @@ const components = {
   },
   // Callout component for MDX
   Callout,
+  // Responsive 9:16 YouTube Shorts embed
+  YouTubeShort,
   // Table elements
   table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
     <div className="overflow-x-auto my-6 sm:my-8">
