@@ -118,4 +118,4 @@ Writing this post brought that line back to mind.
 
 ## Related Short
 
-[How the Brain Invents Mythology — YouTube Shorts](https://www.youtube.com/shorts/SiF_5ZqoF6Y)
+<YouTubeShort videoId="SiF_5ZqoF6Y" title="How the Brain Invents Mythology" />

@@ -118,4 +118,4 @@ tags: ["Thoughts", "Cognition", "kpop", "Daily"]
 
 ## 같이 만든 쇼츠
 
-[How the Brain Invents Mythology — YouTube Shorts](https://www.youtube.com/shorts/SiF_5ZqoF6Y)
+<YouTubeShort videoId="SiF_5ZqoF6Y" title="How the Brain Invents Mythology" />
