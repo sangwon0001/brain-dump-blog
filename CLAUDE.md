@@ -65,6 +65,10 @@ Dictionary values can be functions (e.g. `post.seriesTitle(name)`), so **never p
 
 시리즈는 로케일 안에서 묶인다. 영어 번역본은 `series`를 영어 시리즈명으로 명시하고, 제목에 `(Part N`을 넣어 순서를 맞춘다.
 
+**시리즈 설명 (`src/config/series.ts`):**
+
+시리즈 컨셉 설명은 `SERIES` 레지스트리에 로케일별로 한 번만 적는다. 등록해두면 그 시리즈의 모든 글 상단 목차에 자동으로 붙으므로, 글마다 본문에서 컨셉을 다시 설명하지 않는다. 키는 로케일 무관 id이고, `name`은 각 로케일 frontmatter의 `series` 값과 글자 단위로 같아야 한다. 등록하지 않은 시리즈는 설명 없이 목차만 나온다.
+
 **명시적 지정:**
 ```yaml
 series: "Claude Code로 블로그 만들기"
@@ -81,7 +85,8 @@ series: "Claude Code로 블로그 만들기"
 ### Core Files
 
 - `src/lib/mdx.ts` - Locale-aware MDX parsing, series detection, related posts, fallback
-- `src/config/tags.ts` - Tag registry, curated nav tags, per-locale tag labels
+- `src/config/tags.ts` - Tag registry, curated nav tags, per-locale tag labels/descriptions
+- `src/config/series.ts` - Series registry (per-locale name + description shown above the series TOC)
 - `src/i18n/` - Locale config, dictionaries, server/client accessors
 - `src/views/` - Shared page implementations (`HomeView`, `PostView`, `TagsView`, `TagView`), metadata & RSS builders
 - `src/components/MDXContent.tsx` - MDX renderer with Shiki syntax highlighting
@@ -137,6 +142,7 @@ All colors use CSS variables defined in `globals.css`. To change theme colors, m
 | `persona_blogger.md` | 블로그 글 작성용 (사고 기록자) |
 | `persona_commenter.md` | 댓글/논평용 (논점 교정자) |
 | `blog-guide.md` | 전체 작성 가이드 |
+| `persona_ai_narrator.md` | 'AI 화자' 시리즈 전용 (base를 따르지 않음) |
 | `template.md` | 빈 템플릿 |
 
 ### 글 유형
@@ -145,6 +151,15 @@ All colors use CSS variables defined in `globals.css`. To change theme colors, m
 |-----|------|------|
 | **기술 정리형** | 써보고 정리해서 dump | 튜토리얼, 사용기, 팁 |
 | **사고 정리형** | 구조적 분석 후 정리 dump | 개념 분석, 프레임 제안 |
+| **AI 화자형** | AI와의 대화를 그 AI가 자기 시점에서 다시 쓴 기록 | `세션 로그` 시리즈 |
+
+### 'AI 화자' 시리즈 (세션 로그)
+
+블로그에서 유일하게 **서상원 페르소나를 따르지 않는** 라인이다. 화자가 AI 본인이고, 사용자는 글 안에서 관찰 대상이다.
+
+사용자가 AI 세션 텍스트를 붙여넣으면 **작업 전에 `public/ai/persona_ai_narrator.md`를 읽어라.** 화자·말투·편집 허용 범위·frontmatter 규칙이 전부 거기 있고, 여기서는 중복해서 적지 않는다. (아래 사고방식/결론 스타일 규칙은 이 시리즈에 적용되지 않는다.)
+
+시리즈 설명 문구는 `src/config/series.ts`의 `session-log` 항목 한 곳에만 있고 모든 편 상단에 자동 노출된다.
 
 ### 사고방식 (글쓰는 과정에서 활용)
 
