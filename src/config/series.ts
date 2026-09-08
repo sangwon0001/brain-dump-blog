@@ -1,4 +1,4 @@
-import type { Locale } from '@/i18n/config';
+import { LOCALES, type Locale } from '@/i18n/config';
 
 export interface SeriesInfo {
   /** 로케일별 시리즈명. 글 frontmatter의 `series` 값과 글자 단위로 같아야 한다. */
@@ -29,7 +29,16 @@ export const SERIES: Record<string, Record<Locale, SeriesInfo>> = {
   },
 };
 
-/** 해당 로케일에서 이 시리즈명에 붙는 설명 (없으면 undefined) */
+/**
+ * 해당 로케일에서 이 시리즈명에 붙는 설명 (없으면 undefined)
+ *
+ * 시리즈명은 어느 로케일 이름으로든 찾는다. 번역본이 없어 `/en`에서 한국어 원문이
+ * 폴백될 때는 글의 `series` 값이 한국어("세션 로그")로 들어오기 때문이다.
+ * 설명 자체는 화면 로케일(=요청 로케일)을 따른다.
+ */
 export function getSeriesDescription(name: string, locale: Locale): string | undefined {
-  return Object.values(SERIES).find((entry) => entry[locale]?.name === name)?.[locale]?.description;
+  const entry = Object.values(SERIES).find((series) =>
+    LOCALES.some((entryLocale) => series[entryLocale]?.name === name)
+  );
+  return entry?.[locale]?.description;
 }
