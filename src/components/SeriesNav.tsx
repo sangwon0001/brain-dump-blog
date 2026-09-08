@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PostMeta } from '@/lib/mdx';
 import { getDictionary } from '@/i18n';
+import { getSeriesDescription } from '@/config/series';
 import { DEFAULT_LOCALE, localizePath, type Locale } from '@/i18n/config';
 
 interface SeriesNavProps {
@@ -17,6 +18,7 @@ export default function SeriesNav({
   locale = DEFAULT_LOCALE,
 }: SeriesNavProps) {
   const t = getDictionary(locale);
+  const description = getSeriesDescription(series, locale);
 
   return (
     <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-4 sm:p-6 mb-8 sm:mb-10">
@@ -25,6 +27,12 @@ export default function SeriesNav({
         <h3 className="font-semibold text-[var(--text-primary)]">{t.post.seriesTitle(series)}</h3>
         <span className="text-sm text-[var(--text-muted)]">{t.post.seriesCount(posts.length)}</span>
       </div>
+
+      {description && (
+        <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
+          {description}
+        </p>
+      )}
 
       <ol className="space-y-2">
         {posts.map((post, index) => {
