@@ -62,19 +62,19 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-[var(--border-primary)] bg-[var(--bg-primary)]/80 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3 md:gap-4">
           {/* Logo */}
-          <Link href={href('/')} className="text-lg sm:text-xl font-bold text-[var(--text-primary)]">
+          <Link href={href('/')} className="text-lg sm:text-xl font-bold text-[var(--text-primary)] whitespace-nowrap">
             {t.header.logo}
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden sm:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-5">
             {navTags.map((tag) => (
               <Link
                 key={tag}
                 href={href(`/tags/${encodeURIComponent(tag)}`)}
-                className={`text-sm transition-colors ${tag === currentTag
+                className={`text-sm whitespace-nowrap transition-colors ${tag === currentTag
                   ? 'text-[var(--accent-primary)] font-medium'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
@@ -93,13 +93,13 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
               aria-label={t.header.search}
             >
               <SearchIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="hidden sm:inline text-sm">{t.header.search}</span>
+              <span className="hidden lg:inline text-sm">{t.header.search}</span>
               <kbd className="hidden lg:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs text-[var(--text-tertiary)] bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded">
                 <span className="text-[10px]">⌘</span>K
               </kbd>
             </button>
 
-            <div className="hidden sm:block">
+            <div className="hidden lg:block">
               <LocaleSwitcher />
             </div>
 
@@ -130,7 +130,7 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
             {/* Mobile menu button */}
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="sm:hidden p-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-[var(--bg-tertiary)] transition-colors"
               aria-label={t.header.openMenu}
             >
               <MenuIcon className="w-5 h-5 text-[var(--text-secondary)]" />
@@ -156,7 +156,7 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
               initial="initial"
               animate="animate"
               exit="exit"
-              className="fixed inset-0 z-[70] bg-black/50 sm:hidden"
+              className="fixed inset-0 z-[70] bg-black/50 lg:hidden"
               onClick={() => setIsDrawerOpen(false)}
             />
 
@@ -166,7 +166,7 @@ export default function Header({ navTags = [], currentTag, posts = [] }: HeaderP
               initial="initial"
               animate="animate"
               exit="exit"
-              className="fixed top-0 right-0 z-[80] h-full w-64 bg-[var(--bg-primary)] shadow-xl sm:hidden"
+              className="fixed top-0 right-0 z-[80] h-full w-64 bg-[var(--bg-primary)] shadow-xl lg:hidden"
             >
               <div className="flex items-center justify-between p-4 border-b border-[var(--border-primary)]">
                 <span className="font-semibold text-[var(--text-primary)]">{t.header.menu}</span>

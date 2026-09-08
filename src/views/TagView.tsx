@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllTags, getPostsByTag, getAllPosts } from '@/lib/mdx';
-import { NAV_TAGS, tagLabel } from '@/config/tags';
+import { NAV_TAGS, tagDescription, tagLabel } from '@/config/tags';
 import PostCard from '@/components/PostCard';
 import Header from '@/components/Header';
 import { getDictionary } from '@/i18n';
@@ -17,6 +17,7 @@ export default function TagView({ locale, decodedTag }: TagViewProps) {
   const posts = getPostsByTag(decodedTag, locale);
   const allPosts = getAllPosts(locale);
   const allTags = getAllTags(locale);
+  const description = tagDescription(decodedTag, locale);
 
   if (posts.length === 0) {
     notFound();
@@ -40,7 +41,12 @@ export default function TagView({ locale, decodedTag }: TagViewProps) {
           <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] mb-1 sm:mb-2">
             #{tagLabel(decodedTag, locale)}
           </h1>
-          <p className="text-sm sm:text-base text-[var(--text-secondary)]">
+          {description && (
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed mb-1 sm:mb-2 max-w-2xl">
+              {description}
+            </p>
+          )}
+          <p className="text-sm sm:text-base text-[var(--text-muted)]">
             {t.tags.postCount(posts.length)}
           </p>
         </section>
